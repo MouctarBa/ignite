@@ -1,8 +1,5 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { compareDesc } from 'date-fns'
-
-import workBG from '@/images/featured-work-item-bg.svg'
 import { Container } from '@/components/Container'
 import {
   WebDevelopmentIcon,
@@ -10,7 +7,8 @@ import {
   BrandingIcon,
   ProductDevelopmentIcon,
 } from '../CategoryIcons'
-import { allCaseStudies } from 'contentlayer/generated'
+import { fetchAPI } from '@/lib/strapi'
+import workBG from '@/images/featured-work-item-bg.svg'
 
 const iconOptions = {
   'Web Development': WebDevelopmentIcon,
@@ -21,11 +19,11 @@ const iconOptions = {
 
 function CategoryIcon({ category, ...props }) {
   const Icon = iconOptions[category]
-
   return <Icon {...props} />
 }
 
 function CaseStudy({ caseStudy }) {
+  // caseStudy here is the `attributes` object from a single Strapi entry
   return (
     <div
       key={caseStudy.title}
@@ -51,7 +49,7 @@ function CaseStudy({ caseStudy }) {
           {caseStudy.description}
         </p>
         <Link
-          href={caseStudy.url}
+          href={`/work/${caseStudy.slug}`}
           className="group mt-14 flex items-center gap-2 text-sm font-medium text-sky-600 duration-200 ease-in-out hover:text-sky-700 sm:mt-16 sm:text-md"
         >
           View Case Study
@@ -70,11 +68,11 @@ function CaseStudy({ caseStudy }) {
         </Link>
       </div>
       <Link
-        href={caseStudy.url}
+        href={`/work/${caseStudy.slug}`}
         className="group aspect-h-9 aspect-w-16 relative order-1 h-full w-full overflow-hidden rounded-2xl ring-1 ring-slate-100/75 lg:order-2 lg:col-span-6 lg:rounded-l-none lg:rounded-r-none xl:col-span-7 xl:rounded-tl-2xl"
       >
         <Image
-          src={caseStudy.thumbnail}
+          src={caseStudy.thumbnail.data.attributes.url}
           alt={caseStudy.title}
           className="absolute inset-0 object-cover object-top transition duration-300 group-hover:scale-105"
           fill
@@ -85,10 +83,14 @@ function CaseStudy({ caseStudy }) {
   )
 }
 
-export function FeaturedWork() {
-  const caseStudies = allCaseStudies
-    .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
-    .slice(0, 4)
+export async function FeaturedWork() {
+  const caseStudiesRes = await fetchAPI('/case-studies', {
+    sort: { date: 'desc' },
+    pagination: { limit: 4 },
+    populate: { thumbnail: { fields: ['url'] } },
+  })
+
+  const caseStudies = caseStudiesRes.data
 
   return (
     <section className="overflow-x-clip bg-white pb-16 pt-8 sm:pb-24 sm:pt-12 md:pt-16">
@@ -105,7 +107,7 @@ export function FeaturedWork() {
         </div>
         <div className="relative mx-auto mt-16 max-w-xl space-y-16 lg:mx-0 lg:max-w-none">
           {caseStudies.map((caseStudy) => (
-            <CaseStudy key={caseStudy.slug} caseStudy={caseStudy} />
+            <CaseStudy key={caseStudy.id} caseStudy={caseStudy.attributes} />
           ))}
         </div>
       </Container>

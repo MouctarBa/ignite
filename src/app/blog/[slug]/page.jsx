@@ -1,10 +1,10 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { allPosts } from 'contentlayer/generated'
 import { format, parseISO } from 'date-fns'
+import ReactMarkdown from 'react-markdown'
 
+import { fetchAPI } from '@/lib/strapi'
 import { PostFooter } from './PostFooter'
-import { MdxContent } from '@/components/mdx/MdxContent'
 import { Footer } from '@/components/Footer'
 import {
   WebDevelopmentIcon,
@@ -20,16 +20,26 @@ const iconOptions = {
   Tutorials: TutorialIcon,
 }
 
-export const generateStaticParams = async () =>
-  allPosts.map((post) => ({ slug: post.slug }))
+export async function generateStaticParams() {
+  const posts = await fetchAPI('/posts');
+  return posts.data.map((post) => ({
+    slug: post.attributes.slug,
+  }));
+}
 
 export async function generateMetadata({ params }) {
-  const post = allPosts.find((post) => post.slug === params.slug)
+  const posts = await fetchAPI('/posts', { filters: { slug: { $eq: params.slug } } });
+  const post = posts.data[0].attributes;
   return { title: post.title, description: post.description }
 }
 
-export default function BlogPost({ params }) {
-  const post = allPosts.find((post) => post.slug === params.slug)
+export default async function BlogPost({ params }) {
+  const postsRes = await fetchAPI('/posts', {
+    filters: { slug: { $eq: params.slug } },
+    populate: { image: { fields: ['url', 'alternativeText'] } }
+  });
+
+  const post = postsRes.data[0].attributes;
   const categorySlug = post.category.replace(/ /g, '-').toLowerCase()
   const CategoryIcon = iconOptions[post.category]
 
@@ -95,7 +105,7 @@ export default function BlogPost({ params }) {
               <div className="mx-auto mt-16 w-full max-w-4xl">
                 <div className="aspect-h-9 aspect-w-16 relative block w-full overflow-hidden rounded-3xl shadow-lg shadow-sky-100/50 md:aspect-h-2 md:aspect-w-3">
                   <Image
-                    src={post.image}
+                    src={post.image.data.attributes.url}
                     alt={post.title}
                     fill={true}
                     className="w-full rounded-3xl bg-slate-100 object-cover"
@@ -108,9 +118,9 @@ export default function BlogPost({ params }) {
           </header>
 
           {/* Article Content */}
-          <div className="bg-white px-4 sm:px-6 lg:px-8">
+          <div className="bg-white px-4 py-12 sm:px-6 lg:px-8">
             <div className="prose prose-lg mx-auto max-w-2xl">
-              <MdxContent code={post.body.code} />
+              <ReactMarkdown>{post.body}</ReactMarkdown>
             </div>
             <PostFooter />
           </div>

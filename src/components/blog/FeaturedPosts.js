@@ -1,13 +1,27 @@
 import { Container } from '@/components/Container'
 import { BlogGrid } from '@/components/blog/BlogGrid'
+import { fetchAPI } from '@/lib/strapi'
 
-import { compareDesc } from 'date-fns'
-import { allPosts } from 'contentlayer/generated'
+export async function FeaturedPosts() {
+  const postsRes = await fetchAPI('/posts', {
+    sort: { date: 'desc' },
+    pagination: { limit: 3 },
+    populate: { image: { fields: ['url'] } },
+  })
 
-export function FeaturedPosts() {
-  const posts = allPosts
-    .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
-    .slice(0, 3)
+  const posts = postsRes.data.map((post) => {
+    const { attributes } = post
+    return {
+      title: attributes.title,
+      description: attributes.description,
+      date: attributes.date,
+      category: attributes.category,
+      timeToRead: attributes.timeToRead,
+      slug: attributes.slug,
+      url: `/blog/${attributes.slug}`,
+      image: attributes.image.data.attributes.url,
+    }
+  })
 
   return (
     <section className="py-16 overflow-hidden bg-white sm:pt-24 lg:pt-28">
