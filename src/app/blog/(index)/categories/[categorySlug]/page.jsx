@@ -1,7 +1,5 @@
 import { BlogGrid } from '@/components/blog/BlogGrid'
-import { allPosts } from 'contentlayer/generated'
-
-import { getAllCategories } from '@/lib/articles'
+import { fetchAPI } from '@/lib/strapi'
 
 const parseCategory = (categorySlug) => {
   const category = categorySlug
@@ -12,8 +10,9 @@ const parseCategory = (categorySlug) => {
   return category
 }
 
-export const generateStaticParams = async () => {
-  const categories = await getAllCategories()
+export async function generateStaticParams() {
+  const posts = await fetchAPI('/posts')
+  const categories = [...new Set(posts.data.map((post) => post.attributes.category))]
   return categories.map((category) => ({
     categorySlug: category.replace(/ /g, '-').toLowerCase(),
   }))
@@ -25,9 +24,26 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function BlogCategoryPage({ params }) {
-  const posts = allPosts.filter(
-    (post) => post.category === parseCategory(params.categorySlug)
-  )
+  const categoryName = parseCategory(params.categorySlug)
+
+  const postsRes = await fetchAPI('/posts', {
+    filters: { category: { $eq: categoryName } },
+    populate: { image: { fields: ['url'] } },
+  })
+
+  const posts = postsRes.data.map((post) => {
+    const { attributes } = post
+    return {
+      title: attributes.title,
+      description: attributes.description,
+      date: attributes.date,
+      category: attributes.category,
+      timeToRead: attributes.timeToRead,
+      slug: attributes.slug,
+      url: `/blog/${attributes.slug}`,
+      image: attributes.image.data.attributes.url,
+    }
+  })
 
   return <BlogGrid posts={posts} />
 }

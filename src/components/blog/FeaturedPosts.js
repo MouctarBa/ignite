@@ -6,8 +6,13 @@ export async function FeaturedPosts() {
   const postsRes = await fetchAPI('/posts', {
     sort: { date: 'desc' },
     pagination: { limit: 3 },
-    populate: { image: { fields: ['url'] } },
+    populate: '*',
   })
+
+  // Safety check
+  if (!postsRes || !postsRes.data) {
+    return <div>Could not load posts. Please check API permissions.</div>;
+  }
 
   const posts = postsRes.data.map((post) => {
     const { attributes } = post
@@ -42,7 +47,6 @@ export async function FeaturedPosts() {
           </span>{' '}
           on design, business and indie-hacking
         </h2>
-
         <BlogGrid posts={posts} featured={true} />
       </Container>
     </section>

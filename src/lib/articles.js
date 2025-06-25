@@ -1,7 +1,18 @@
-import { allPosts } from 'contentlayer/generated'
+import { fetchAPI } from './strapi'
 
 export async function getAllCategories() {
-  let repeatingCategories = allPosts.map((post) => post.category)
+  const postsRes = await fetchAPI('/posts')
+
+  // Safety Check: If there's no data or the data array is empty, return an empty array.
+  if (!postsRes || !postsRes.data || postsRes.data.length === 0) {
+    console.warn("getAllCategories: No posts found, returning empty array for categories.");
+    return [];
+  }
+
+  // Filter out any posts that might be missing attributes before mapping
+  const validPosts = postsRes.data.filter(post => post.attributes && post.attributes.category);
+
+  let repeatingCategories = validPosts.map((post) => post.attributes.category)
 
   const categoryCount = new Map()
 
@@ -9,7 +20,7 @@ export async function getAllCategories() {
     if (categoryCount.has(category)) {
       categoryCount.set(category, categoryCount.get(category) + 1)
     } else {
-      categoryCount.set(category, 1) // Map to capture Count of elements
+      categoryCount.set(category, 1)
     }
   })
 

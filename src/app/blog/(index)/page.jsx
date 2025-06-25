@@ -1,18 +1,32 @@
 import { BlogGrid } from '@/components/blog/BlogGrid'
 import { fetchAPI } from '@/lib/strapi';
 
-// This is the main page for your blog that displays all posts.
 export default async function BlogPage() {
-  // 1. Fetch all posts from your Strapi API.
-  // We use populate: '*' to ensure that all related fields, like the image, are included in the response.
-  const postsRes = await fetchAPI('/posts', { populate: '*' });
+  const postsRes = await fetchAPI('/posts', { 
+    sort: { date: 'desc' },
+    populate: '*' 
+  });
 
-  // 2. The data from Strapi is nested. We need to map over it to create a
-  // simpler array of objects that our components can easily use.
-  const posts = postsRes.data.map(post => {
-    const attributes = post.attributes;
+  // Safety check to ensure data was fetched correctly
+  if (!postsRes || !postsRes.data) {
+    return (
+      <div className="text-center py-10">
+        <h2 className="text-xl font-semibold">Could not load posts.</h2>
+        <p className="mt-2">Please ensure you have published posts in Strapi and that API permissions are correct.</p>
+      </div>
+    );
+  }
+
+  // Filter out any entries that are missing essential data to prevent crashes
+  const validPosts = postsRes.data.filter(post => {
+      const { attributes } = post;
+      return attributes && attributes.slug && attributes.image && attributes.image.data;
+  });
+
+  // Map over only the valid posts
+  const posts = validPosts.map(post => {
+    const { attributes } = post;
     return {
-      // These are the properties our <Post> component expects
       title: attributes.title,
       description: attributes.description,
       date: attributes.date,
@@ -20,11 +34,9 @@ export default async function BlogPage() {
       timeToRead: attributes.timeToRead,
       slug: attributes.slug,
       url: `/blog/${attributes.slug}`,
-      // Make sure to access the image URL correctly from the nested structure
       image: attributes.image.data.attributes.url,
     };
   });
 
-  // 3. Pass the simplified posts array to the BlogGrid component.
-  return <BlogGrid posts={posts} />;
+  return <BlogGrid posts={posts} />
 }

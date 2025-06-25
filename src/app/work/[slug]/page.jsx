@@ -26,38 +26,37 @@ export default async function CaseStudyPage({ params }) {
     populate: {
       coverImage: { fields: ['url', 'alternativeText'] },
       images: { fields: ['url', 'alternativeText'] },
-      thumbnail: { fields: ['url', 'alternativeText'] },
-      testimonial: { populate: '*' },
-      client: { populate: '*' }
+      tags: { fields: ['name'] }, // Populate the new tags relation
+      client: true, // Populate the client component
+      testimonial: { populate: { author: { populate: 'image' } } }, // Populate nested components
     }
   });
 
   const caseStudy = caseStudiesRes.data[0].attributes;
 
-  // Helper to extract image URLs from the Strapi response
   const galleryImages = caseStudy.images.data.map(img => img.attributes.url);
+  const tagNames = caseStudy.tags.data.map(tag => tag.attributes.name);
 
   return (
     <>
       <CaseStudyHero
         title={caseStudy.title}
         subtitle={caseStudy.subtitle}
-        tags={caseStudy.tags}
+        tags={tagNames} // Pass the array of tag names
         coverImage={caseStudy.coverImage.data.attributes.url}
       />
       <CaseStudyDetails
-        client={caseStudy.client}
+        client={caseStudy.client} // Pass the client component data directly
         description={caseStudy.description}
         projectDuration={caseStudy.projectDuration}
         projectURL={caseStudy.projectURL}
       >
-        {/* Use ReactMarkdown to render the body content from Strapi */}
         <ReactMarkdown>{caseStudy.body}</ReactMarkdown>
       </CaseStudyDetails>
       <CaseStudyGallery images={galleryImages} />
       <CaseStudyTestimonial
         clientName={caseStudy.client.name}
-        testimonial={caseStudy.testimonial}
+        testimonial={caseStudy.testimonial} // Pass the testimonial component data
       />
       <CaseStudyNavigation caseStudySlug={caseStudy.slug} />
       <Footer newsletter={false} />

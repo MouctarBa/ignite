@@ -1,7 +1,20 @@
-import { allCaseStudies } from 'contentlayer/generated'
+import { fetchAPI } from './strapi'
 
-export function getAllTags() {
-  let repeatingTags = allCaseStudies.map((caseStudy) => caseStudy.tags).flat()
+export async function getAllTags() {
+  // THE FIX: Use populate: '*' to fetch all relations, including tags.
+  const caseStudiesRes = await fetchAPI('/case-studies', {
+    populate: '*',
+  });
+  
+  if (!caseStudiesRes || !caseStudiesRes.data) {
+    return [];
+  }
+
+  const validCaseStudies = caseStudiesRes.data.filter(study => study.attributes && study.attributes.tags);
+
+  let repeatingTags = validCaseStudies.flatMap(
+    (caseStudy) => caseStudy.attributes.tags.data.map(tag => tag.attributes.name)
+  );
 
   const tagCount = new Map()
 
@@ -9,7 +22,7 @@ export function getAllTags() {
     if (tagCount.has(tag)) {
       tagCount.set(tag, tagCount.get(tag) + 1)
     } else {
-      tagCount.set(tag, 1) // Map to capture Count of elements
+      tagCount.set(tag, 1)
     }
   })
 
@@ -25,8 +38,7 @@ export function getAllTags() {
   return tags
 }
 
-export function getFeaturedTags() {
-  const tags = getAllTags()
-
+export async function getFeaturedTags() {
+  const tags = await getAllTags()
   return tags.slice(0, 4)
 }

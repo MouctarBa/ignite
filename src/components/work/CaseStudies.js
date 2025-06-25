@@ -3,9 +3,25 @@ import Image from 'next/image'
 import clsx from 'clsx'
 
 function CaseStudy({ caseStudy, index }) {
+  // Safety check: if there are no attributes, don't render anything.
+  if (!caseStudy || !caseStudy.attributes) {
+    return null;
+  }
+
+  const { attributes } = caseStudy;
+  
+  // Safety check for thumbnail before rendering
+  if (!attributes.thumbnail || !attributes.thumbnail.data) {
+    return (
+      <div className="text-center p-8 bg-red-100 rounded-2xl">
+        <p>Case study "{attributes.title}" is missing a thumbnail image.</p>
+      </div>
+    );
+  }
+
   return (
     <div
-      key={caseStudy.title}
+      key={attributes.title}
       className={clsx(
         'flex flex-col gap-12 rounded-3xl bg-slate-50 px-7 py-12 sm:gap-14 sm:p-16 lg:px-10 lg:py-14 xl:gap-16 xl:p-16',
         index % 2 === 0
@@ -14,15 +30,15 @@ function CaseStudy({ caseStudy, index }) {
       )}
     >
       <Link
-        href={caseStudy.url}
+        href={`/work/${attributes.slug}`}
         className={clsx(
           'group aspect-h-9 aspect-w-16 relative block w-full overflow-hidden rounded-xl md:aspect-h-2 md:aspect-w-3',
           index % 2 === 0 ? 'order-1' : 'order-2'
         )}
       >
         <Image
-          src={caseStudy.thumbnail}
-          alt={caseStudy.title}
+          src={attributes.thumbnail.data.attributes.url}
+          alt={attributes.title}
           fill
           className="object-cover object-top w-full transition duration-300 rounded-xl bg-slate-100 group-hover:scale-105"
           sizes="(min-width: 1280px) 27rem, (min-width: 1024px) calc(50vw - 8.25rem), (min-width: 640px) 28rem, calc(100vw - 6rem)"
@@ -36,13 +52,13 @@ function CaseStudy({ caseStudy, index }) {
         )}
       >
         <h3 className="text-center font-display text-[28px] font-medium text-slate-900">
-          {caseStudy.title}
+          {attributes.title}
         </h3>
         <p className="mt-5 text-base leading-8 text-center text-slate-700">
-          {caseStudy.description}
+          {attributes.description}
         </p>
         <Link
-          href={caseStudy.url}
+          href={`/work/${attributes.slug}`}
           className="inline-flex items-center justify-center gap-2 py-3 mt-12 font-medium transition duration-300 bg-white rounded-full shadow-sm group px-9 text-md text-sky-900 shadow-sky-100/50 ring-1 ring-slate-100/90 hover:bg-white/60 hover:text-sky-700 hover:shadow-md hover:shadow-sky-100"
         >
           View Case study
@@ -73,7 +89,7 @@ export function CaseStudies({ caseStudies }) {
       )}
     >
       {caseStudies.map((caseStudy, index) => (
-        <CaseStudy key={caseStudy.title} caseStudy={caseStudy} index={index} />
+        <CaseStudy key={caseStudy.id} caseStudy={caseStudy} index={index} />
       ))}
     </div>
   )
