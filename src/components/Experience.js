@@ -1,7 +1,7 @@
 import Image from 'next/image'
 
 import { Container } from './Container'
-import image from '@/images/experience-image.jpg'
+import image from '@/images/speaking-onstage.jpg'
 
 export function Experience() {
   return (

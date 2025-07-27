@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { Button } from '@/components/Button'
 import { Footer } from '@/components/Footer'
 
-import image from '@/images/contact.jpg'
+import image from '@/images/quote.jpg'
 
 export const metadata = {
   title: 'Contact me',
@@ -92,14 +92,14 @@ function Form() {
           label='Name'
           name='name'
           autoComplete='name'
-          placeholder='Jane Doe'
+          placeholder='Adebayo Adedji'
         />
         <TextField
           label='Email'
           name='email'
           type='email'
           autoComplete='email'
-          placeholder='foobar@email.com'
+          placeholder='adebayo@email.com'
         />
         <TextField
           label='Phone'
@@ -114,22 +114,22 @@ function Form() {
           name='message'
           type='textarea'
           aria-describedby='message-description'
-          placeholder='Tell me a little bit about your project...'
+          placeholder='Tell me a little bit about your request...'
         />
         <fieldset>
           <legend className='block text-md font-medium leading-6 text-slate-900'>
             Expected services
           </legend>
           <div className='mt-4 space-y-3'>
-            <CheckboxField label='Web development' name='web-development' />
-            <CheckboxField label='Web design' name='web-design' />
-            <CheckboxField label='Consulting' name='consulting' />
+            <CheckboxField label='Coaching' name='coaching' />
+            <CheckboxField label='Mentorship' name='mentorship' />
+            <CheckboxField label='Speaking' name='speacking' />
             <CheckboxField label='Other' name='other' />
           </div>
         </fieldset>
       </div>
       <div className='mt-10 border-t border-slate-200 pt-8'>
-        <Button type='submit' className='w-full text-base sm:text-lg'>
+        <Button type='submit' variant="secondary" className='w-full text-base sm:text-lg'>
           Get started
         </Button>
       </div>
@@ -219,7 +219,7 @@ export default function ContactPage() {
                         href='mailto:hey@janedoe.com'
                         className='mt-5 inline-block text-sky-700 duration-200 ease-in-out hover:text-sky-600 sm:mt-6'
                       >
-                        hey@janedoe.com
+                        C.Doris@evergreen.edu
                       </Link>
                     </div>
                   </div>
@@ -250,7 +250,7 @@ export default function ContactPage() {
                         href='tel:+13234567891'
                         className='mt-6 inline-block text-sky-700 duration-200 ease-in-out hover:text-sky-600'
                       >
-                        +1 (323) 456-7891
+                        +1 (234) 456-7891
                       </Link>
                     </div>
                   </div>
@@ -261,11 +261,10 @@ export default function ContactPage() {
             <div className='px-5 py-16 sm:px-6 sm:py-24 lg:col-span-6 lg:pl-0 lg:pr-8 lg:pt-32 xl:col-span-5 xl:col-start-8 2xl:pr-0'>
               <div className='mx-auto max-w-lg lg:mr-0'>
                 <h3 className='font-display text-3xl font-semibold text-slate-900'>
-                  Fill our the form below to get started
+                  Fill out the form below to get started
                 </h3>
                 <p className='mt-4 text-lg text-slate-600'>
-                  Turkish cortado mazagran skinny macchiato espresso trade
-                  medium aromatic.
+                  Your next breakthrough starts right here let’s build it together.
                 </p>
                 <Form />
               </div>

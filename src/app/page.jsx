@@ -1,26 +1,40 @@
 import { Hero } from '@/components/Hero'
 import { Experience } from '@/components/Experience'
-import { StackIconsRow } from '@/components/StackIconsRow'
 import { FeaturedWork } from '@/components/work/FeaturedWork'
 import { Testimonials } from '@/components/Testimonials'
 import { FeaturedPosts } from '@/components/blog/FeaturedPosts'
 import { Footer } from '@/components/Footer'
+import { fetchAPI } from '@/lib/strapi'
 
 export const metadata = {
   description:
     "I'm a passionate developer, entrepreneur, and general technology enthusiast living in San Francisco. I've worked with hundreds of startups to help them develop their ideas into profitable businesses.",
 }
 
-// The component is async because it now renders child components that fetch their own data.
+async function getHomepageData() {
+  const [testimonialsRes, caseStudiesRes, postsRes] = await Promise.all([
+    fetchAPI('/testimonials', { populate: '*' }),
+    fetchAPI('/case-studies', { sort: { date: 'desc' }, pagination: { limit: 4 }, populate: '*' }),
+    fetchAPI('/posts', { sort: { date: 'desc' }, pagination: { limit: 3 }, populate: '*' }),
+  ]);
+
+  return {
+    testimonials: testimonialsRes.data || [],
+    caseStudies: caseStudiesRes.data || [],
+    posts: postsRes.data || [],
+  }
+}
+
 export default async function HomePage() {
+  const { testimonials, caseStudies, posts } = await getHomepageData();
+
   return (
     <>
       <Hero />
       <Experience />
-      <StackIconsRow />
-      <FeaturedWork />
-      <Testimonials />
-      <FeaturedPosts />
+      <FeaturedWork caseStudies={caseStudies} />
+      <Testimonials testimonials={testimonials} />
+      <FeaturedPosts posts={posts} />
       <Footer />
     </>
   )

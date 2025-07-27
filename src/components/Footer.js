@@ -4,13 +4,10 @@ import clsx from 'clsx'
 
 import { Button } from './Button'
 import { Container } from './Container'
-import newsletterBg from '@/images/newsletter-bg.png'
+import newsletterBg from '@/images/newsletter-bg_yellow.png'
 import {
-  DribbbleIcon,
   InstagramIcon,
-  TwitterIcon,
   LinkedInIcon,
-  GitHubIcon,
   EmailIcon,
 } from './SocialIcons'
 
@@ -29,18 +26,8 @@ const socialLinks = [
     href: '#',
   },
   {
-    label: 'Dribbble',
-    icon: DribbbleIcon,
-    href: '#',
-  },
-  {
     label: 'Instagram',
     icon: InstagramIcon,
-    href: '#',
-  },
-  {
-    label: 'Twitter',
-    icon: TwitterIcon,
     href: '#',
   },
   {
@@ -48,17 +35,12 @@ const socialLinks = [
     icon: LinkedInIcon,
     href: '#',
   },
-  {
-    label: 'Github',
-    icon: GitHubIcon,
-    href: '#',
-  },
 ]
 
 function SocialLink({ icon: Icon, label, ...props }) {
   return (
     <Link
-      className="flex items-center justify-center gap-2.5 rounded-full border border-slate-600/90 py-2.5 text-sm text-slate-50 duration-200 ease-in-out hover:bg-slate-800 hover:text-white lg:gap-2 xl:gap-2.5"
+      className="flex items-center justify-center gap-2.5 rounded-full border border-emerald-600/90 py-2.5 text-sm text-slate-50 duration-200 ease-in-out hover:bg-emerald-800 hover:text-white lg:gap-2 xl:gap-2.5"
       {...props}
     >
       <Icon className="h-4 w-4 shrink-0 text-slate-200 duration-200 ease-in-out group-hover:fill-slate-100" />
@@ -72,9 +54,9 @@ export function Footer({ newsletter = true }) {
     <section className={clsx(newsletter && 'pt-12 sm:pt-16')}>
       {newsletter && (
         <div className="relative">
-          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-slate-900"></div>
+          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-emerald-900"></div>
           <div className="relative mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-            <div className="relative overflow-hidden rounded-2xl bg-sky-700 px-5 py-12 sm:px-16 lg:py-14">
+            <div className="relative overflow-hidden rounded-2xl bg-emerald-700 px-5 py-12 sm:px-16 lg:py-14">
               <Image
                 src={newsletterBg}
                 alt=""
@@ -85,7 +67,7 @@ export function Footer({ newsletter = true }) {
                   <h3 className="font-display text-4xl font-semibold text-white sm:text-5xl">
                     Subscribe to my newsletter
                   </h3>
-                  <p className="mx-auto mt-4 max-w-lg text-lg text-sky-50 lg:mx-0 lg:mt-6">
+                  <p className="mx-auto mt-4 max-w-lg text-lg text-emerald-50 lg:mx-0 lg:mt-6">
                     Join 10,000+ designers and get creative site breakdowns,
                     design musings and tips every Monday.
                   </p>
@@ -97,14 +79,14 @@ export function Footer({ newsletter = true }) {
                 >
                   <input
                     type="email"
-                    className="h-14 w-full rounded-full border-0 bg-white/10 py-3.5 pl-5 pr-32 text-sm leading-5 text-sky-50 placeholder-sky-100/90 outline-none ring-1 ring-white/25 backdrop-blur  duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-white/30 sm:pl-6"
+                    className="h-14 w-full rounded-full border-0 bg-white/10 py-3.5 pl-5 pr-32 text-sm leading-5 text-emeral-50 placeholder-emerald-100/90 outline-none ring-1 ring-white/25 backdrop-blur  duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-white/30 sm:pl-6"
                     required
                     placeholder="Enter your email"
                     autoComplete="email"
                   />
                   <button
                     type="submit"
-                    className="absolute right-1.5 top-1.5 inline-flex h-11 items-center rounded-full bg-sky-900 px-5 py-3 text-sm font-semibold text-sky-50 outline-none transition duration-200 ease-in-out hover:bg-sky-800 focus:outline-none sm:px-7 sm:text-md"
+                    className="absolute right-1.5 top-1.5 inline-flex h-11 items-center rounded-full bg-emerald-900 px-5 py-3 text-sm font-semibold text-emerald-50 outline-none transition duration-200 ease-in-out hover:bg-emerald-800 focus:outline-none sm:px-7 sm:text-md"
                   >
                     Subscribe
                   </button>
@@ -114,7 +96,7 @@ export function Footer({ newsletter = true }) {
           </div>
         </div>
       )}
-      <footer className="overflow-hidden bg-slate-900 pb-8 pt-20 sm:pb-12 sm:pt-24 lg:pt-32">
+      <footer className="overflow-hidden bg-emerald-900 pb-8 pt-20 sm:pb-12 sm:pt-24 lg:pt-32">
         <Container>
           <div className="mx-auto grid max-w-xl items-center gap-5 lg:mx-0 lg:max-w-none lg:grid-cols-12 lg:gap-12 xl:gap-20">
             <div className="lg:col-span-7">
@@ -122,7 +104,7 @@ export function Footer({ newsletter = true }) {
                 Lets make something great together
               </h3>
               <div className="hidden lg:block">
-                <Button href="#" variant="primaryOnDark" className="mt-12">
+                <Button href="#" variant="primary" className="mt-12">
                   Book a call
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -147,7 +129,7 @@ export function Footer({ newsletter = true }) {
 
               <Button
                 href="#"
-                variant="primaryOnDark"
+                variant="primary"
                 className="mt-10 lg:hidden"
               >
                 Book a call
@@ -176,7 +158,7 @@ export function Footer({ newsletter = true }) {
               </div>
             </div>
           </div>
-          <hr className="mb-6 mt-12 h-px w-full border-slate-600/90 sm:mb-10 sm:mt-16" />
+          <hr className="mb-6 mt-12 h-px w-full border-emerald-600/90 sm:mb-10 sm:mt-16" />
           <div className="flex flex-col items-center justify-between md:flex-row">
             <div className="flex items-center gap-6">
               {links.map((link, index) => (
@@ -189,8 +171,8 @@ export function Footer({ newsletter = true }) {
                 </Link>
               ))}
             </div>
-            <p className="mt-8 text-base text-slate-400/90 md:mt-0">
-              © {new Date().getFullYear()} Tailwind Awesome. All rights
+            <p className="mt-8 text-base text-slate-300/90 md:mt-0">
+              © {new Date().getFullYear()} Bah Digital Design. All rights
               reserved.
             </p>
           </div>

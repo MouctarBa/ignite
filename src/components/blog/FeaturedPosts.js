@@ -1,35 +1,20 @@
 import { Container } from '@/components/Container'
 import { BlogGrid } from '@/components/blog/BlogGrid'
-import { fetchAPI } from '@/lib/strapi'
 
-export async function FeaturedPosts() {
-  const postsRes = await fetchAPI('/posts', {
-    sort: { date: 'desc' },
-    pagination: { limit: 3 },
-    populate: '*', // Use wildcard to ensure all relations like images are included
-  })
-
-  // Robust Safety Check: If there's no data or the data array is empty,
-  // return a message instead of crashing. This is the most important fix.
-  if (!postsRes || !postsRes.data || postsRes.data.length === 0) {
-    return (
-      <section className="py-16 bg-white sm:pt-24 lg:pt-28">
-        <Container>
-          <div className="text-center">
-            <h2 className="text-xl font-semibold">No featured posts found.</h2>
-            <p className="mt-2">Please ensure you have published posts in Strapi.</p>
-          </div>
-        </Container>
-      </section>
-    );
+export function FeaturedPosts({ posts }) {
+  if (!posts || posts.length === 0) {
+    return null;
   }
 
-  // Filter out any invalid post objects before mapping
-  const validPosts = postsRes.data.filter(post => post && post.attributes);
+  // Filter for valid data before transforming and rendering
+  const validPosts = posts.filter(post => post && post.attributes && post.attributes.image?.data?.attributes?.url);
 
-  // Map over the valid posts to create the data structure the component needs
-  const posts = validPosts.map((post) => {
-    const { attributes } = post
+  if (validPosts.length === 0) {
+    return null;
+  }
+
+  const transformedPosts = validPosts.map(post => {
+    const { attributes } = post;
     return {
       title: attributes.title,
       description: attributes.description,
@@ -38,10 +23,9 @@ export async function FeaturedPosts() {
       timeToRead: attributes.timeToRead,
       slug: attributes.slug,
       url: `/blog/${attributes.slug}`,
-      // Safely access the image URL
-      image: attributes.image?.data?.attributes?.url,
-    }
-  })
+      image: attributes.image.data.attributes.url,
+    };
+  });
 
   return (
     <section className="py-16 overflow-hidden bg-white sm:pt-24 lg:pt-28">
@@ -62,9 +46,8 @@ export async function FeaturedPosts() {
           </span>{' '}
           on design, business and indie-hacking
         </h2>
-
-        <BlogGrid posts={posts} featured={true} />
+        <BlogGrid posts={transformedPosts} featured={true} />
       </Container>
     </section>
-  )
+  );
 }

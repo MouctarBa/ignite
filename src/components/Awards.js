@@ -32,7 +32,7 @@ const awards = [
 
 export function Awards() {
   return (
-    <section className='overflow-hidden bg-slate-900 py-16 sm:py-24 lg:py-32'>
+    <section className='overflow-hidden bg-emerald-900 py-16 sm:py-24 lg:py-32'>
       <Container>
         <div className='text-center'>
           <h2 className='font-display text-4xl font-semibold text-white sm:text-5xl'>

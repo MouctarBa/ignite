@@ -1,4 +1,5 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
+const colors = require('tailwindcss/colors') // import the full tailwindcss color palette
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -25,6 +26,13 @@ module.exports = {
         sans: ['var(--font-inter)', ...defaultTheme.fontFamily.sans],
         display: ['var(--font-lexend)', ...defaultTheme.fontFamily.sans],
         writing: ['var(--font-gochi-hand)', ...defaultTheme.fontFamily.sans],
+      },
+      // Define the new color palatte
+      colors: {
+        // Replacing 'slate' with 'gray' for a more standard neutral tone 
+        slate: colors.gray,
+        // We are replacing 'sky' with 'emerald' for a more vibrant green theme
+        sky: colors.emerald,
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

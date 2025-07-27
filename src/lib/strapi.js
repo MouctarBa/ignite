@@ -1,18 +1,19 @@
-// src/lib/strapi.js
 import qs from 'qs';
 
 const STRAPI_API_URL = process.env.STRAPI_API_URL || 'http://localhost:1337';
-const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN;
+// Read the variable with the correct NEXT_PUBLIC_ prefix
+const STRAPI_API_TOKEN = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
 
 export async function fetchAPI(path, urlParamsObject = {}, options = {}) {
+  // Check if the token is missing and provide a clear error
   if (!STRAPI_API_TOKEN) {
-    throw new Error('The Strapi API token is missing. Please check your .env.local file.');
+    throw new Error('The Strapi API token is missing. Please check your .env.local file and ensure the variable is named NEXT_PUBLIC_STRAPI_API_TOKEN');
   }
 
   const mergedOptions = {
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${STRAPI_API_TOKEN}`, // Add the authorization header
+      'Authorization': `Bearer ${STRAPI_API_TOKEN}`,
     },
     ...options,
   };

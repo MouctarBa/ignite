@@ -3,8 +3,9 @@ import Image from 'next/image'
 
 import { Button } from './Button'
 import { Container } from './Container'
-import { DribbbleIcon, InstagramIcon, TwitterIcon } from './SocialIcons'
-import heroPortrait from '@/images/hero-portrait.jpg'
+import { InstagramIcon, EmailIcon, LinkedInIcon } from './SocialIcons'
+import {EducationIcon, ConsultingIcon, BusinessIcon} from './CategoryIcons'
+import heroPortrait from '@/images/hero-image.png'
 import heroBG from '@/images/home-hero-gradient.svg'
 import figma from '@/images/logos/icons/figma.png'
 import tailwind from '@/images/logos/icons/tailwindcss.png'
@@ -52,26 +53,20 @@ export function Hero() {
             businesses.
           </p>
           <div className="flex flex-wrap items-center justify-center mt-10 gap-x-10 gap-y-6 lg:justify-start">
-            <Button href="#" className="h-11">
+            <Button variant='secondary' href="#" className="h-11">
               Book a call with me
             </Button>
 
             <div className="flex gap-3 sm:gap-4">
-              <SocialLink
-                href="https://dribbble.com"
-                aria-label="Follow on Dribbble"
-                icon={DribbbleIcon}
-              />
-
               <SocialLink
                 href="https://instagram.com"
                 aria-label="Follow on Instagram"
                 icon={InstagramIcon}
               />
               <SocialLink
-                href="https://twitter.com"
-                aria-label="Follow on Twitter"
-                icon={TwitterIcon}
+                href="#"
+                aria-label="Follow on LinkedIn"
+                icon={LinkedInIcon}
               />
             </div>
           </div>
@@ -89,7 +84,7 @@ export function Hero() {
             <div>
               <div className="absolute hidden w-max md:left-full md:top-16 md:block lg:-left-28 lg:-top-8 2xl:left-full 2xl:top-16 ">
                 <span className="inline-block transform font-writing text-2xl tracking-wide text-slate-600 md:rotate-[16deg] lg:translate-x-6 lg:rotate-[-18deg] 2xl:rotate-12">
-                  Hi, I'm Jane!
+                  Hi, I'm Doris!
                 </span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -110,16 +105,16 @@ export function Hero() {
                 </svg>
               </div>
               <div className="absolute -top-6 right-12 inline-flex h-12 w-max items-center justify-center gap-3.5 rounded-2xl bg-white/90 px-8 text-sm font-semibold text-slate-700 shadow-lg shadow-sky-100/50 ring-1 ring-slate-900/5 backdrop-blur-md md:-left-28 md:top-14 lg:-top-6 lg:left-44 lg:px-10 2xl:-left-48 2xl:top-14">
-                <Image src={figma} alt="" className="w-4 h-auto" priority />4
-                years of experience
+                <EducationIcon className="h-5 w-5 text-slate-700" />20
+                years of Education Experience
               </div>
               <div className="absolute left-12 top-full inline-flex h-12 w-max -translate-y-6 items-center justify-center gap-3.5 rounded-2xl bg-white/90 px-8 text-sm font-semibold text-slate-700 shadow-lg shadow-sky-100/50 ring-1 ring-slate-900/5 backdrop-blur-md md:left-0 md:-translate-x-20 md:-translate-y-24 lg:-left-3 lg:-translate-y-24 lg:px-10 xl:-left-6 xl:-translate-x-28 xl:-translate-y-32">
-                <Image src={sketch} alt="" className="w-auto h-6" priority />5
-                years of experience
+                <ConsultingIcon className="h-6 w-6 text-indigo-600" />
+                  <span className="text-sm font-medium text-slate-800">10 years Consulting Services Experience</span>
               </div>
               <div className="absolute top-[350px] hidden h-12 w-max items-center justify-center gap-3.5 rounded-2xl bg-white/90 px-8 text-sm font-semibold text-slate-700 shadow-lg shadow-sky-100/50 ring-1 ring-slate-900/5 backdrop-blur-md md:left-full md:inline-flex md:-translate-x-32 lg:left-48 lg:hidden lg:px-10 2xl:left-full 2xl:inline-flex 2xl:-translate-x-28">
-                <Image src={tailwind} alt="" className="h-auto w-7" priority />
-                <span className="">3 years of experience</span>
+                <BusinessIcon className="h-6 w-6 text-teal-500" />
+                <span className="text-sm font-medium text-slate-800">15 years Business Strategy Experience</span>
               </div>
             </div>
           </div>
