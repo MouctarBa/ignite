@@ -1,10 +1,11 @@
 import { BlogGrid } from '@/components/blog/BlogGrid'
-import { fetchAPI } from '@/lib/strapi';
+import { samplePosts } from '@/components/blog/FeaturedPosts'
+import { fetchAPI } from '@/lib/strapi'
 
 export default async function BlogPage() {
-  const postsRes = await fetchAPI('/posts', { 
+  const postsRes = await fetchAPI('/posts', {
     sort: { date: 'desc' },
-    populate: '*' 
+    populate: '*'
   });
 
   // Safety check to ensure data was fetched correctly
@@ -24,8 +25,8 @@ export default async function BlogPage() {
   });
 
   // Map over only the valid posts
-  const posts = validPosts.map(post => {
-    const { attributes } = post;
+  const posts = validPosts.map((post) => {
+    const { attributes } = post
     return {
       title: attributes.title,
       description: attributes.description,
@@ -35,8 +36,19 @@ export default async function BlogPage() {
       slug: attributes.slug,
       url: `/blog/${attributes.slug}`,
       image: attributes.image.data.attributes.url,
-    };
-  });
+    }
+  })
 
-  return <BlogGrid posts={posts} />
+  const finalPosts = posts.length > 0 ? posts : samplePosts
+
+  return (
+    <section className="py-16 sm:py-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <h1 className="text-center font-display text-4xl font-semibold text-slate-900 sm:text-5xl">
+          Educational Insights
+        </h1>
+        <BlogGrid posts={finalPosts} />
+      </div>
+    </section>
+  )
 }

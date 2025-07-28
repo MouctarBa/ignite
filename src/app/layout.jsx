@@ -22,9 +22,9 @@ const gochiHand = Gochi_Hand({
 
 export const metadata = {
   title: {
-    template: '%s - Jane Doe',
+    template: '%s - Doris Chinedu-Okoro',
     default:
-      'Jane - Developer, entrepreneur, and general technology enthusiast',
+      'Doris Chinedu-Okoro \u2013 Education Consultant & CEO | Evergreen Group of Schools',
   },
 }
 
