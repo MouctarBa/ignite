@@ -33,7 +33,8 @@ async function getHomepageData() {
 }
 
 export default async function HomePage() {
-  const { testimonials, caseStudies, posts } = await getHomepageData();
+  const homepage = (await getHomepageData()) || {};
+  const { testimonials = [], caseStudies = [], posts = [] } = homepage;
   const global = await getGlobal();
 
   return (
@@ -47,3 +48,4 @@ export default async function HomePage() {
     </>
   )
 }
+
