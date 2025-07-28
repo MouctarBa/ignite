@@ -11,6 +11,7 @@ import {
   TutorialIcon,
   BusinessIcon,
   ContentCreationIcon,
+  EducationIcon,
 } from '@/components/CategoryIcons'
 
 const iconOptions = {
@@ -18,6 +19,7 @@ const iconOptions = {
   Business: BusinessIcon,
   'Content Creation': ContentCreationIcon,
   Tutorials: TutorialIcon,
+  Education: EducationIcon,
 }
 
 export async function generateStaticParams() {
@@ -41,7 +43,7 @@ export default async function BlogPost({ params }) {
 
   const post = postsRes.data[0].attributes;
   const categorySlug = post.category.replace(/ /g, '-').toLowerCase()
-  const CategoryIcon = iconOptions[post.category]
+  const CategoryIcon = iconOptions[post.category] ?? EducationIcon
   const global = await getGlobal()
 
   return (

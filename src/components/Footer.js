@@ -53,10 +53,10 @@ export function Footer({
   newsletter = true,
   links = defaultLinks,
   socialLinks = defaultSocialLinks,
-  newsletterHeading = 'Subscribe to my newsletter',
+  newsletterHeading = 'Subscribe to my educator insights',
   newsletterSubtext =
-    'Join 10,000+ designers and get creative site breakdowns, design musings and tips every Monday.',
-  copyright = `© ${new Date().getFullYear()} Doris Chinedu-Okoro. All rights reserved.`,
+    'Join a community of forward‑thinking school leaders and receive exclusive tips on teacher training, starting and growing schools, and building student‑centred institutions delivered straight to your inbox.',
+  copyright = `© ${new Date().getFullYear()} Bah Digital Designs. All rights reserved.`,
 }) {
   return (
     <section className={clsx(newsletter && 'pt-12 sm:pt-16')}>
@@ -108,7 +108,7 @@ export function Footer({
           <div className="mx-auto grid max-w-xl items-center gap-5 lg:mx-0 lg:max-w-none lg:grid-cols-12 lg:gap-12 xl:gap-20">
             <div className="lg:col-span-7">
               <h3 className="text-center font-display text-4xl font-semibold text-white sm:text-5xl lg:max-w-xl lg:text-left">
-                Lets make something great together
+                Let’s transform education together
               </h3>
               <div className="hidden lg:block">
                 <Button href="#" variant="primary" className="mt-12">
@@ -130,8 +130,7 @@ export function Footer({
             </div>
             <div className="flex flex-col items-center lg:col-span-5 lg:items-start">
               <p className="text-center text-lg text-slate-50 lg:max-w-sm lg:text-left">
-                Dedicated to empowering educators and inspiring the next
-                generation of leaders.
+                I’m currently partnering with educators, entrepreneurs and NGOs across Africa to build exemplary schools and empower teachers. Let’s connect and discuss how I can support your vision.
               </p>
 
               <Button

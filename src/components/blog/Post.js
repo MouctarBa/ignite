@@ -6,6 +6,7 @@ import {
   TutorialIcon,
   BusinessIcon,
   ContentCreationIcon,
+  EducationIcon,
 } from '../CategoryIcons'
 
 const iconOptions = {
@@ -13,11 +14,12 @@ const iconOptions = {
   Business: BusinessIcon,
   'Content Creation': ContentCreationIcon,
   Tutorials: TutorialIcon,
+  Education: EducationIcon,
 }
 
 export function Post({ post }) {
   const categorySlug = post.category.replace(/ /g, '-').toLowerCase()
-  const CategoryIcon = iconOptions[post.category]
+  const CategoryIcon = iconOptions[post.category] ?? EducationIcon
 
   return (
     <article className="flex flex-col items-start justify-between rounded-2xl bg-slate-50 shadow-sm shadow-sky-100/50 ring-1 ring-slate-100">

@@ -70,19 +70,6 @@ export function BlogHero() {
                 </defs>
               </svg>
             </div>
-            <input
-              type="email"
-              className="h-12 w-full rounded-full border-0 bg-white/95 py-3.5 pl-5 pr-32 text-sm leading-5 text-slate-900 placeholder-slate-400 shadow-md shadow-sky-100/50 outline-none ring-1  ring-slate-900/5 duration-200 ease-in-out focus:border-0 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-sky-900/20 sm:pl-6 sm:text-md"
-              required
-              placeholder="Enter your email"
-              autoComplete="email"
-            />
-            <button
-              type="submit"
-              className="absolute right-1 top-1 inline-flex h-10 items-center rounded-full bg-emerald-900 px-5 text-sm font-semibold text-sky-50 outline-none transition duration-200 ease-in-out hover:bg-emerald-800 focus:outline-none sm:px-7 sm:text-md"
-            >
-              Subscribe
-            </button>
           </form>
         </div>
       </Container>

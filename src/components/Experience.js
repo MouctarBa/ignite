@@ -30,9 +30,7 @@ export function Experience() {
           </div>
           <div>
             <p className="text-lg leading-8 text-slate-700">
-              With two decades of school leadership and teacher training
-              experience, I help institutions deliver world-class education
-              quickly and effectively.
+Experience the advantage of an all‑inclusive educational consulting solution, where excellence, efficiency and responsiveness converge to build thriving schools and empower teachers.
             </p>
           </div>
         </div>
@@ -85,8 +83,7 @@ export function Experience() {
                         Excellence
                       </h3>
                       <p className="mt-2.5 text-base text-slate-700">
-                        I take pride in doing things well. All client work is
-                        done with the best quality possible.
+                        I take pride in doing things well. From curriculum design to teacher training, every project is delivered with the highest standards.
                       </p>
                     </div>
                   </div>
@@ -156,8 +153,7 @@ export function Experience() {
                         Speed
                       </h3>
                       <p className="mt-2.5 text-base text-slate-700">
-                        I like to work hard and fast. I know how important
-                        deadlines are to my clients.
+                        I work fast and effectively. I know how important timelines and budgets are when launching or improving schools.
                       </p>
                     </div>
                   </div>
@@ -226,8 +222,7 @@ export function Experience() {
                         Responsiveness
                       </h3>
                       <p className="mt-2.5 text-base text-slate-700">
-                        You can rely on me to be responsive and clear whenever
-                        we work together.
+                        You can rely on me to be responsive and clear whenever we work together. I listen to your needs and adapt to your context.
                       </p>
                     </div>
                   </div>
@@ -415,16 +410,16 @@ export function Experience() {
                       Years of experience
                     </dt>
                     <dd className="order-first text-3xl font-extrabold text-white sm:text-4xl">
-                      10
+                      20
                     </dd>
                   </div>
 
                   <div className="flex flex-col gap-1">
                     <dt className="text-sm font-semibold leading-6 text-sky-50">
-                      Projects completed
+                      Teachers trained
                     </dt>
                     <dd className="order-first text-3xl font-extrabold text-white sm:text-4xl">
-                      150
+                      200+
                     </dd>
                   </div>
                 </dl>
