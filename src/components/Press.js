@@ -129,18 +129,24 @@ export function Press({ items = defaultItems }) {
         <div className="max-w-lg gap-6 mx-auto space-y-6 mt-14 columns-1 sm:mt-16 sm:max-w-2xl sm:columns-2 lg:mx-0 lg:max-w-none lg:columns-3 xl:gap-8 xl:space-y-8">
           {items.map((item, index) => {
             // Compute safe link values.  If item.link is undefined, use fallback values.
-            const href =
-              item.link?.href ?? item.linkHref ?? '#';
-            const label =
-              item.link?.label ?? item.linkLabel ?? '';
-            const displayUrl =
-              item.link?.displayUrl ?? item.linkDisplayUrl ?? '';
+            const href = item.link?.href ?? item.linkHref ?? '#'
+            const label = item.link?.label ?? item.linkLabel ?? ''
+            const displayUrl = item.link?.displayUrl ?? item.linkDisplayUrl ?? ''
+
+            // Determine the icon based on category
+            const category = item.category?.toLowerCase() || ''
+            let Icon = ArticleIcon
+            if (category.includes('podcast')) {
+              Icon = PodcastIcon
+            } else if (category.includes('conference')) {
+              Icon = ConferenceIcon
+            }
 
             return (
               <div key={`press-item-${index}`} className="py-px break-inside-avoid-column">
                 <div className="shadow-sm rounded-xl bg-slate-50/75 p-7 shadow-sky-100/50 ring-1 ring-slate-900/5 lg:p-10">
                   <div className="flex items-center gap-2 text-md text-slate-600">
-                    <item.icon className="w-4 h-4 text-slate-500" />
+                    <Icon className="w-4 h-4 text-slate-500" />
                     {item.category}
                   </div>
                   <h3 className="mt-6 text-lg font-medium font-display text-slate-900 lg:text-xl">
