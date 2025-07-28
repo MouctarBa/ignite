@@ -35,7 +35,6 @@ async function getHomepageData() {
 export default async function HomePage() {
   const homepage = (await getHomepageData()) || {};
   const { testimonials = [], caseStudies = [], posts = [] } = homepage;
-  const global = await getGlobal();
 
   return (
     <>
@@ -44,7 +43,7 @@ export default async function HomePage() {
       <FeaturedWork caseStudies={caseStudies} />
       <Testimonials testimonials={testimonials} />
       <FeaturedPosts posts={posts} />
-      <Footer {...(global.footer || {})} />
+      <Footer {...(homepage.footer || {})} />
     </>
   )
 }
