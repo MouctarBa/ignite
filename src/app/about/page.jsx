@@ -6,9 +6,9 @@ import { Footer } from '@/components/Footer'
 import { getGlobal, getPage } from '@/lib/strapi'
 
 export const metadata = {
-  title: 'About',
+  title: 'About Doris Chinedu-Okoro',
   description:
-    "Hi, I'm Doris Chinedu-okoro, a passionate developer, entrepreneur, and general technology enthusiast living in San Francisco.",
+    'Doris Chinedu-Okoro is an education consultant and CEO of Evergreen Group of Schools specializing in teacher training and school startups.',
 }
 
 export default async function AboutPage() {

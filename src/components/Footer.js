@@ -49,7 +49,15 @@ function SocialLink({ icon: Icon, label, ...props }) {
   )
 }
 
-export function Footer({ newsletter = true, links = defaultLinks, socialLinks = defaultSocialLinks, newsletterHeading = 'Subscribe to my newsletter', newsletterSubtext = 'Join 10,000+ designers and get creative site breakdowns, design musings and tips every Monday.', copyright = `© ${new Date().getFullYear()} Bah Digital Design. All rights reserved.` }) {
+export function Footer({
+  newsletter = true,
+  links = defaultLinks,
+  socialLinks = defaultSocialLinks,
+  newsletterHeading = 'Subscribe to my newsletter',
+  newsletterSubtext =
+    'Join 10,000+ designers and get creative site breakdowns, design musings and tips every Monday.',
+  copyright = `© ${new Date().getFullYear()} Doris Chinedu-Okoro. All rights reserved.`,
+}) {
   return (
     <section className={clsx(newsletter && 'pt-12 sm:pt-16')}>
       {newsletter && (
@@ -122,8 +130,8 @@ export function Footer({ newsletter = true, links = defaultLinks, socialLinks = 
             </div>
             <div className="flex flex-col items-center lg:col-span-5 lg:items-start">
               <p className="text-center text-lg text-slate-50 lg:max-w-sm lg:text-left">
-                Iced pumpkin ristretto irish trifecta robusta trade froth
-                affogato barista con barista cappuccino filter roast.
+                Dedicated to empowering educators and inspiring the next
+                generation of leaders.
               </p>
 
               <Button

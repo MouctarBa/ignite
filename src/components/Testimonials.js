@@ -63,8 +63,8 @@ export function Testimonials({ testimonials }) {
           </div>
           <div className="lg:ml-auto lg:max-w-sm">
             <p className="text-lg text-slate-700">
-              Iced pumpkin ristretto irish trifecta robusta trade froth affogato
-              barista con barista cappuccino filter roast.
+              Hear from educators who have transformed their schools through our
+              programs.
             </p>
             <div className="mt-14 flex gap-2.5 lg:mt-12">
               <button className="carousel-prev inline-flex items-center justify-center w-12 h-12 duration-200 bg-white rounded-full shadow-sm shadow-sky-200/75 ring-1 ring-slate-200/60 hover:bg-sky-50/50" aria-label="Previous testimonials">

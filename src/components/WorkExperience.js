@@ -11,38 +11,38 @@ import shopify from '@/images/logos/icons/shopify.png'
 
 const defaultCompanies = [
   {
-    name: 'Adobe',
-    dates: 'Dec 2016 - Oct 2017',
+    name: 'CEO & Founder, Evergreen Group of Schools',
+    dates: '2008 \u2013 Present',
     description:
-      'Breve macchiato bar cortado dripper shot sweet robust qui. Et café whipped go white that espresso fair origin pot cream est cup.',
+      'Doris founded Evergreen Group of Schools with the goal of providing high-quality, values-based education in Nigeria. Under her leadership, Evergreen has grown into a multi-campus institution known for its holistic approach to learning.',
     logo: adobe,
   },
   {
-    name: 'Dropbox',
-    dates: 'Nov 2017 - Apr 2018',
+    name: 'School Startup Consultant',
+    dates: '2012 \u2013 Present',
     description:
-      'Breve macchiato bar cortado dripper shot sweet robust qui. Et café whipped go white that espresso fair origin pot cream est cup.',
+      'As a consultant, Doris helps entrepreneurs and communities design, launch and manage new schools. Her expertise covers curriculum development, teacher training and sustainable school governance.',
     logo: dropbox,
   },
   {
-    name: 'Gumroad',
-    dates: 'Apr 2018 - Jan 2019',
+    name: 'Convenor, South East Educators Conference (SEEC)',
+    dates: '2019 \u2013 Present',
     description:
-      'Breve macchiato bar cortado dripper shot sweet robust qui. Et café whipped go white that espresso fair origin pot cream est cup.',
+      'Doris founded SEEC, the first conference dedicated to educators in the South-East. The annual event brings teachers together to share best practices, network and receive world-class professional development.',
     logo: gumroad,
   },
   {
-    name: 'Mailchimp',
-    dates: 'Jan 2019 - Mar 2020',
+    name: 'Author & Education Advocate',
+    dates: '2015 \u2013 Present',
     description:
-      'Breve macchiato bar cortado dripper shot sweet robust qui. Et café whipped go white that espresso fair origin pot cream est cup.',
+      'Doris has written extensively about education reform and teacher empowerment. She uses her platform to advocate for policies that improve student outcomes and teacher welfare.',
     logo: mailchimp,
   },
   {
-    name: 'Shopify',
-    dates: 'Mar 2020 - Present',
+    name: 'Lagos Business School, Executive Education',
+    dates: '2023 \u2013 Present',
     description:
-      'Breve macchiato bar cortado dripper shot sweet robust qui. Et café whipped go white that espresso fair origin pot cream est cup.',
+      'To stay at the forefront of educational leadership, Doris continues her professional development through executive programmes at Lagos Business School.',
     logo: shopify,
   },
 ]
@@ -79,8 +79,8 @@ export function WorkExperience({ experiences = defaultCompanies }) {
               so far
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-slate-700">
-              Panna french americano macchiato breve roast cinnamon cortado
-              strong white pumpkin et single press aftertaste.
+              From founding Evergreen Schools to mentoring new educators, my
+              journey continues to focus on excellence in teaching.
             </p>
             <Button href="#" className="mt-10" variant="secondary">
               Download CV
