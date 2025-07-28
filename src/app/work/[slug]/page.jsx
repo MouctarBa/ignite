@@ -65,4 +65,4 @@ export default async function CaseStudyPage({ params }) {
   )
 }
 
-export const dynamicParams = false
+export const dynamicParams = true

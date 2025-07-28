@@ -41,4 +41,4 @@ export default async function WorkCategoryPage({ params }) {
   return <CaseStudies caseStudies={caseStudies} />
 }
 
-export const dynamicParams = false
+export const dynamicParams = true
