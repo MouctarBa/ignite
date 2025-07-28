@@ -2,7 +2,7 @@
 
 This is a personal portfolio template built using [Tailwind CSS](https://tailwindcss.com) and [Next.js](https://nextjs.org).
 
-This template is built with **Next.js v14.2** and **Tailwind CSS v3**, leveraging the latest [App Router](https://nextjs.org/docs/app) and server component functionalities. It's Powered by [MDX](https://mdxjs.com/), with [Contentlayer](https://www.contentlayer.dev/) integration.
+This template is built with **Next.js v14.2** and **Tailwind CSS v3**, leveraging the latest [App Router](https://nextjs.org/docs/app) and server component functionalities. It's powered by [MDX](https://mdxjs.com/).
 
 ## Getting Started
 
@@ -38,34 +38,22 @@ STRAPI_API_TOKEN=<your-private-token>
 The token should be kept server-side for security. Avoid using the
 `NEXT_PUBLIC_` prefix so it is not exposed to the browser.
 
+Make sure your Strapi instance is running and reachable at the
+`STRAPI_API_URL`. If the API is unavailable or the token is invalid the site
+will fail to fetch content and you may see `500` errors in development.
+
 ## File Structure
 
 All of the code for this template is located in the `/src` folder. The folder contains the following:
 
 - `components` - Directory of reusable components
 - `app` - Contains the site route components and layouts
-- `content` - Contains all the `mdx` content files for the blog and case studies powered by `contentlayer`.
 - `images` - Directory of images used across the site, including logos
 - `styles` - Contains the entry point CSS file for Tailwind CSS and additional typography styles for Prism
 - `lib` - Contains custom scripts for getting articles and case studies.
 
 Note that in order to more concisely import images and components, we defined a module path alias to the `/src` directory inside the `jsconfig.json` file at the root of our project. To learn more about module aliases you can check out [Vercel's documentation](https://nextjs.org/docs/advanced-features/module-path-aliases) on the subject.
 
-## MDX Content
-
-All of the content for the site is stored in mdx files in the `src/content` directory. Jane uses [contentlayer](https://www.contentlayer.dev/docs), to access, model and transform this content into data throughout the blog and work sections.
-
-In order to model your data correctly, `contentlayer` needs to know the shape of your content — your content schema. This content schema is stored and defined in the root of the project in the `contentlayer.config.js` file.
-
-To add a blog post or case study, simply add the data to its corresponding directory in the `src/content` directory. Make sure that the data structure is the same as the content schema defined in the `contentlayer.config.js` file for that corresponding model.
-
-### MDX Rendering with MdxContent
-
-The template provides a specialized component called `MdxContent` which renders your MDX content with the help of the `useMDXComponent` hook from `next-contentlayer/hooks`. This component is situated in the `src/components/mdx` directory.
-
-The MdxContent component defines Image and Link mdx components that are wrapper components for the Next.js Link and Image components respectively.
-
-Both of these helper components, along with any future ones you might add, are also housed in the `src/components/mdx` directory. This modular approach allows you to easily extend or customize the behavior of MDX elements as your project grows.
 
 ## Tailwind CSS
 

@@ -15,7 +15,7 @@ import logoipsum5 from '@/images/logos/awards/logoipsum-5.svg'
 import logoipsum6 from '@/images/logos/awards/logoipsum-6.svg'
 import logoipsum7 from '@/images/logos/awards/logoipsum-7.svg'
 
-const awards = [
+const defaultAwards = [
   awwwards,
   cssDesignAwards,
   adobe,
@@ -30,7 +30,7 @@ const awards = [
   logoipsum7,
 ]
 
-export function Awards() {
+export function Awards({ awards = defaultAwards }) {
   return (
     <section className='overflow-hidden bg-emerald-900 py-16 sm:py-24 lg:py-32'>
       <Container>

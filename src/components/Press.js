@@ -108,7 +108,7 @@ function ConferenceIcon(props) {
   )
 }
 
-const items = [
+const defaultItems = [
   {
     title: 'The Future of Software Engineering with Jane Doe',
     category: 'Podcast',
@@ -207,7 +207,7 @@ const items = [
   },
 ]
 
-export function Press() {
+export function Press({ items = defaultItems }) {
   return (
     <section className="py-16 overflow-hidden bg-white sm:py-24 lg:pt-32">
       <Container>
