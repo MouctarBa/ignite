@@ -279,7 +279,7 @@ export default async function ContactPage() {
           </div>
         </div>
       </section>
-      <Footer {...global.footer} />
+      <Footer {...(global.footer || {})} />
     </>
   )
 }

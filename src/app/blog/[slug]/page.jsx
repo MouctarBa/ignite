@@ -127,7 +127,7 @@ export default async function BlogPost({ params }) {
           </div>
         </article>
       </main>
-      <Footer {...global.footer} />
+      <Footer {...(global.footer || {})} />
     </>
   )
 }

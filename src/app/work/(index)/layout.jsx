@@ -44,7 +44,7 @@ export default async function WorkLayout({ children }) {
           </div>
         </Container>
       </section>
-      <Footer {...global.footer} />
+      <Footer {...(global.footer || {})} />
     </>
   )
 }

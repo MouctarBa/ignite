@@ -60,7 +60,7 @@ export default async function CaseStudyPage({ params }) {
         testimonial={caseStudy.testimonial} // Pass the testimonial component data
       />
       <CaseStudyNavigation caseStudySlug={caseStudy.slug} />
-      <Footer newsletter={false} {...global.footer} />
+      <Footer newsletter={false} {...(global.footer || {})} />
     </>
   )
 }
