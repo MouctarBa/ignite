@@ -34,7 +34,6 @@ Create an `.env.local` file in the project root with the following variables:
 STRAPI_API_URL=http://localhost:1337
 STRAPI_API_TOKEN=<your-private-token>
 REVALIDATE_INTERVAL=60 # revalidate Strapi fetches every 60 seconds
-```
 
 The token should be kept server-side for security. Avoid using the
 `NEXT_PUBLIC_` prefix so it is not exposed to the browser.

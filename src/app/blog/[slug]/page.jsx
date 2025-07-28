@@ -132,4 +132,4 @@ export default async function BlogPost({ params }) {
   )
 }
 
-export const dynamicParams = false
+export const dynamicParams = true
