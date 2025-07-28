@@ -77,12 +77,11 @@ export function FeaturedWork({ caseStudies }) {
       <Container>
         <div className="text-center">
           <h2 className="font-display text-4xl font-semibold text-slate-900 sm:text-5xl">
-            Check out my latest work
+            Explore my recent education projects
           </h2>
           <p className="mx-auto mt-4 max-w-md text-lg leading-8 text-slate-700 sm:mt-5">
-            My goal is to create effective digital experiences that make
-            people’s lives easier and better. I hope my work is a reflection of
-            this.
+            These case studies highlight how I support schools and teachers to
+            achieve excellence.
           </p>
         </div>
         <div className="relative mx-auto mt-16 max-w-xl space-y-16 lg:mx-0 lg:max-w-none">

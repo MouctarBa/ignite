@@ -79,8 +79,8 @@ export function WorkExperience({ experiences = defaultCompanies }) {
               so far
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-slate-700">
-              Panna french americano macchiato breve roast cinnamon cortado
-              strong white pumpkin et single press aftertaste.
+              From founding Evergreen Schools to mentoring new educators, my
+              journey continues to focus on excellence in teaching.
             </p>
             <Button href="#" className="mt-10" variant="secondary">
               Download CV
