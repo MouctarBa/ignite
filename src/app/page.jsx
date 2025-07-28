@@ -36,7 +36,7 @@ export default async function HomePage() {
       <FeaturedWork caseStudies={caseStudies} />
       <Testimonials testimonials={testimonials} />
       <FeaturedPosts posts={posts} />
-      <Footer {...global.footer} />
+      <Footer {...(global.footer || {})} />
     </>
   )
 }

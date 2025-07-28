@@ -55,7 +55,12 @@ export async function fetchAPI(path, urlParamsObject = {}, options = {}) {
 }
 
 export async function getGlobal() {
-  const globalRes = await fetchAPI('/global', { populate: '*' })
+  let globalRes = await fetchAPI('/global', { populate: '*' })
+
+  if (!globalRes.data) {
+    globalRes = await fetchAPI('/globals', { populate: '*' })
+  }
+
   return globalRes.data?.attributes || {}
 }
 

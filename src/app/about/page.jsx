@@ -21,7 +21,7 @@ export default async function AboutPage() {
       <WorkExperience experiences={page.workExperiences} />
       <Awards awards={page.awards} />
       <Press items={page.pressItems} />
-      <Footer {...global.footer} />
+      <Footer {...(global.footer || {})} />
     </>
   )
 }
