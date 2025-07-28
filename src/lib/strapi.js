@@ -2,11 +2,9 @@ import qs from 'qs';
 
 const STRAPI_API_URL =
   process.env.STRAPI_API_URL ||
-  process.env.NEXT_PUBLIC_STRAPI_API_URL ||
   'http://localhost:1337';
-// Prefer the private token but support the old public variable for backwards compatibility
 const STRAPI_API_TOKEN =
-  process.env.STRAPI_API_TOKEN || process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
+  process.env.STRAPI_API_TOKEN;
 
 export async function fetchAPI(path, urlParamsObject = {}, options = {}) {
   // Check if the token is missing and provide a clear error
@@ -45,8 +43,10 @@ export async function fetchAPI(path, urlParamsObject = {}, options = {}) {
     throw new Error(`An error occurred please try again. Status: ${response.status}`)
   }
 
+
   const data = await response.json()
   return data
+
 }
 
 export async function getGlobal() {
@@ -61,3 +61,4 @@ export async function getPage(slug) {
   })
   return pageRes.data?.[0]?.attributes || {}
 }
+
