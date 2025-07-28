@@ -33,6 +33,7 @@ Create an `.env.local` file in the project root with the following variables:
 ```bash
 STRAPI_API_URL=http://localhost:1337
 STRAPI_API_TOKEN=<your-private-token>
+REVALIDATE_INTERVAL=60 # revalidate Strapi fetches every 60 seconds
 ```
 
 The token should be kept server-side for security. Avoid using the
@@ -41,6 +42,9 @@ The token should be kept server-side for security. Avoid using the
 Make sure your Strapi instance is running and reachable at the
 `STRAPI_API_URL`. If the API is unavailable or the token is invalid the site
 will fail to fetch content and you may see `500` errors in development.
+
+`REVALIDATE_INTERVAL` controls how often Next.js will revalidate data
+fetched from Strapi. The default is `60` seconds.
 
 ## File Structure
 

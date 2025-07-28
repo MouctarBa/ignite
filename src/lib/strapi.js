@@ -5,6 +5,10 @@ const STRAPI_API_URL =
   'http://localhost:1337';
 const STRAPI_API_TOKEN =
   process.env.STRAPI_API_TOKEN;
+const REVALIDATE_INTERVAL = parseInt(
+  process.env.REVALIDATE_INTERVAL ?? '60',
+  10
+);
 
 export async function fetchAPI(path, urlParamsObject = {}, options = {}) {
   // Check if the token is missing and provide a clear error
@@ -19,6 +23,7 @@ export async function fetchAPI(path, urlParamsObject = {}, options = {}) {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${STRAPI_API_TOKEN}`,
     },
+    next: { revalidate: REVALIDATE_INTERVAL },
     ...options,
   }
 
