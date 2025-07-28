@@ -9,7 +9,7 @@ import gumroad from '@/images/logos/icons/gumroad.png'
 import mailchimp from '@/images/logos/icons/mailchimp.png'
 import shopify from '@/images/logos/icons/shopify.png'
 
-const companies = [
+const defaultCompanies = [
   {
     name: 'Adobe',
     dates: 'Dec 2016 - Oct 2017',
@@ -47,7 +47,7 @@ const companies = [
   },
 ]
 
-export function WorkExperience() {
+export function WorkExperience({ experiences = defaultCompanies }) {
   return (
     <section className="relative overflow-x-clip bg-white py-16 sm:py-24 lg:py-32">
       <Container className="relative">
@@ -103,7 +103,7 @@ export function WorkExperience() {
             </Button>
           </div>
           <ol className="col-span-2 grid grid-cols-1 gap-x-8 gap-y-10 text-base leading-7 text-gray-600 [counter-reset:section] sm:grid-cols-2 lg:gap-y-16">
-            {companies.map((company) => (
+            {experiences.map((company) => (
               <li
                 key={company.name}
                 className="relative [counter-increment:section] before:absolute before:-top-7 before:right-0 before:font-mono before:text-9xl before:font-black before:leading-none before:text-slate-50 before:content-[counter(section,decimal-leading-zero)]"

@@ -5,7 +5,7 @@ import { CaseStudyTestimonial } from '@/components/work/CaseStudyTestimonial'
 import { CaseStudyNavigation } from '@/components/work/CaseStudyNavigation'
 import { Footer } from '@/components/Footer'
 import ReactMarkdown from 'react-markdown'
-import { fetchAPI } from '@/lib/strapi'
+import { fetchAPI, getGlobal } from '@/lib/strapi'
 
 export async function generateStaticParams() {
   const caseStudies = await fetchAPI('/case-studies');
@@ -36,6 +36,7 @@ export default async function CaseStudyPage({ params }) {
 
   const galleryImages = caseStudy.images.data.map(img => img.attributes.url);
   const tagNames = caseStudy.tags.data.map(tag => tag.attributes.name);
+  const global = await getGlobal();
 
   return (
     <>
@@ -59,7 +60,7 @@ export default async function CaseStudyPage({ params }) {
         testimonial={caseStudy.testimonial} // Pass the testimonial component data
       />
       <CaseStudyNavigation caseStudySlug={caseStudy.slug} />
-      <Footer newsletter={false} />
+      <Footer newsletter={false} {...global.footer} />
     </>
   )
 }
