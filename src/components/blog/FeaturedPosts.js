@@ -1,31 +1,62 @@
 import { Container } from '@/components/Container'
 import { BlogGrid } from '@/components/blog/BlogGrid'
 
+const samplePosts = [
+  {
+    title: 'Improving Teacher Training Programs',
+    description: 'Key takeaways from the SEEC conference.',
+    date: '2024-01-15',
+    category: 'Education',
+    timeToRead: 4,
+    slug: 'improving-teacher-training-programs',
+    url: '/blog/improving-teacher-training-programs',
+    image: '/images/articles/article-03.jpg',
+  },
+  {
+    title: 'Building Student-Centred Schools',
+    description: 'Lessons learned from launching Evergreen campuses.',
+    date: '2024-02-10',
+    category: 'Leadership',
+    timeToRead: 5,
+    slug: 'building-student-centred-schools',
+    url: '/blog/building-student-centred-schools',
+    image: '/images/articles/article-04.jpg',
+  },
+]
+
+export { samplePosts }
+
 export function FeaturedPosts({ posts }) {
-  if (!posts || posts.length === 0) {
-    return null;
+  let transformedPosts = []
+
+  if (posts && posts.length > 0) {
+    const validPosts = posts.filter(
+      (post) =>
+        post &&
+        post.attributes &&
+        post.attributes.image?.data?.attributes?.url
+    )
+
+    if (validPosts.length > 0) {
+      transformedPosts = validPosts.map((post) => {
+        const { attributes } = post
+        return {
+          title: attributes.title,
+          description: attributes.description,
+          date: attributes.date,
+          category: attributes.category,
+          timeToRead: attributes.timeToRead,
+          slug: attributes.slug,
+          url: `/blog/${attributes.slug}`,
+          image: attributes.image.data.attributes.url,
+        }
+      })
+    }
   }
 
-  // Filter for valid data before transforming and rendering
-  const validPosts = posts.filter(post => post && post.attributes && post.attributes.image?.data?.attributes?.url);
-
-  if (validPosts.length === 0) {
-    return null;
+  if (transformedPosts.length === 0) {
+    transformedPosts = samplePosts
   }
-
-  const transformedPosts = validPosts.map(post => {
-    const { attributes } = post;
-    return {
-      title: attributes.title,
-      description: attributes.description,
-      date: attributes.date,
-      category: attributes.category,
-      timeToRead: attributes.timeToRead,
-      slug: attributes.slug,
-      url: `/blog/${attributes.slug}`,
-      image: attributes.image.data.attributes.url,
-    };
-  });
 
   return (
     <section className="py-16 overflow-hidden bg-white sm:pt-24 lg:pt-28">

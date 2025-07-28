@@ -9,17 +9,19 @@ const REVALIDATE_INTERVAL = parseInt(
 );
 
 export async function fetchAPI(path, urlParamsObject = {}, options = {}) {
-  if (!STRAPI_API_TOKEN) {
-    throw new Error(
-      'The Strapi API token is missing. Please define STRAPI_API_TOKEN in your environment.'
+  const headers = {
+    'Content-Type': 'application/json',
+  };
+  if (STRAPI_API_TOKEN) {
+    headers.Authorization = `Bearer ${STRAPI_API_TOKEN}`;
+  } else {
+    console.warn(
+      'The Strapi API token is missing. Define STRAPI_API_TOKEN to access private content.'
     );
   }
 
   const mergedOptions = {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${STRAPI_API_TOKEN}`,
-    },
+    headers,
     next: { revalidate: REVALIDATE_INTERVAL },
     ...options,
   };

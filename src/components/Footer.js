@@ -130,8 +130,8 @@ export function Footer({
             </div>
             <div className="flex flex-col items-center lg:col-span-5 lg:items-start">
               <p className="text-center text-lg text-slate-50 lg:max-w-sm lg:text-left">
-                Iced pumpkin ristretto irish trifecta robusta trade froth
-                affogato barista con barista cappuccino filter roast.
+                Dedicated to empowering educators and inspiring the next
+                generation of leaders.
               </p>
 
               <Button

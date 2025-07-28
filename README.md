@@ -37,6 +37,8 @@ REVALIDATE_INTERVAL=60 # revalidate Strapi fetches every 60 seconds
 
 The token should be kept server-side for security. Avoid using the
 `NEXT_PUBLIC_` prefix so it is not exposed to the browser.
+If `STRAPI_API_TOKEN` is omitted, the site will attempt public requests only and
+log a warning, but private content will not load.
 
 Make sure your Strapi instance is running and reachable at the
 `STRAPI_API_URL`. If the API is unavailable or the token is invalid the site
