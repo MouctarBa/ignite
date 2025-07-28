@@ -17,23 +17,36 @@ export async function fetchAPI(path, urlParamsObject = {}, options = {}) {
   const mergedOptions = {
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${STRAPI_API_TOKEN}`,
+      Authorization: `Bearer ${STRAPI_API_TOKEN}`,
     },
     ...options,
-  };
-
-  const queryString = qs.stringify(urlParamsObject);
-  const requestUrl = `${STRAPI_API_URL}/api${path}${queryString ? `?${queryString}` : ''}`;
-
-  const response = await fetch(requestUrl, mergedOptions);
-
-  if (!response.ok) {
-    console.error("Error response from Strapi:", await response.text());
-    throw new Error(`An error occurred please try again. Status: ${response.status}`);
   }
 
-  const data = await response.json();
-  return data;
+  const queryString = qs.stringify(urlParamsObject, { encodeValuesOnly: true })
+  const requestUrl = `${STRAPI_API_URL}/api${path}${queryString ? `?${queryString}` : ''}`
+
+  let response
+  try {
+    response = await fetch(requestUrl, mergedOptions)
+  } catch (err) {
+    console.error('Failed to fetch from Strapi:', err)
+    throw new Error('Unable to reach Strapi. Please try again later.')
+  }
+
+  if (response.status === 404) {
+    console.warn('Strapi returned 404 for', path)
+    return { data: null }
+  }
+
+  if (!response.ok) {
+    console.error('Error response from Strapi:', await response.text())
+    throw new Error(`An error occurred please try again. Status: ${response.status}`)
+  }
+
+
+  const data = await response.json()
+  return data
+
 }
 
 export async function getGlobal() {
@@ -48,3 +61,4 @@ export async function getPage(slug) {
   })
   return pageRes.data?.[0]?.attributes || {}
 }
+
