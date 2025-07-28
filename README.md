@@ -38,6 +38,10 @@ STRAPI_API_TOKEN=<your-private-token>
 The token should be kept server-side for security. Avoid using the
 `NEXT_PUBLIC_` prefix so it is not exposed to the browser.
 
+Make sure your Strapi instance is running and reachable at the
+`STRAPI_API_URL`. If the API is unavailable or the token is invalid the site
+will fail to fetch content and you may see `500` errors in development.
+
 ## File Structure
 
 All of the code for this template is located in the `/src` folder. The folder contains the following:
