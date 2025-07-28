@@ -141,8 +141,8 @@ function Form() {
 export default async function ContactPage() {
   const page = await getPage('contact')
   const global = await getGlobal()
-  const email = page.email || 'C.Doris@evergreen.edu'
-  const phone = page.phone || '+1 (234) 456-7891'
+  const email = page.email || 'Ceo@evergreenschool.com.ng'
+  const phone = page.phone || '+(234) 080-6878-2862'
   const heading = page.heading || 'How can I help you? Let\u2019s get in touch'
   const subheading = page.subheading || 'Your next breakthrough starts right here let\u2019s build it together.'
   return (

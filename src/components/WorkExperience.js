@@ -54,7 +54,7 @@ export function WorkExperience({ experiences = defaultCompanies }) {
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
           <div>
             <h2 className="font-display text-4xl font-semibold text-slate-900 sm:text-5xl">
-              My career{' '}
+              My journey in{' '}
               <span className="relative whitespace-nowrap">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -74,13 +74,14 @@ export function WorkExperience({ experiences = defaultCompanies }) {
                   </defs>
                 </svg>
 
-                <span className="relative text-sky-700">journey</span>
+                <span className="relative text-sky-700">education</span>
               </span>{' '}
-              so far
+              leadership
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-slate-700">
-              From founding Evergreen Schools to mentoring new educators, my
-              journey continues to focus on excellence in teaching.
+              From launching my first Evergreen campus to convening SEEC, each
+              step has been driven by my passion for teacher excellence and
+              student‑centred learning.
             </p>
             <Button href="#" className="mt-10" variant="secondary">
               Download CV
@@ -126,7 +127,7 @@ export function WorkExperience({ experiences = defaultCompanies }) {
             ))}
             <li className="relative mt-3 flex h-fit items-center font-writing text-2xl tracking-wide text-slate-600 sm:left-14 sm:top-6 sm:mt-0 sm:block sm:text-[27px] md:left-20">
               <span className="inline-block w-52 max-w-[240px] transform sm:w-auto sm:-rotate-12">
-                I am currently here in my journey :D
+                I am currently here in my journey
               </span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
