@@ -4,7 +4,7 @@ import clsx from 'clsx'
 
 import { Button } from './Button'
 import { Container } from './Container'
-import newsletterBg from '@/images/newsletter-bg_yellow.png'
+import newsletterBg from '@/images/Newsletter-bg_yellow.png'
 import {
   InstagramIcon,
   LinkedInIcon,
