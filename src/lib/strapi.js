@@ -55,7 +55,12 @@ export async function fetchAPI(path, urlParamsObject = {}, options = {}) {
 }
 
 export async function getGlobal() {
-  let globalRes = await fetchAPI('/global', { populate: '*' })
+  // Prefer the dedicated homepage endpoint when available
+  let globalRes = await fetchAPI('/homepage', { populate: '*' })
+
+  if (!globalRes.data) {
+    globalRes = await fetchAPI('/global', { populate: '*' })
+  }
 
   if (!globalRes.data) {
     globalRes = await fetchAPI('/globals', { populate: '*' })

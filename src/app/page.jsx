@@ -12,11 +12,18 @@ export const metadata = {
 }
 
 async function getHomepageData() {
+  const homepageRes = await fetchAPI('/homepage', { populate: '*' })
+
+  if (homepageRes?.data) {
+    return homepageRes.data.attributes
+  }
+
+  // Fallback for older Strapi setups
   const [testimonialsRes, caseStudiesRes, postsRes] = await Promise.all([
     fetchAPI('/testimonials', { populate: '*' }),
     fetchAPI('/case-studies', { sort: { date: 'desc' }, pagination: { limit: 4 }, populate: '*' }),
     fetchAPI('/posts', { sort: { date: 'desc' }, pagination: { limit: 3 }, populate: '*' }),
-  ]);
+  ])
 
   return {
     testimonials: testimonialsRes.data || [],
