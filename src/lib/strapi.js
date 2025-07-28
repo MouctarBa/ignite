@@ -35,3 +35,16 @@ export async function fetchAPI(path, urlParamsObject = {}, options = {}) {
   const data = await response.json();
   return data;
 }
+
+export async function getGlobal() {
+  const globalRes = await fetchAPI('/global', { populate: '*' })
+  return globalRes.data?.attributes || {}
+}
+
+export async function getPage(slug) {
+  const pageRes = await fetchAPI('/pages', {
+    filters: { slug: { $eq: slug } },
+    populate: '*',
+  })
+  return pageRes.data?.[0]?.attributes || {}
+}

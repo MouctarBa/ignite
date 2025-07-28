@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { format, parseISO } from 'date-fns'
 import ReactMarkdown from 'react-markdown'
 
-import { fetchAPI } from '@/lib/strapi'
+import { fetchAPI, getGlobal } from '@/lib/strapi'
 import { PostFooter } from './PostFooter'
 import { Footer } from '@/components/Footer'
 import {
@@ -42,6 +42,7 @@ export default async function BlogPost({ params }) {
   const post = postsRes.data[0].attributes;
   const categorySlug = post.category.replace(/ /g, '-').toLowerCase()
   const CategoryIcon = iconOptions[post.category]
+  const global = await getGlobal()
 
   return (
     <>
@@ -126,7 +127,7 @@ export default async function BlogPost({ params }) {
           </div>
         </article>
       </main>
-      <Footer />
+      <Footer {...global.footer} />
     </>
   )
 }

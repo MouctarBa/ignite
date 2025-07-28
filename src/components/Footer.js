@@ -11,7 +11,7 @@ import {
   EmailIcon,
 } from './SocialIcons'
 
-const links = [
+const defaultLinks = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/about' },
   { label: 'Work', href: '/work' },
@@ -19,7 +19,7 @@ const links = [
   { label: 'Contact', href: '/contact' },
 ]
 
-const socialLinks = [
+const defaultSocialLinks = [
   {
     label: 'Email me',
     icon: EmailIcon,
@@ -49,7 +49,7 @@ function SocialLink({ icon: Icon, label, ...props }) {
   )
 }
 
-export function Footer({ newsletter = true }) {
+export function Footer({ newsletter = true, links = defaultLinks, socialLinks = defaultSocialLinks, newsletterHeading = 'Subscribe to my newsletter', newsletterSubtext = 'Join 10,000+ designers and get creative site breakdowns, design musings and tips every Monday.', copyright = `© ${new Date().getFullYear()} Bah Digital Design. All rights reserved.` }) {
   return (
     <section className={clsx(newsletter && 'pt-12 sm:pt-16')}>
       {newsletter && (
@@ -65,11 +65,10 @@ export function Footer({ newsletter = true }) {
               <div className="relative flex w-full flex-col items-center lg:flex-row">
                 <div className="max-w-2xl text-center lg:pr-4 lg:text-left">
                   <h3 className="font-display text-4xl font-semibold text-white sm:text-5xl">
-                    Subscribe to my newsletter
+                    {newsletterHeading}
                   </h3>
                   <p className="mx-auto mt-4 max-w-lg text-lg text-emerald-50 lg:mx-0 lg:mt-6">
-                    Join 10,000+ designers and get creative site breakdowns,
-                    design musings and tips every Monday.
+                    {newsletterSubtext}
                   </p>
                 </div>
                 <form
@@ -172,8 +171,7 @@ export function Footer({ newsletter = true }) {
               ))}
             </div>
             <p className="mt-8 text-base text-slate-300/90 md:mt-0">
-              © {new Date().getFullYear()} Bah Digital Design. All rights
-              reserved.
+              {copyright}
             </p>
           </div>
         </Container>
