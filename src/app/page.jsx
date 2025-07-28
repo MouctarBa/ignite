@@ -8,7 +8,7 @@ import { fetchAPI, getGlobal } from '@/lib/strapi'
 
 export const metadata = {
   description:
-    "I'm a passionate developer, entrepreneur, and general technology enthusiast living in San Francisco. I've worked with hundreds of startups to help them develop their ideas into profitable businesses.",
+    'Doris Chinedu-Okoro is an education consultant and CEO of Evergreen Group of Schools helping teachers build student-centred institutions.',
 }
 
 async function getHomepageData() {

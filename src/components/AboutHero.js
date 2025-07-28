@@ -14,19 +14,23 @@ const mrDafoe = Mr_Dafoe({
 
 export function AboutHero({ data = {} }) {
   const {
-    heading = "Hi, I'm Doris and I'm an entrepreneur, and educator",
+    heading = 'Empowering Educators Across Africa',
     description1 =
-      'Pumpkin seasonal rich froth decaffeinated trifecta organic blue panna doppio. Body a whipped lungo variety spice seasonal body press mountain con macchiato. Medium coffee single white to caramelization siphon con siphon id as con go single. So ristretto pumpkin affogato cinnamon breve turkish organic. Lait black kopi dripper spice lait cultivar robusta panna whipped and sit aromatic sugar.',
+      'Doris Chinedu-Okoro is known as “The Teacher’s Teacher” for a reason. As the CEO of Evergreen Group of Schools and a sought-after school startup consultant, she has helped countless educators turn their vision into thriving, student-centred institutions. Her mission is to elevate teaching standards and build the next generation of leaders.',
     description2 =
-      'And café frappuccino extraction filter froth sugar siphon coffee pumpkin press milk ristretto et au. Trade instant aged as wings bar seasonal pumpkin barista turkish shot go seasonal robusta. Strong iced lungo frappuccino espresso redeye macchiato aftertaste trade pot. Seasonal turkish mocha wings sit crema blue au and grounds eu cortado café cup. Filter viennese bar seasonal wings siphon as frappuccino go luwak single mazagran.',
-    name = 'Doris Chinedu-okoro',
+      'Doris is also the convenor of the South East Educators Conference (SEEC), the first conference of its kind dedicated to professional development for teachers in the region. When she’s not mentoring educators, she’s writing and speaking about education reform, running the Evergreen Foundation, or participating in executive programmes at Lagos Business School. Join her journey to transform education for all.',
+    name = 'Doris Chinedu-Okoro',
     image,
     background,
   } = data
 
   return (
     <section className="relative bg-slate-50/50">
-      <Image src={background?.url || heroBG} alt="" className="absolute inset-0 object-cover object-left w-full h-full lg:w-2/3" />
+      <Image
+        src={background?.url || heroBG}
+        alt="Classroom background"
+        className="absolute inset-0 object-cover object-left w-full h-full lg:w-2/3"
+      />
       <Container className="relative py-16 sm:py-24 lg:py-32">
         <div className="max-w-3xl px-4 mx-auto sm:px-6 lg:mx-0 lg:w-2/3 lg:max-w-none lg:px-8 lg:pr-16">
           <h1 className="text-5xl font-semibold font-display text-slate-900 sm:text-6xl">
@@ -60,7 +64,7 @@ export function AboutHero({ data = {} }) {
       <div className="relative h-96 w-full md:h-[600px] lg:absolute lg:inset-y-0 lg:right-0 lg:h-full lg:w-1/3">
         <Image
           src={image?.url || heroImage}
-          alt=""
+          alt="Doris Chinedu-Okoro, founder of Evergreen Group of Schools"
           className="absolute inset-0 object-cover object-top w-full h-full"
           sizes="(min-width: 1024px) 33vw, 100vw"
           priority

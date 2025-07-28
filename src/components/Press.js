@@ -109,8 +109,15 @@ function ConferenceIcon(props) {
 }
 
 const defaultItems = [
-  // (unchanged: the default items still have proper link objects)
-  // … defaultItems array …
+  {
+    title: 'The Teacher\u2019s Teacher on Building Great Schools',
+    category: 'Podcast',
+    link: {
+      href: 'https://podcasts.example.com/doris-interview',
+      label: 'Listen to podcast',
+      displayUrl: 'podcasts.example.com',
+    },
+  },
 ]
 
 export function Press({ items = defaultItems }) {
@@ -119,12 +126,11 @@ export function Press({ items = defaultItems }) {
       <Container>
         <div className="text-center">
           <h2 className="text-4xl font-semibold font-display text-slate-900 sm:text-5xl">
-            Press and Interviews
+            Press & Interviews
           </h2>
-            <p className="max-w-md mx-auto mt-6 text-lg leading-8 text-slate-700">
-              Recognitions are like tattoos, you only show them off to people you
-              want to impress.
-            </p>
+          <p className="max-w-md mx-auto mt-6 text-lg leading-8 text-slate-700">
+            Explore podcasts, articles and events featuring Doris Chinedu-Okoro.
+          </p>
         </div>
         <div className="max-w-lg gap-6 mx-auto space-y-6 mt-14 columns-1 sm:mt-16 sm:max-w-2xl sm:columns-2 lg:mx-0 lg:max-w-none lg:columns-3 xl:gap-8 xl:space-y-8">
           {items.map((item, index) => {
