@@ -86,7 +86,10 @@ export function Testimonials({ testimonials }) {
             spaceBetween={0}
             slidesPerView="auto"
             grabCursor={true}
-            loop={testimonials.length > 1}
+            // Enable looping only when there are enough slides to avoid
+            // Swiper's "not enough slides" warning. With slidesPerView set to
+            // "auto" we need more than two slides for a seamless loop.
+            loop={testimonials.length > 2}
             centeredSlides={false}
             initialSlide={0}
             onSlideChange={(swiper) => setSwiperIndex(swiper.activeIndex)}
