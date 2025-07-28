@@ -3,6 +3,7 @@ import Image from 'next/image'
 
 import { Button } from '@/components/Button'
 import { Footer } from '@/components/Footer'
+import { getGlobal, getPage } from '@/lib/strapi'
 
 import image from '@/images/quote.jpg'
 
@@ -137,7 +138,13 @@ function Form() {
   )
 }
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const page = await getPage('contact')
+  const global = await getGlobal()
+  const email = page.email || 'C.Doris@evergreen.edu'
+  const phone = page.phone || '+1 (234) 456-7891'
+  const heading = page.heading || 'How can I help you? Let\u2019s get in touch'
+  const subheading = page.subheading || 'Your next breakthrough starts right here let\u2019s build it together.'
   return (
     <>
       <section className='relative overflow-hidden'>
@@ -147,7 +154,7 @@ export default function ContactPage() {
               <div className='absolute inset-y-0 -left-full hidden w-full bg-slate-50 lg:block' />
               <div className='relative mx-auto max-w-2xl lg:mx-0 lg:max-w-none'>
                 <h2 className='font-display text-4xl font-semibold leading-tight text-slate-900 sm:text-5xl sm:leading-tight lg:text-[40px] lg:leading-tight xl:text-5xl xl:leading-tight'>
-                  How can I help you? Let’s get in touch
+                  {heading}
                   <span className='ml-4 sm:ml-6'>👋</span>
                 </h2>
 
@@ -216,10 +223,10 @@ export default function ContactPage() {
                         I will usually email you back within an hour
                       </p>
                       <Link
-                        href='mailto:hey@janedoe.com'
+                        href={`mailto:${email}`}
                         className='mt-5 inline-block text-sky-700 duration-200 ease-in-out hover:text-sky-600 sm:mt-6'
                       >
-                        C.Doris@evergreen.edu
+                        {email}
                       </Link>
                     </div>
                   </div>
@@ -247,10 +254,10 @@ export default function ContactPage() {
                         I’m available weekdays from 9AM to 5PM
                       </p>
                       <Link
-                        href='tel:+13234567891'
+                        href={`tel:${phone}`}
                         className='mt-6 inline-block text-sky-700 duration-200 ease-in-out hover:text-sky-600'
                       >
-                        +1 (234) 456-7891
+                        {phone}
                       </Link>
                     </div>
                   </div>
@@ -264,7 +271,7 @@ export default function ContactPage() {
                   Fill out the form below to get started
                 </h3>
                 <p className='mt-4 text-lg text-slate-600'>
-                  Your next breakthrough starts right here let’s build it together.
+                  {subheading}
                 </p>
                 <Form />
               </div>
@@ -272,7 +279,7 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
-      <Footer />
+      <Footer {...global.footer} />
     </>
   )
 }

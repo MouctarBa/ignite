@@ -1,36 +1,44 @@
 import Link from 'next/link'
-import { compareDesc } from 'date-fns'
 
 import { Container } from '@/components/Container'
-import { allCaseStudies } from 'contentlayer/generated'
+import { fetchAPI } from '@/lib/strapi'
 
-function getSortedCaseStudiesAndIndex(caseStudySlug) {
-  const caseStudies = allCaseStudies.sort((a, b) =>
-    compareDesc(new Date(a.date), new Date(b.date))
-  )
+async function getSortedCaseStudiesAndIndex(caseStudySlug) {
+  const res = await fetchAPI('/case-studies', {
+    sort: ['date:desc'],
+    fields: ['slug', 'title'],
+  })
+
+  const caseStudies = res.data.map((cs) => ({
+    slug: cs.attributes.slug,
+    title: cs.attributes.title,
+  }))
+
   const index = caseStudies.findIndex((p) => p.slug === caseStudySlug)
   return { caseStudies, index }
 }
 
-function prev(caseStudySlug) {
-  const { caseStudies, index } = getSortedCaseStudiesAndIndex(caseStudySlug)
+async function prev(caseStudySlug) {
+  const { caseStudies, index } = await getSortedCaseStudiesAndIndex(caseStudySlug)
   return caseStudies[index - 1] ?? caseStudies[caseStudies.length - 1]
 }
 
-function next(caseStudySlug) {
-  const { caseStudies, index } = getSortedCaseStudiesAndIndex(caseStudySlug)
+async function next(caseStudySlug) {
+  const { caseStudies, index } = await getSortedCaseStudiesAndIndex(caseStudySlug)
   return caseStudies[index + 1] ?? caseStudies[0]
 }
 
-export function CaseStudyNavigation({ caseStudySlug }) {
-  const prevCaseStudy = prev(caseStudySlug)
-  const nextCaseStudy = next(caseStudySlug)
+export async function CaseStudyNavigation({ caseStudySlug }) {
+  const prevCaseStudy = await prev(caseStudySlug)
+  const nextCaseStudy = await next(caseStudySlug)
+  const prevCaseStudyUrl = `/work/${prevCaseStudy.slug}`
+  const nextCaseStudyUrl = `/work/${nextCaseStudy.slug}`
 
   return (
     <section className="py-8 border-t border-slate-200">
       <Container>
         <div className="flex items-center justify-between">
-          <Link href={prevCaseStudy.url} className="group space-y-1.5">
+          <Link href={prevCaseStudyUrl} className="group space-y-1.5">
             <div className="flex items-center gap-1 duration-200 text-slate-500 group-hover:text-sky-500">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +80,7 @@ export function CaseStudyNavigation({ caseStudySlug }) {
             </svg>
           </Link>
 
-          <Link href={nextCaseStudy.url} className="group space-y-1.5">
+          <Link href={nextCaseStudyUrl} className="group space-y-1.5">
             <div className="flex items-center justify-end gap-1 duration-200 text-slate-500 group-hover:text-sky-500">
               Next
               <svg
