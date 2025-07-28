@@ -26,6 +26,18 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to view the website.
 
+## Strapi Configuration
+
+Create an `.env.local` file in the project root with the following variables:
+
+```bash
+STRAPI_API_URL=http://localhost:1337
+STRAPI_API_TOKEN=<your-private-token>
+```
+
+The token should be kept server-side for security. Avoid using the
+`NEXT_PUBLIC_` prefix so it is not exposed to the browser.
+
 ## File Structure
 
 All of the code for this template is located in the `/src` folder. The folder contains the following:
