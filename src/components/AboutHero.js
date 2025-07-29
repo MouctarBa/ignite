@@ -59,6 +59,7 @@ export function AboutHero({ data = {} }) {
           </p>
         </div>
       </Container>
+
       <div className='relative h-96 w-full md:h-[600px] lg:absolute lg:inset-y-0 lg:right-0 lg:h-full lg:w-1/3'>
         <Image
           src={image?.url || heroImage}

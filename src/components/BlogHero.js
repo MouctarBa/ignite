@@ -1,4 +1,5 @@
 import { Container } from './Container'
+import { Button } from './Button'
 import Image from 'next/image'
 
 import bgGradient from '@/images/blog-hero-bg.png'
@@ -29,48 +30,12 @@ export function BlogHero() {
               <span className="relative">my blog</span>
             </span>
           </h1>
-          <p className="mx-auto mt-6 max-w-xl text-center text-lg leading-8 text-slate-700">
-            Join me on my journey as I share my insights and experiences on web
-            development, business, and content creation.
+           <p className="mx-auto mt-10 max-w-xl text-center text-lg leading-8 text-slate-700">
+            Scroll down and subscribe in the footer to get exclusive insights on school leadership, teacher training, and community impact.
           </p>
-          <form
-            action="#"
-            method="post"
-            className="relative mt-12 w-full max-w-lg"
-          >
-            <div className="absolute -left-48 -top-12 hidden lg:flex xl:-left-72">
-              <span className="inline-block max-w-[175px] -rotate-12 transform font-writing text-2xl text-slate-600">
-                Subscribe to my newsletter
-              </span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="91"
-                height="49"
-                viewBox="0 0 91 49"
-                fill="none"
-                className="relative -top-5 left-0 h-auto w-20 text-slate-600"
-              >
-                <g clipPath="url(#clip0_324_1142)">
-                  <path
-                    d="M1.69238 27.312C20.3067 17.6575 42.2779 13.0915 62.6792 20.3817C68.653 22.5164 74.9261 26.8457 79.7975 31.004C80.8268 31.8828 81.6964 32.9264 82.5869 33.944C83.4001 34.8733 83.6539 26.1696 83.7375 25.1594C84.6308 14.3591 83.4075 25.9604 83.6012 30.1072C83.7516 33.3254 84.9068 36.8047 84.5415 40.0293C84.2474 42.6259 79.3878 40.8403 77.6335 40.5719C75.8298 40.2959 63.737 40.239 66.2469 36.714C70.7498 30.3895 77.2856 27.0444 83.4264 22.7486"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </g>
-                <defs>
-                  <clipPath id="clip0_324_1142">
-                    <rect
-                      width="85"
-                      height="29"
-                      fill="white"
-                      transform="translate(83 49) rotate(-165.831)"
-                    />
-                  </clipPath>
-                </defs>
-              </svg>
-            </div>
-          </form>
+          <Button href="#newsletter" variant="secondary" className="mt-8">
+            Go to Subscribe
+          </Button>
         </div>
       </Container>
     </section>

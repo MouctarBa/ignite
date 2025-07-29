@@ -61,7 +61,7 @@ export function Footer({
   return (
     <section className={clsx(newsletter && 'pt-12 sm:pt-16')}>
       {newsletter && (
-        <div className="relative">
+        <div id="newsletter" className="relative">
           <div className="absolute inset-x-0 bottom-0 h-1/2 bg-emerald-900"></div>
           <div className="relative mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
             <div className="relative overflow-hidden rounded-2xl bg-emerald-700 px-5 py-12 sm:px-16 lg:py-14">
