@@ -23,15 +23,15 @@ export function AboutHero({ data = {} }) {
   } = data
 
   return (
-    <section className='relative overflow-hidden bg-slate-50/50'>
+    <section className='relative bg-slate-50/50'>
       <Image
         src={background?.url || heroBG}
         alt='Classroom background'
         className='absolute inset-0 h-full w-full object-cover object-left lg:w-2/3'
       />
-      <Container className='relative grid items-center gap-12 py-16 sm:py-24 lg:grid-cols-2 lg:gap-8 lg:py-32'>
-        <div className='mx-auto max-w-3xl px-4 sm:px-6 lg:mx-0 lg:max-w-none lg:px-8 lg:pr-16'>
-          <h1 className='font-display text-4xl font-semibold text-slate-900 sm:text-5xl lg:text-6xl'>
+      <Container className='relative py-16 sm:py-24 lg:py-32'>
+        <div className='mx-auto max-w-3xl px-4 sm:px-6 lg:mx-0 lg:w-2/3 lg:max-w-none lg:px-8 lg:pr-16'>
+          <h1 className='font-display text-5xl font-semibold text-slate-900 sm:text-6xl'>
             <span className='relative whitespace-nowrap'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -59,58 +59,56 @@ export function AboutHero({ data = {} }) {
           </p>
         </div>
       </Container>
-      <div className='mx-auto w-full max-w-lg lg:mr-0'>
-        <div className='aspect-h-5 aspect-w-4 relative overflow-hidden rounded-2xl'>
-          <Image
-            src={image?.url || heroImage}
-            alt='Doris Chinedu-Okoro, founder of Evergreen Group of Schools'
-            fill
-            className='object-cover object-top'
-            sizes='(min-width: 1024px) 33vw, 100vw'
-            priority
-          />
-          <svg
-            width='229'
-            height='40'
-            viewBox='0 0 229 40'
-            fill='none'
-            xmlns='http://www.w3.org/2000/svg'
-            className='absolute bottom-4 left-0 h-8 w-auto -translate-x-1/2 sm:bottom-10 sm:h-10'
-          >
-            <g clipPath='url(#clip0_204_150)'>
-              <path
-                d='M1 19L29.4 39L57.7 19L86.1 39L114.5 19L142.8 39L171.2 19L199.6 39L228 19'
-                stroke='#0369A1'
-                strokeWidth='2'
-                strokeMiterlimit='10'
-                strokeLinecap='round'
-                strokeLinejoin='round'
-              />
-              <path
-                d='M1 19L29.4 39L57.7 19L86.1 39L114.5 19L142.8 39L171.2 19L199.6 39L228 19'
-                stroke='black'
-                strokeOpacity='0.2'
-                strokeWidth='2'
-                strokeMiterlimit='10'
-                strokeLinecap='round'
-                strokeLinejoin='round'
-              />
-              <path
-                d='M1 1L29.4 21L57.7 1L86.1 21L114.5 1L142.8 21L171.2 1L199.6 21L228 1'
-                stroke='#BAE6FD'
-                strokeWidth='2'
-                strokeMiterlimit='10'
-                strokeLinecap='round'
-                strokeLinejoin='round'
-              />
-            </g>
-            <defs>
-              <clipPath id='clip0_204_150'>
-                <rect width='229' height='40' fill='white' />
-              </clipPath>
-            </defs>
-          </svg>
-        </div>
+
+      <div className='relative h-96 w-full md:h-[600px] lg:absolute lg:inset-y-0 lg:right-0 lg:h-full lg:w-1/3'>
+        <Image
+          src={image?.url || heroImage}
+          alt='Doris Chinedu-Okoro, founder of Evergreen Group of Schools'
+          className='absolute inset-0 h-full w-full object-cover object-top'
+          sizes='(min-width: 1024px) 33vw, 100vw'
+          priority
+        />
+        <svg
+          width='229'
+          height='40'
+          viewBox='0 0 229 40'
+          fill='none'
+          xmlns='http://www.w3.org/2000/svg'
+          className='absolute bottom-16 left-0 mt-14 h-8 w-auto -translate-x-1/2 sm:mt-20 sm:h-10'
+        >
+          <g clipPath='url(#clip0_204_150)'>
+            <path
+              d='M1 19L29.4 39L57.7 19L86.1 39L114.5 19L142.8 39L171.2 19L199.6 39L228 19'
+              stroke='#0369A1'
+              strokeWidth='2'
+              strokeMiterlimit='10'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+            />
+            <path
+              d='M1 19L29.4 39L57.7 19L86.1 39L114.5 19L142.8 39L171.2 19L199.6 39L228 19'
+              stroke='black'
+              strokeOpacity='0.2'
+              strokeWidth='2'
+              strokeMiterlimit='10'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+            />
+            <path
+              d='M1 1L29.4 21L57.7 1L86.1 21L114.5 1L142.8 21L171.2 1L199.6 21L228 1'
+              stroke='#BAE6FD'
+              strokeWidth='2'
+              strokeMiterlimit='10'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+            />
+          </g>
+          <defs>
+            <clipPath id='clip0_204_150'>
+              <rect width='229' height='40' fill='white' />
+            </clipPath>
+          </defs>
+        </svg>
       </div>
     </section>
   )
