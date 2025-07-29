@@ -33,12 +33,6 @@ export default async function WorkLayout({ children }) {
                 transformative learning experiences—from bespoke curriculum
                 design to hands-on teacher training and community engagement.
               </p>
-              <Link
-                href='/work'
-                className='mt-6 inline-block rounded-full border border-emerald-100 bg-emerald-50 px-4 py-1 text-emerald-700'
-              >
-                Browse All Case Studies
-              </Link>
             </div>
             <Tabs
               className='mt-14 gap-x-1.5 gap-y-4 md:gap-x-1 lg:mt-16 lg:gap-2'
