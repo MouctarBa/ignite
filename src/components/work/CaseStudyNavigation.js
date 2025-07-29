@@ -37,8 +37,8 @@ export async function CaseStudyNavigation({ caseStudySlug }) {
   return (
     <section className="py-8 border-t border-slate-200">
       <Container>
-        <div className="flex items-center justify-between">
-          <Link href={prevCaseStudyUrl} className="group space-y-1.5">
+        <div className="grid grid-cols-3 items-center">
+          <Link href={prevCaseStudyUrl} className="group space-y-1.5 justify-self-start">
             <div className="flex items-center gap-1 duration-200 text-slate-500 group-hover:text-sky-500">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -64,7 +64,7 @@ export async function CaseStudyNavigation({ caseStudySlug }) {
 
           <Link
             href="/work"
-            className="flex items-center justify-center w-12 h-12 duration-200 rounded-full shadow-sm group bg-slate-50 ring-1 ring-slate-100/80 hover:bg-sky-600 md:h-14 md:w-14"
+            className="flex items-center justify-center w-12 h-12 duration-200 rounded-full shadow-sm group bg-slate-50 ring-1 ring-slate-100/80 hover:bg-sky-600 md:h-14 md:w-14 justify-self-center"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -80,7 +80,7 @@ export async function CaseStudyNavigation({ caseStudySlug }) {
             </svg>
           </Link>
 
-          <Link href={nextCaseStudyUrl} className="group space-y-1.5">
+          <Link href={nextCaseStudyUrl} className="group space-y-1.5 justify-self-end text-right">
             <div className="flex items-center justify-end gap-1 duration-200 text-slate-500 group-hover:text-sky-500">
               Next
               <svg
