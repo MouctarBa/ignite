@@ -14,7 +14,7 @@ const mrDafoe = Mr_Dafoe({
 
 export function AboutHero({ data = {} }) {
   const {
-    heading = 'Empowering Educators Across Africa',
+    heading = 'About Me',
     description1 = 'Doris Chinedu-Okoro is known as “The Teacher’s Teacher” for a reason. As the CEO of Evergreen Group of Schools and a sought-after school startup consultant, she has helped countless educators turn their vision into thriving, student-centred institutions. Her mission is to elevate teaching standards and build the next generation of leaders.',
     description2 = 'Doris is also the convenor of the South East Educators Conference (SEEC), the first conference of its kind dedicated to professional development for teachers in the region. When she’s not mentoring educators, she’s writing and speaking about education reform, running the Evergreen Foundation, or participating in executive programmes at Lagos Business School. Join her journey to transform education for all.',
     name = 'Doris Chinedu-Okoro',

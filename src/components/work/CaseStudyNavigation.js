@@ -65,7 +65,6 @@ export async function CaseStudyNavigation({ caseStudySlug }) {
           <Link
             href="/work"
             className="mx-auto flex items-center justify-center w-12 h-12 duration-200 rounded-full shadow-sm group bg-slate-50 ring-1 ring-slate-100/80 hover:bg-sky-600 md:h-14 md:w-14"
-          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
