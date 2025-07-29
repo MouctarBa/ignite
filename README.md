@@ -47,6 +47,22 @@ will fail to fetch content and you may see `500` errors in development.
 `REVALIDATE_INTERVAL` controls how often Next.js will revalidate data
 fetched from Strapi. The default is `60` seconds.
 
+## Production Build
+
+Create an optimized build with:
+
+```bash
+npm run build
+```
+
+Start the production server using:
+
+```bash
+npm run start
+```
+
+Ensure `STRAPI_API_URL` and `STRAPI_API_TOKEN` are configured in your deployment environment for secure content fetching.
+
 ## File Structure
 
 All of the code for this template is located in the `/src` folder. The folder contains the following:
@@ -106,3 +122,5 @@ To learn more about Next.js, take a look at the following resources:
 ## Additional Help
 
 If you need additional help setting up the template or have any questions, feel free to contact us at <rodrigo@tailwindawesome.com>.
+
+See [DEVELOPER_GUIDE.md](DEVELOPER_GUIDE.md) for detailed development and deployment instructions.
