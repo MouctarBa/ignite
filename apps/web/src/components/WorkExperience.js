@@ -6,35 +6,35 @@ const defaultCompanies = [
     dates: "2008 \u2013 Present",
     description:
       "Doris founded Evergreen Group of Schools with the goal of providing high-quality, values-based education in Nigeria. Under her leadership, Evergreen has grown into a multi-campus institution known for its holistic approach to learning.",
-    website: "https://evergreenschools.com",
+    website: "https://evergreenschools.com.ng/",
   },
   {
     name: "School Startup Consultant",
     dates: "2012 \u2013 Present",
     description:
       "As a consultant, Doris helps entrepreneurs and communities design, launch and manage new schools. Her expertise covers curriculum development, teacher training and sustainable school governance.",
-    website: "https://dorischineduokoro.com",
+    website: "https://evergreenschools.com.ng/consult/",
   },
   {
     name: "Convenor, South East Educators Conference (SEEC)",
     dates: "2019 \u2013 Present",
     description:
       "Doris founded SEEC, the first conference dedicated to educators in the South-East. The annual event brings teachers together to share best practices, network and receive world-class professional development.",
-    website: "https://southeasteducatorsconference.com",
+    website: "https://guardian.ng/features/south-east-educators-conference-holds-in-enugu/#:~:text=The%20highly%20anticipated%20South%20East%20Educators%20Conference%20%28SEEC%29,the%20theme%2C%20%E2%80%98Advancing%20Education%3A%20Innovation%2C%20Leadership%20%26%20Transformation%E2%80%99.",
   },
   {
     name: "Author & Education Advocate",
     dates: "2015 \u2013 Present",
     description:
       "Doris has written extensively about education reform and teacher empowerment. She uses her platform to advocate for policies that improve student outcomes and teacher welfare.",
-    website: "https://dorischineduokoro.com",
+    website: "#",
   },
   {
     name: "Lagos Business School, Executive Education",
     dates: "2023 \u2013 Present",
     description:
       "To stay at the forefront of educational leadership, Doris continues her professional development through executive programmes at Lagos Business School.",
-    website: "https://www.lbs.edu.ng",
+    website: "https://www.lbs.edu.ng/alumni/",
   },
 ];
 

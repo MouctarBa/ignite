@@ -6,7 +6,9 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "concurrently -k \"npm run -w web dev\" \"npm run -w cms develop\"",
+    "dev:web": "npm run dev --workspace apps/web",
+    "dev:cms": "npm run develop --workspace apps/cms",
+    "dev": "concurrently -k \"npm:dev:web\" \"npm:dev:cms\"",
     "build": "npm run build --workspaces",
     "lint": "npm run lint --workspaces"
   },
