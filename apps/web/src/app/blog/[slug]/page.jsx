@@ -4,6 +4,7 @@ import { format, parseISO } from 'date-fns'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeSanitize from 'rehype-sanitize'
+import { notFound } from 'next/navigation'
 
 import { fetchAPI, getGlobal } from '@/lib/strapi'
 import { PostFooter } from './PostFooter'
@@ -32,8 +33,11 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }) {
-  const posts = await fetchAPI('/posts', { filters: { slug: { $eq: params.slug } } });
-  const post = posts.data[0].attributes;
+  const posts = await fetchAPI('/posts', { filters: { slug: { $eq: params.slug } } })
+  if (!Array.isArray(posts.data) || posts.data.length === 0) {
+    notFound()
+  }
+  const post = posts.data[0].attributes
   return { title: post.title, description: post.description }
 }
 
@@ -41,9 +45,13 @@ export default async function BlogPost({ params }) {
   const postsRes = await fetchAPI('/posts', {
     filters: { slug: { $eq: params.slug } },
     populate: { image: { fields: ['url', 'alternativeText'] } }
-  });
+  })
 
-  const post = postsRes.data[0].attributes;
+  if (!Array.isArray(postsRes.data) || postsRes.data.length === 0) {
+    notFound()
+  }
+
+  const post = postsRes.data[0].attributes
   const categorySlug = post.category.replace(/ /g, '-').toLowerCase()
   const CategoryIcon = iconOptions[post.category] ?? EducationIcon
   const global = await getGlobal()
