@@ -75,12 +75,9 @@ export function WorkExperience({ experiences = defaultCompanies }) {
               student‑centred learning.
             </p>
           </div>
-          <ol className="col-span-2 grid grid-cols-1 gap-x-8 gap-y-10 text-base leading-7 text-gray-600 [counter-reset:section] sm:grid-cols-2 lg:gap-y-16">
+          <ol className="col-span-2 grid grid-cols-1 gap-x-8 gap-y-10 text-base leading-7 text-gray-600 sm:grid-cols-2 lg:gap-y-16">
             {experiences.map((company) => (
-              <li
-                key={company.name}
-                className="relative [counter-increment:section] before:absolute before:-top-7 before:right-0 before:font-mono before:text-9xl before:font-black before:leading-none before:text-slate-50 before:content-[counter(section,decimal-leading-zero)]"
-              >
+              <li key={company.name}>
                 <div className="mb-6">
                   <p className="text-sm font-medium text-sky-700">
                     {company.dates}
