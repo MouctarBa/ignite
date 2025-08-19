@@ -1,51 +1,42 @@
-import Image from 'next/image'
-
-import { Button } from './Button'
-import { Container } from './Container'
-
-import adobe from '@/images/logos/icons/adobe.png'
-import dropbox from '@/images/logos/icons/dropbox.png'
-import gumroad from '@/images/logos/icons/gumroad.png'
-import mailchimp from '@/images/logos/icons/mailchimp.png'
-import shopify from '@/images/logos/icons/shopify.png'
+import { Container } from "./Container";
 
 const defaultCompanies = [
   {
-    name: 'CEO & Founder, Evergreen Group of Schools',
-    dates: '2008 \u2013 Present',
+    name: "CEO & Founder, Evergreen Group of Schools",
+    dates: "2008 \u2013 Present",
     description:
-      'Doris founded Evergreen Group of Schools with the goal of providing high-quality, values-based education in Nigeria. Under her leadership, Evergreen has grown into a multi-campus institution known for its holistic approach to learning.',
-    logo: adobe,
+      "Doris founded Evergreen Group of Schools with the goal of providing high-quality, values-based education in Nigeria. Under her leadership, Evergreen has grown into a multi-campus institution known for its holistic approach to learning.",
+    website: "https://evergreenschools.com",
   },
   {
-    name: 'School Startup Consultant',
-    dates: '2012 \u2013 Present',
+    name: "School Startup Consultant",
+    dates: "2012 \u2013 Present",
     description:
-      'As a consultant, Doris helps entrepreneurs and communities design, launch and manage new schools. Her expertise covers curriculum development, teacher training and sustainable school governance.',
-    logo: dropbox,
+      "As a consultant, Doris helps entrepreneurs and communities design, launch and manage new schools. Her expertise covers curriculum development, teacher training and sustainable school governance.",
+    website: "https://dorischineduokoro.com",
   },
   {
-    name: 'Convenor, South East Educators Conference (SEEC)',
-    dates: '2019 \u2013 Present',
+    name: "Convenor, South East Educators Conference (SEEC)",
+    dates: "2019 \u2013 Present",
     description:
-      'Doris founded SEEC, the first conference dedicated to educators in the South-East. The annual event brings teachers together to share best practices, network and receive world-class professional development.',
-    logo: gumroad,
+      "Doris founded SEEC, the first conference dedicated to educators in the South-East. The annual event brings teachers together to share best practices, network and receive world-class professional development.",
+    website: "https://southeasteducatorsconference.com",
   },
   {
-    name: 'Author & Education Advocate',
-    dates: '2015 \u2013 Present',
+    name: "Author & Education Advocate",
+    dates: "2015 \u2013 Present",
     description:
-      'Doris has written extensively about education reform and teacher empowerment. She uses her platform to advocate for policies that improve student outcomes and teacher welfare.',
-    logo: mailchimp,
+      "Doris has written extensively about education reform and teacher empowerment. She uses her platform to advocate for policies that improve student outcomes and teacher welfare.",
+    website: "https://dorischineduokoro.com",
   },
   {
-    name: 'Lagos Business School, Executive Education',
-    dates: '2023 \u2013 Present',
+    name: "Lagos Business School, Executive Education",
+    dates: "2023 \u2013 Present",
     description:
-      'To stay at the forefront of educational leadership, Doris continues her professional development through executive programmes at Lagos Business School.',
-    logo: shopify,
+      "To stay at the forefront of educational leadership, Doris continues her professional development through executive programmes at Lagos Business School.",
+    website: "https://www.lbs.edu.ng",
   },
-]
+];
 
 export function WorkExperience({ experiences = defaultCompanies }) {
   return (
@@ -54,7 +45,7 @@ export function WorkExperience({ experiences = defaultCompanies }) {
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
           <div>
             <h2 className="font-display text-4xl font-semibold text-slate-900 sm:text-5xl">
-              My journey in{' '}
+              My journey in{" "}
               <span className="relative whitespace-nowrap">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -75,7 +66,7 @@ export function WorkExperience({ experiences = defaultCompanies }) {
                 </svg>
 
                 <span className="relative text-sky-700">education</span>
-              </span>{' '}
+              </span>{" "}
               leadership
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-slate-700">
@@ -84,21 +75,26 @@ export function WorkExperience({ experiences = defaultCompanies }) {
               student‑centred learning.
             </p>
           </div>
-          <ol className="col-span-2 grid grid-cols-1 gap-x-8 gap-y-10 text-base leading-7 text-gray-600 [counter-reset:section] sm:grid-cols-2 lg:gap-y-16">
+          <ol className="col-span-2 grid grid-cols-1 gap-x-8 gap-y-10 text-base leading-7 text-gray-600 sm:grid-cols-2 lg:gap-y-16">
             {experiences.map((company) => (
-              <li
-                key={company.name}
-                className="relative [counter-increment:section] before:absolute before:-top-7 before:right-0 before:font-mono before:text-9xl before:font-black before:leading-none before:text-slate-50 before:content-[counter(section,decimal-leading-zero)]"
-              >
-                <div>
-                  <div className="mb-6 flex h-11 w-11 items-center justify-center rounded-lg bg-gradient-to-br from-sky-50 via-slate-50 to-sky-50 ring-1 ring-slate-900/5">
-                    <Image src={company.logo} alt={company.name} />
-                  </div>
+              <li key={company.name}>
+                <div className="mb-6">
                   <p className="text-sm font-medium text-sky-700">
                     {company.dates}
                   </p>
                   <p className="mt-2 font-display text-lg font-semibold text-slate-900">
-                    {company.name}
+                    {company.website ? (
+                      <a
+                        href={company.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:underline"
+                      >
+                        {company.name}
+                      </a>
+                    ) : (
+                      company.name
+                    )}
                   </p>
                 </div>
                 <p className="mt-3 text-base leading-7 text-slate-700">
@@ -142,5 +138,5 @@ export function WorkExperience({ experiences = defaultCompanies }) {
         </div>
       </Container>
     </section>
-  )
+  );
 }
