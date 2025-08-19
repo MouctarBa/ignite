@@ -2,6 +2,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { format, parseISO } from 'date-fns'
 import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+import rehypeSanitize from 'rehype-sanitize'
 
 import { fetchAPI, getGlobal } from '@/lib/strapi'
 import { PostFooter } from './PostFooter'
@@ -123,7 +125,12 @@ export default async function BlogPost({ params }) {
           {/* Article Content */}
           <div className="bg-white px-4 py-12 sm:px-6 lg:px-8">
             <div className="prose prose-lg mx-auto max-w-2xl">
-              <ReactMarkdown>{post.body}</ReactMarkdown>
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeSanitize]}
+              >
+                {post.body}
+              </ReactMarkdown>
             </div>
             <PostFooter />
           </div>
