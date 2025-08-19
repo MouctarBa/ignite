@@ -14,6 +14,10 @@ export async function fetchAPI(path, urlParamsObject = {}, options = {}) {
   };
   if (STRAPI_API_TOKEN) {
     headers.Authorization = `Bearer ${STRAPI_API_TOKEN}`;
+  } else if (process.env.NODE_ENV !== 'development') {
+    throw new Error(
+      'STRAPI_API_TOKEN must be defined when NODE_ENV is not development.'
+    );
   } else {
     console.warn(
       'The Strapi API token is missing. Define STRAPI_API_TOKEN to access private content.'
