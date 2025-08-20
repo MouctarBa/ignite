@@ -94,3 +94,15 @@ export async function getPage(slug) {
   const attrs = record.attributes ?? record;
   return attrs || {};
 }
+
+export function getStrapiMedia(media) {
+  const url = media?.data?.attributes?.url ?? media?.url
+  if (!url) return null
+  try {
+    const absoluteUrl = new URL(url, STRAPI_API_URL)
+    if (absoluteUrl.protocol === 'http:' || absoluteUrl.protocol === 'https:') {
+      return absoluteUrl.toString()
+    }
+  } catch {}
+  return null
+}
