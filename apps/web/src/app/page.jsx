@@ -4,7 +4,7 @@ import { FeaturedWork } from '@/components/work/FeaturedWork'
 import { Testimonials } from '@/components/Testimonials'
 import { FeaturedPosts } from '@/components/blog/FeaturedPosts'
 import { Footer } from '@/components/Footer'
-import { fetchAPI, getGlobal } from '@/lib/strapi'
+import { fetchAPI } from '@/lib/strapi'
 
 export const metadata = {
   description:
@@ -34,12 +34,17 @@ async function getHomepageData() {
 
 export default async function HomePage() {
   const homepage = (await getHomepageData()) || {};
-  const { testimonials = [], caseStudies = [], posts = [] } = homepage;
+  const {
+    testimonials = [],
+    caseStudies = [],
+    posts = [],
+    experienceVideo,
+  } = homepage;
 
   return (
     <>
       <Hero />
-      <Experience />
+      <Experience video={experienceVideo} />
       <FeaturedWork caseStudies={caseStudies} />
       <Testimonials testimonials={testimonials} />
       <FeaturedPosts posts={posts} />
