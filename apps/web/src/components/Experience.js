@@ -362,9 +362,8 @@ Experience the advantage of an all‑inclusive educational consulting solution, 
               </div>
             </div>
           </div>
-        </div>
-      </Container>
-    </section>
-  )
-}
+        </Container>
+      </section>
+    )
+  }
 
