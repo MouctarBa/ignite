@@ -1,4 +1,4 @@
-// File: C:\Users\mouct\OneDrive\Documents\ignite\apps\web\src\app\about\page.jsx
+// File: C:\Users\mouct\Documents\ignite\apps\web\src\app\about\page.jsx
 import * as entry from '../../../../src/app/about/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

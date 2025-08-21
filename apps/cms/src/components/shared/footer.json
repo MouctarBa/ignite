@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_shared_footers",
+  "info": {
+    "displayName": "footer"
+  },
+  "options": {},
+  "attributes": {
+    "newsletter": {
+      "type": "boolean"
+    },
+    "newsletterHeading": {
+      "type": "string",
+      "required": true
+    },
+    "newsletterSubtext": {
+      "type": "text",
+      "required": true
+    },
+    "links": {
+      "type": "component",
+      "component": "shared.footer-link",
+      "repeatable": true
+    },
+    "socialLinks": {
+      "type": "component",
+      "component": "shared.social-link",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_shared_footer_links",
+  "info": {
+    "displayName": "footerLink"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "maxLength": 50,
+      "required": true
+    },
+    "href": {
+      "type": "string",
+      "required": true,
+      "regex": "/^https?:\\\\/\\\\//"
+    }
+  },
+  "config": {}
+}
