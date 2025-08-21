@@ -15,7 +15,7 @@ function CaseStudy({ caseStudy, index }) {
   if (!attributes.thumbnail || !attributes.thumbnail.data) {
     return (
       <div className='rounded-2xl bg-red-100 p-8 text-center'>
-        <p>Case study "{attributes.title}" is missing a thumbnail image.</p>
+        <p>Case study &quot;{attributes.title}&quot; is missing a thumbnail image.</p>
       </div>
     )
   }

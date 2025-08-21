@@ -10,7 +10,7 @@
     "dev:cms": "npm run develop --workspace apps/cms",
     "dev": "concurrently -k \"npm:dev:web\" \"npm:dev:cms\"",
     "build": "npm run build --workspaces",
-    "lint": "npm run lint --workspaces"
+    "lint": "npm run lint --workspaces --if-present"
   },
   "devDependencies": {
     "concurrently": "^9.2.0"

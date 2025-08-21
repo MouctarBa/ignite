@@ -10,7 +10,7 @@ export function Experience({ video }) {
         <div className="grid items-center max-w-xl gap-6 mx-auto lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:gap-16">
           <div>
             <h2 className="text-4xl font-semibold font-display text-slate-900 sm:text-5xl">
-              I'm your{' '}
+              I&apos;m your{' '}
               <span className="relative whitespace-nowrap">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
