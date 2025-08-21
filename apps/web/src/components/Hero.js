@@ -57,7 +57,7 @@ export function Hero() {
             <div className="flex gap-3 sm:gap-4">
               <SocialLink
                 href="https://www.facebook.com/"
-                aria-lebel="Follow on Facebook"
+                aria-label="Follow on Facebook"
                 icon={FacebookIcon}
               />
               <SocialLink
@@ -86,7 +86,7 @@ export function Hero() {
             <div>
               <div className="absolute hidden w-max md:left-full md:top-16 md:block lg:-left-28 lg:-top-8 2xl:left-full 2xl:top-16 ">
                 <span className="inline-block transform font-writing text-2xl tracking-wide text-slate-600 md:rotate-[16deg] lg:translate-x-6 lg:rotate-[-18deg] 2xl:rotate-12">
-                  Hi, I'm Doris!
+                  Hi, I&apos;m Doris!
                 </span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

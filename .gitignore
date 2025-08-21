@@ -8,7 +8,9 @@ node_modules/
 # ------------------------
 # Build / Production output
 # ------------------------
+# Next.js build output
 /.next
+apps/web/.next
 /out
 /build
 /dist
