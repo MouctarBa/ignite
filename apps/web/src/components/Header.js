@@ -31,6 +31,8 @@ const links = [
 export function Header() {
   const pathname = usePathname()
   const [logoUrl, setLogoUrl] = useState(null)
+  const [logoWidth, setLogoWidth] = useState(null)
+  const [logoHeight, setLogoHeight] = useState(null)
   const [bookCallUrl, setBookCallUrl] = useState('#')
 
   useEffect(() => {
@@ -52,6 +54,12 @@ export function Header() {
         const mediaUrl = getStrapiMedia(data?.logo)
         if (mediaUrl) {
           setLogoUrl(mediaUrl)
+          const width = Number(data?.logo?.data?.attributes?.width)
+          const height = Number(data?.logo?.data?.attributes?.height)
+          if (Number.isFinite(width) && Number.isFinite(height)) {
+            setLogoWidth(width)
+            setLogoHeight(height)
+          }
         }
         const callUrl = data?.bookCallUrl
         try {
@@ -131,12 +139,18 @@ export function Header() {
                 alt=''
                 className='h-8 w-auto sm:h-9 md:hidden lg:block lg:h-16'
                 priority
+                {...(logoUrl && logoWidth && logoHeight
+                  ? { width: logoWidth, height: logoHeight }
+                  : {})}
               />
               <Image
                 src={logoUrl || logoIcon}
                 alt=''
                 className='hidden h-8 w-auto md:block lg:hidden'
                 priority
+                {...(logoUrl && logoWidth && logoHeight
+                  ? { width: logoWidth, height: logoHeight }
+                  : {})}
               />
             </Link>
           </div>
