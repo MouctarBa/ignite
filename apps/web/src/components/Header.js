@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import clsx from 'clsx'
 import {
   Popover,
@@ -17,6 +18,7 @@ import { Button } from './Button'
 import { Container } from './Container'
 import logo from '@/images/logo-image.png'
 import logoIcon from '@/images/logo-icon.png'
+import { getStrapiMedia } from '@/lib/strapi'
 
 const links = [
   { label: 'Home', href: '/' },
@@ -28,6 +30,45 @@ const links = [
 
 export function Header() {
   const pathname = usePathname()
+  const [logoUrl, setLogoUrl] = useState(null)
+  const [bookCallUrl, setBookCallUrl] = useState('#')
+
+  useEffect(() => {
+    const controller = new AbortController()
+    async function loadSettings() {
+      try {
+        const baseUrl =
+          process.env.NEXT_PUBLIC_STRAPI_API_URL ||
+          process.env.STRAPI_API_URL ||
+          'http://localhost:1337'
+        const url = new URL('/api/site-setting', baseUrl)
+        url.searchParams.set('populate', 'logo')
+        const res = await fetch(url.toString(), { signal: controller.signal })
+        if (!res.ok) {
+          throw new Error('Failed to fetch site settings')
+        }
+        const json = await res.json()
+        const data = json.data?.attributes || json.data
+        const mediaUrl = getStrapiMedia(data?.logo)
+        if (mediaUrl) {
+          setLogoUrl(mediaUrl)
+        }
+        const callUrl = data?.bookCallUrl
+        try {
+          const parsed = new URL(callUrl)
+          if (parsed.protocol === 'https:') {
+            setBookCallUrl(parsed.toString())
+          }
+        } catch {
+          /* ignore invalid URLs */
+        }
+      } catch (err) {
+        console.error('Error loading site settings', err)
+      }
+    }
+    loadSettings()
+    return () => controller.abort()
+  }, [])
 
   function Hamburger() {
     return (
@@ -86,14 +127,16 @@ export function Header() {
               className='flex flex-shrink-0 items-center'
             >
               <Image
-                src={logo}
+                src={logoUrl || logo}
                 alt=''
                 className='h-8 w-auto sm:h-9 md:hidden lg:block lg:h-16'
+                priority
               />
               <Image
-                src={logoIcon}
+                src={logoUrl || logoIcon}
                 alt=''
                 className='hidden h-8 w-auto md:block lg:hidden'
+                priority
               />
             </Link>
           </div>
@@ -114,7 +157,7 @@ export function Header() {
             ))}
           </div>
           <div className='flex items-center'>
-            <Button variant='primary' href='#'>
+            <Button variant='primary' href={bookCallUrl}>
               Book a call
             </Button>
             <div className='ml-4 md:hidden'>
