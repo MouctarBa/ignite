@@ -462,7 +462,7 @@ export interface ApiCaseStudyCaseStudy extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiHomepageHomepage extends Struct.CollectionTypeSchema {
+export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
   collectionName: 'homepages';
   info: {
     displayName: 'Homepage';
@@ -486,7 +486,7 @@ export interface ApiHomepageHomepage extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::homepage.homepage'
     >;
-    logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+    logo: Schema.Attribute.Media<'images' | 'files'> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;

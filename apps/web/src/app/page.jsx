@@ -18,12 +18,29 @@ async function getHomepageData() {
     return homepageRes.data.attributes
   }
 
-  // Fallback for older Strapi setups
-  const [testimonialsRes, caseStudiesRes, postsRes] = await Promise.all([
-    fetchAPI('/testimonials', { populate: '*' }),
-    fetchAPI('/case-studies', { sort: { date: 'desc' }, pagination: { limit: 4 }, populate: '*' }),
-    fetchAPI('/posts', { sort: { date: 'desc' }, pagination: { limit: 3 }, populate: '*' }),
-  ])
+  // Fallback for older/alternate Strapi setups
+  // - Strapi v4/v5 accept `sort` as a string like 'publishedAt:desc'
+  // - Avoid object sort syntax which can trigger 400s (e.g., `sort[date]`)
+  let testimonialsRes = { data: [] }
+  let caseStudiesRes = { data: [] }
+  let postsRes = { data: [] }
+  try {
+    ;[testimonialsRes, caseStudiesRes, postsRes] = await Promise.all([
+      fetchAPI('/testimonials', { populate: '*' }),
+      fetchAPI('/case-studies', {
+        sort: 'publishedAt:desc',
+        pagination: { limit: 4 },
+        populate: '*',
+      }),
+      fetchAPI('/posts', {
+        sort: 'publishedAt:desc',
+        pagination: { limit: 3 },
+        populate: '*',
+      }),
+    ])
+  } catch (err) {
+    console.warn('Fallback content failed to load:', err)
+  }
 
   return {
     testimonials: testimonialsRes.data || [],
