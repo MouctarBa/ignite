@@ -4,6 +4,7 @@ const strapiUrl = process.env.STRAPI_API_URL || 'http://localhost:1337';
 const { hostname, port } = new URL(strapiUrl);
 const isLocalhost = ['localhost', '127.0.0.1'].includes(hostname);
 
+
 const nextConfig = {
   reactStrictMode: true,
   images: {
