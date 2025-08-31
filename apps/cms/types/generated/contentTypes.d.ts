@@ -505,12 +505,12 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
   };
 }
 
-export interface ApiSiteSettingsSiteSettings extends Struct.SingleTypeSchema {
+export interface ApiSiteSettingSiteSetting extends Struct.SingleTypeSchema {
   collectionName: 'site_settings';
   info: {
     displayName: 'Site Settings';
     pluralName: 'site-settings';
-    singularName: 'site-settings';
+    singularName: 'site-setting';
   };
   options: {
     draftAndPublish: false;
@@ -1213,7 +1213,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::case-study.case-study': ApiCaseStudyCaseStudy;
       'api::homepage.homepage': ApiHomepageHomepage;
-      'api::site-settings.site-settings': ApiSiteSettingsSiteSettings;
+      'api::site-setting.site-setting': ApiSiteSettingSiteSetting;
       'api::page.page': ApiPagePage;
       'api::post.post': ApiPostPost;
       'api::tag.tag': ApiTagTag;

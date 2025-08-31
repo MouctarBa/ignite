@@ -68,7 +68,7 @@ export async function fetchAPI(path, urlParamsObject = {}, options = {}) {
 }
 
 export async function getSiteSettings() {
-  const settingsRes = await fetchAPI('/site-settings', {
+  const settingsRes = await fetchAPI('/site-setting', {
     populate: {
       logo: '*',
       socialLinks: { populate: '*' },

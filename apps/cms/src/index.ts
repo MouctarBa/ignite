@@ -27,7 +27,7 @@ export default {
           'api::homepage.homepage': {
             find: true,
           },
-          'api::site-settings.site-settings': {
+          'api::site-setting.site-setting': {
             find: true,
           },
         },
