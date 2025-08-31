@@ -2,6 +2,12 @@ import qs from 'qs';
 
 const STRAPI_API_URL =
   process.env.STRAPI_API_URL || 'http://localhost:1337';
+const IS_LOCALHOST =
+  STRAPI_API_URL.startsWith('http://localhost') ||
+  STRAPI_API_URL.startsWith('http://127.0.0.1');
+if (!IS_LOCALHOST && !STRAPI_API_URL.startsWith('https://')) {
+  throw new Error('STRAPI_API_URL must use https');
+}
 const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN;
 const REVALIDATE_INTERVAL = parseInt(
   process.env.REVALIDATE_INTERVAL ?? '60',
@@ -59,6 +65,18 @@ export async function fetchAPI(path, urlParamsObject = {}, options = {}) {
 
   const data = await response.json();
   return data;
+}
+
+export async function getSiteSettings() {
+  const settingsRes = await fetchAPI('/site-settings', {
+    populate: {
+      logo: '*',
+      socialLinks: { populate: '*' },
+    },
+  });
+  const record = settingsRes.data;
+  const attrs = record?.attributes ?? record;
+  return attrs || {};
 }
 
 // Updated to return data whether it's under `attributes` (v4) or directly on the record (v5).

@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
 import clsx from 'clsx'
 import {
   Popover,
@@ -28,56 +27,20 @@ const links = [
   { label: 'Contact', href: '/contact' },
 ]
 
-export function Header() {
+export function Header({ siteSettings = {} }) {
   const pathname = usePathname()
-  const [logoUrl, setLogoUrl] = useState(null)
-  const [logoWidth, setLogoWidth] = useState(null)
-  const [logoHeight, setLogoHeight] = useState(null)
-  const [bookCallUrl, setBookCallUrl] = useState('#')
-
-  useEffect(() => {
-    const controller = new AbortController()
-    async function loadSettings() {
-      try {
-        const baseUrl =
-          process.env.NEXT_PUBLIC_STRAPI_API_URL ||
-          process.env.STRAPI_API_URL ||
-          'http://localhost:1337'
-        const url = new URL('/api/site-setting', baseUrl)
-        url.searchParams.set('populate', 'logo')
-        const res = await fetch(url.toString(), { signal: controller.signal })
-        if (!res.ok) {
-          throw new Error('Failed to fetch site settings')
-        }
-        const json = await res.json()
-        const data = json.data?.attributes || json.data
-        const media = data?.logo?.data?.attributes
-        const mediaUrl = getStrapiMedia(data?.logo)
-        if (
-          mediaUrl &&
-          Number.isFinite(media?.width) &&
-          Number.isFinite(media?.height)
-        ) {
-          setLogoUrl(mediaUrl)
-          setLogoWidth(media.width)
-          setLogoHeight(media.height)
-        }
-        const callUrl = data?.bookCallUrl
-        try {
-          const parsed = new URL(callUrl)
-          if (parsed.protocol === 'https:') {
-            setBookCallUrl(parsed.toString())
-          }
-        } catch {
-          /* ignore invalid URLs */
-        }
-      } catch (err) {
-        console.error('Error loading site settings', err)
-      }
+  const media = getStrapiMedia(siteSettings.logo)
+  const mediaAttrs = siteSettings.logo?.data?.attributes || {}
+  const logoUrl = media
+  const logoWidth = mediaAttrs.width
+  const logoHeight = mediaAttrs.height
+  let bookCallUrl = '#'
+  try {
+    const parsed = new URL(siteSettings.bookCallUrl)
+    if (parsed.protocol === 'https:') {
+      bookCallUrl = parsed.toString()
     }
-    loadSettings()
-    return () => controller.abort()
-  }, [])
+  } catch {}
 
   function Hamburger() {
     return (
