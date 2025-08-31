@@ -100,7 +100,10 @@ export function getStrapiMedia(media) {
   if (!url) return null
   try {
     const absoluteUrl = new URL(url, STRAPI_API_URL)
-    if (absoluteUrl.protocol === 'http:' || absoluteUrl.protocol === 'https:') {
+    const isLocalhost = ['localhost', '127.0.0.1'].includes(
+      absoluteUrl.hostname,
+    )
+    if (absoluteUrl.protocol === 'https:' || isLocalhost) {
       return absoluteUrl.toString()
     }
   } catch {}
