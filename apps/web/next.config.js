@@ -1,10 +1,8 @@
 /** @type {import('next').NextConfig} */
 
-const strapiUrl =
-  process.env.STRAPI_API_URL ||
-  'http://localhost:1337';
-
-const { protocol, hostname, port } = new URL(strapiUrl);
+const strapiUrl = process.env.STRAPI_API_URL || 'http://localhost:1337';
+const { hostname, port } = new URL(strapiUrl);
+const isLocalhost = ['localhost', '127.0.0.1'].includes(hostname);
 
 const nextConfig = {
   reactStrictMode: true,
@@ -12,9 +10,9 @@ const nextConfig = {
     // Allow images from the configured Strapi instance
     remotePatterns: [
       {
-        protocol: protocol.replace(':', ''),
+        protocol: isLocalhost ? 'http' : 'https',
         hostname,
-        port: port || '',
+        port: isLocalhost ? port : '',
         pathname: '/uploads/**',
       },
     ],
