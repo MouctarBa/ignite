@@ -15,18 +15,22 @@
     }
   },
   "attributes": {
-    "logo": {
-      "type": "media",
+    "heroText": {
+      "type": "text",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
-      },
-      "multiple": false,
-      "allowedTypes": [
-        "images",
-        "files"
-      ]
+      }
+    },
+    "heroMedia": {
+      "type": "media",
+      "allowedTypes": ["images", "videos"],
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     }
   }
 }

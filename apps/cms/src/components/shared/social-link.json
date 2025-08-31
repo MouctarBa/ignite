@@ -5,23 +5,24 @@
   },
   "options": {},
   "attributes": {
-    "label": {
+    "platform": {
       "type": "string",
       "required": true
     },
-    "href": {
+    "url": {
       "type": "string",
       "required": true,
-      "regex": "/^https?:\\\\/\\\\//"
+      "regex": "^https://"
     },
-    "platform": {
+    "icon": {
       "type": "enumeration",
       "enum": [
         "Facebook",
         "Instagram",
         "LinkedIn",
         "Email"
-      ]
+      ],
+      "required": true
     }
   },
   "config": {}

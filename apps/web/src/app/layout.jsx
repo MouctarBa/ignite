@@ -1,4 +1,6 @@
 import { Header } from '@/components/Header'
+import { Footer } from '@/components/Footer'
+import { getSiteSettings } from '@/lib/strapi'
 import clsx from 'clsx'
 import { Inter, Lexend, Gochi_Hand } from 'next/font/google'
 import '@/styles/globals.css'
@@ -28,7 +30,8 @@ export const metadata = {
   },
 }
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const siteSettings = await getSiteSettings()
   return (
     <html lang="en">
       <body
@@ -39,8 +42,12 @@ export default function RootLayout({ children }) {
           gochiHand.variable
         )}
       >
-        <Header />
+        <Header siteSettings={siteSettings} />
         {children}
+        <Footer
+          socialLinks={siteSettings.socialLinks}
+          bookCallUrl={siteSettings.bookCallUrl}
+        />
       </body>
     </html>
   )

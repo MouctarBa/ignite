@@ -3,7 +3,6 @@ import { Experience } from '@/components/Experience'
 import { FeaturedWork } from '@/components/work/FeaturedWork'
 import { Testimonials } from '@/components/Testimonials'
 import { FeaturedPosts } from '@/components/blog/FeaturedPosts'
-import { Footer } from '@/components/Footer'
 import { fetchAPI } from '@/lib/strapi'
 
 export const metadata = {
@@ -65,7 +64,6 @@ export default async function HomePage() {
       <FeaturedWork caseStudies={caseStudies} />
       <Testimonials testimonials={testimonials} />
       <FeaturedPosts posts={posts} />
-      <Footer {...(homepage.footer || {})} />
     </>
   )
 }

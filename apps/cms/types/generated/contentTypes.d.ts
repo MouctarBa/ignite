@@ -481,18 +481,49 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::homepage.homepage'
-    >;
-    logo: Schema.Attribute.Media<'images' | 'files'> &
+    heroMedia: Schema.Attribute.Media<'images' | 'videos'> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
         };
       }>;
+    heroText: Schema.Attribute.Text &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::homepage.homepage'
+    >;
     publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiSiteSettingsSiteSettings extends Struct.SingleTypeSchema {
+  collectionName: 'site_settings';
+  info: {
+    displayName: 'Site Settings';
+    pluralName: 'site-settings';
+    singularName: 'site-settings';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    bookCallUrl: Schema.Attribute.String &
+      Schema.Attribute.SetRegex<'^https://'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    logo: Schema.Attribute.Media<'images'>;
+    publishedAt: Schema.Attribute.DateTime;
+    socialLinks: Schema.Attribute.Component<'shared.social-link', true>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1182,6 +1213,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::case-study.case-study': ApiCaseStudyCaseStudy;
       'api::homepage.homepage': ApiHomepageHomepage;
+      'api::site-settings.site-settings': ApiSiteSettingsSiteSettings;
       'api::page.page': ApiPagePage;
       'api::post.post': ApiPostPost;
       'api::tag.tag': ApiTagTag;

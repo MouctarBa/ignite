@@ -65,11 +65,13 @@ export interface SharedSocialLink extends Struct.ComponentSchema {
     displayName: 'socialLink';
   };
   attributes: {
-    href: Schema.Attribute.String & Schema.Attribute.Required;
-    label: Schema.Attribute.String & Schema.Attribute.Required;
-    platform: Schema.Attribute.Enumeration<
+    platform: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetRegex<'^https://'>;
+    icon: Schema.Attribute.Enumeration<
       ['Facebook', 'Instagram', 'LinkedIn', 'Email']
-    >;
+    > & Schema.Attribute.Required;
   };
 }
 
