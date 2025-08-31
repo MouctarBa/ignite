@@ -51,15 +51,16 @@ export function Header() {
         }
         const json = await res.json()
         const data = json.data?.attributes || json.data
+        const media = data?.logo?.data?.attributes
         const mediaUrl = getStrapiMedia(data?.logo)
-        if (mediaUrl) {
+        if (
+          mediaUrl &&
+          Number.isFinite(media?.width) &&
+          Number.isFinite(media?.height)
+        ) {
           setLogoUrl(mediaUrl)
-          const width = Number(data?.logo?.data?.attributes?.width)
-          const height = Number(data?.logo?.data?.attributes?.height)
-          if (Number.isFinite(width) && Number.isFinite(height)) {
-            setLogoWidth(width)
-            setLogoHeight(height)
-          }
+          setLogoWidth(media.width)
+          setLogoHeight(media.height)
         }
         const callUrl = data?.bookCallUrl
         try {
@@ -136,21 +137,19 @@ export function Header() {
             >
               <Image
                 src={logoUrl || logo}
+                width={logoUrl ? logoWidth || logo.width : logo.width}
+                height={logoUrl ? logoHeight || logo.height : logo.height}
                 alt=''
                 className='h-8 w-auto sm:h-9 md:hidden lg:block lg:h-16'
                 priority
-                {...(logoUrl && logoWidth && logoHeight
-                  ? { width: logoWidth, height: logoHeight }
-                  : {})}
               />
               <Image
                 src={logoUrl || logoIcon}
+                width={logoUrl ? logoWidth || logoIcon.width : logoIcon.width}
+                height={logoUrl ? logoHeight || logoIcon.height : logoIcon.height}
                 alt=''
                 className='hidden h-8 w-auto md:block lg:hidden'
                 priority
-                {...(logoUrl && logoWidth && logoHeight
-                  ? { width: logoWidth, height: logoHeight }
-                  : {})}
               />
             </Link>
           </div>
