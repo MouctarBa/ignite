@@ -1,7 +1,19 @@
 export default ({ env }) => {
-  const origin = env('CORS_ORIGIN', 'https://localhost:3000')
-  if (!origin.startsWith('https://')) {
-    throw new Error('CORS_ORIGIN must use https')
+  const nodeEnv = env('NODE_ENV', 'development')
+  const isProd = nodeEnv === 'production'
+  const origin = env(
+    'CORS_ORIGIN',
+    isProd ? 'https://localhost:3000' : 'http://localhost:3000,https://localhost:3000',
+  )
+  // In production, enforce https-only origins. In dev, allow http for localhost.
+  if (isProd) {
+    const allHttps = origin
+      .split(',')
+      .map((o) => o.trim())
+      .every((o) => o.startsWith('https://'))
+    if (!allHttps) {
+      throw new Error('CORS_ORIGIN must use https in production')
+    }
   }
   return [
     'strapi::logger',
@@ -10,7 +22,7 @@ export default ({ env }) => {
     {
       name: 'strapi::cors',
       config: {
-        origin: origin.split(','),
+        origin: origin.split(',').map((o) => o.trim()),
       },
     },
     'strapi::poweredBy',

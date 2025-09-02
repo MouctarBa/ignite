@@ -10,6 +10,7 @@ import heroBG from '@/images/home-hero-gradient.svg'
 import figma from '@/images/logos/icons/figma.png'
 import tailwind from '@/images/logos/icons/tailwindcss.png'
 import sketch from '@/images/logos/icons/sketch.png'
+import { getStrapiMedia } from '@/lib/strapi'
 
 function SocialLink({ icon: Icon, ...props }) {
   return (
@@ -22,7 +23,11 @@ function SocialLink({ icon: Icon, ...props }) {
   )
 }
 
-export function Hero() {
+export function Hero({ heroText, heroMedia }) {
+  let dynamicHeroImage = null
+  try {
+    dynamicHeroImage = getStrapiMedia(heroMedia)
+  } catch {}
   return (
     <section className="relative py-20 overflow-hidden lg:py-24">
       {/* Light blue gradient background */}
@@ -47,7 +52,8 @@ export function Hero() {
             educators across Africa
           </h1>
           <p className="mt-6 text-lg leading-8 text-center text-slate-700 lg:text-left">
-            Known as “The Teacher’s Teacher,” Doris Chinedu-Okoro helps schools across Africa deliver high-quality, student-centred education through training and consulting.
+            {heroText ||
+              'Known as "The Teacher\'s Teacher," Doris Chinedu-Okoro helps schools across Africa deliver high-quality, student-centred education through training and consulting.'}
           </p>
           <div className="flex flex-wrap items-center justify-center mt-10 gap-x-10 gap-y-6 lg:justify-start">
             <Button variant='secondary' href="#" className="h-11">
@@ -77,7 +83,7 @@ export function Hero() {
           <div className="relative aspect-h-5 aspect-w-4 rounded-2xl bg-slate-50">
             <Image
               className="object-cover object-center w-full h-full rounded-2xl"
-              src={heroPortrait}
+              src={dynamicHeroImage || heroPortrait}
               alt="Doris Chinedu-Okoro, founder of Evergreen Group of Schools"
               sizes="(min-width: 552px) 32rem, calc(100vw - 2.5rem)"
               fill

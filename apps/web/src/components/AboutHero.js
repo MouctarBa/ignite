@@ -5,6 +5,7 @@ import { Container } from './Container'
 import heroImage from '@/images/evening.jpg'
 import heroBG from '@/images/about-hero-gradient.svg'
 import { Mr_Dafoe } from 'next/font/google'
+import { getStrapiMedia } from '@/lib/strapi'
 
 const mrDafoe = Mr_Dafoe({
   subsets: ['latin'],
@@ -21,11 +22,13 @@ export function AboutHero({ data = {} }) {
     image,
     background,
   } = data
+  const bgUrl = getStrapiMedia(background) || background?.url || heroBG
+  const imgUrl = getStrapiMedia(image) || image?.url || heroImage
 
   return (
     <section className='relative bg-slate-50/50'>
       <Image
-        src={background?.url || heroBG}
+        src={bgUrl}
         alt='Classroom background'
         className='absolute inset-0 h-full w-full object-cover object-left lg:w-2/3'
       />
@@ -62,7 +65,7 @@ export function AboutHero({ data = {} }) {
 
       <div className='relative h-96 w-full md:h-[600px] lg:absolute lg:inset-y-0 lg:right-0 lg:h-full lg:w-1/3'>
         <Image
-          src={image?.url || heroImage}
+          src={imgUrl}
           alt='Doris Chinedu-Okoro, founder of Evergreen Group of Schools'
           className='absolute inset-0 h-full w-full object-cover object-top'
           sizes='(min-width: 1024px) 33vw, 100vw'

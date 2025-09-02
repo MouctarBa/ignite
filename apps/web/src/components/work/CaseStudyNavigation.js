@@ -5,7 +5,7 @@ import { fetchAPI } from '@/lib/strapi'
 
 async function getSortedCaseStudiesAndIndex(caseStudySlug) {
   const res = await fetchAPI('/case-studies', {
-    sort: ['date:desc'],
+    sort: ['publishedAt:desc'],
     fields: ['slug', 'title'],
   })
 

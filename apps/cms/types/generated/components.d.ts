@@ -1,5 +1,45 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface SharedAboutHero extends Struct.ComponentSchema {
+  collectionName: 'components_shared_about_heroes';
+  info: {
+    displayName: 'aboutHero';
+  };
+  attributes: {
+    background: Schema.Attribute.Media<'images'>;
+    description1: Schema.Attribute.Text;
+    description2: Schema.Attribute.Text;
+    heading: Schema.Attribute.String & Schema.Attribute.Required;
+    image: Schema.Attribute.Media<'images'>;
+    name: Schema.Attribute.String;
+  };
+}
+
+export interface SharedAward extends Struct.ComponentSchema {
+  collectionName: 'components_shared_awards';
+  info: {
+    displayName: 'award';
+  };
+  attributes: {
+    alt: Schema.Attribute.String;
+    label: Schema.Attribute.String;
+    logo: Schema.Attribute.Media<'images'>;
+  };
+}
+
+export interface SharedExperience extends Struct.ComponentSchema {
+  collectionName: 'components_shared_experiences';
+  info: {
+    displayName: 'experience';
+  };
+  attributes: {
+    dates: Schema.Attribute.String;
+    description: Schema.Attribute.Text;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    website: Schema.Attribute.String;
+  };
+}
+
 export interface SharedFooter extends Struct.ComponentSchema {
   collectionName: 'components_shared_footers';
   info: {
@@ -29,6 +69,18 @@ export interface SharedFooterLink extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedLink extends Struct.ComponentSchema {
+  collectionName: 'components_shared_links';
+  info: {
+    displayName: 'link';
+  };
+  attributes: {
+    displayUrl: Schema.Attribute.String;
+    href: Schema.Attribute.String;
+    label: Schema.Attribute.String;
+  };
+}
+
 export interface SharedNavigation extends Struct.ComponentSchema {
   collectionName: 'components_shared_navigations';
   info: {
@@ -37,6 +89,18 @@ export interface SharedNavigation extends Struct.ComponentSchema {
   attributes: {
     label: Schema.Attribute.String & Schema.Attribute.Required;
     url: Schema.Attribute.String;
+  };
+}
+
+export interface SharedPressItem extends Struct.ComponentSchema {
+  collectionName: 'components_shared_press_items';
+  info: {
+    displayName: 'pressItem';
+  };
+  attributes: {
+    category: Schema.Attribute.String;
+    link: Schema.Attribute.Component<'shared.link', false>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -65,22 +129,26 @@ export interface SharedSocialLink extends Struct.ComponentSchema {
     displayName: 'socialLink';
   };
   attributes: {
-    platform: Schema.Attribute.String & Schema.Attribute.Required;
-    url: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.SetRegex<'^https://'>;
     icon: Schema.Attribute.Enumeration<
       ['Facebook', 'Instagram', 'LinkedIn', 'Email']
-    > & Schema.Attribute.Required;
+    > &
+      Schema.Attribute.Required;
+    platform: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'shared.about-hero': SharedAboutHero;
+      'shared.award': SharedAward;
+      'shared.experience': SharedExperience;
       'shared.footer': SharedFooter;
       'shared.footer-link': SharedFooterLink;
+      'shared.link': SharedLink;
       'shared.navigation': SharedNavigation;
+      'shared.press-item': SharedPressItem;
       'shared.seo': SharedSeo;
       'shared.social-link': SharedSocialLink;
     }

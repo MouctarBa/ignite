@@ -2,8 +2,7 @@ import { AboutHero } from '@/components/AboutHero'
 import { WorkExperience } from '@/components/WorkExperience'
 import { Awards } from '@/components/Awards'
 import { Press } from '@/components/Press'
-import { Footer } from '@/components/Footer'
-import { getGlobal, getPage } from '@/lib/strapi'
+import { getPage } from '@/lib/strapi'
 
 export const metadata = {
   title: 'About Doris Chinedu-Okoro',
@@ -12,8 +11,12 @@ export const metadata = {
 }
 
 export default async function AboutPage() {
-  const page = await getPage('about')
-  const global = await getGlobal()
+  let page = {}
+  try {
+    page = await getPage('about')
+  } catch (e) {
+    console.warn('About page content unavailable:', e?.message || e)
+  }
 
   return (
     <>
@@ -21,7 +24,6 @@ export default async function AboutPage() {
       <WorkExperience experiences={page.workExperiences} />
       <Awards awards={page.awards} />
       <Press items={page.pressItems} />
-      <Footer {...(global.footer || {})} />
     </>
   )
 }

@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_shared_links",
+  "info": {
+    "displayName": "link"
+  },
+  "options": {},
+  "attributes": {
+    "href": { "type": "string", "regex": "^https?://" },
+    "label": { "type": "string" },
+    "displayUrl": { "type": "string" }
+  },
+  "config": {}
+}
+

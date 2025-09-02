@@ -18,34 +18,52 @@ const uploadsUrl =
   null;
 
 
+// Build robust remotePatterns to cover common local setups and env-based hosts
+const remotePatterns = [
+  // Env-configured Strapi host
+  {
+    protocol: isLocalhost ? 'http' : 'https',
+    hostname,
+    port: isLocalhost ? port : '',
+    pathname: '/uploads/**',
+  },
+  // Always allow typical local development hosts
+  { protocol: 'http', hostname: 'localhost', port: '1337', pathname: '/uploads/**' },
+  { protocol: 'http', hostname: '127.0.0.1', port: '1337', pathname: '/uploads/**' },
+  // If using the provided HTTPS proxy (tools/dev-https-proxy.js)
+  { protocol: 'https', hostname: 'localhost', port: '1338', pathname: '/uploads/**' },
+  { protocol: 'https', hostname: '127.0.0.1', port: '1338', pathname: '/uploads/**' },
+  // Optional separate uploads host, e.g. a CDN
+  ...(uploadsUrl
+    ? (() => {
+        try {
+          const { hostname: uploadsHostname, protocol: uploadsProtocol } = new URL(uploadsUrl);
+          return [
+            {
+              protocol: uploadsProtocol.replace(':', '') || 'https',
+              hostname: uploadsHostname,
+              pathname: '/uploads/**',
+            },
+          ];
+        } catch {
+          return [];
+        }
+      })()
+    : []),
+];
+
 const nextConfig = {
   reactStrictMode: true,
+  // Make the Strapi base URL available to the client to avoid SSR/CSR mismatches
+  env: {
+    NEXT_PUBLIC_STRAPI_API_URL:
+      process.env.NEXT_PUBLIC_STRAPI_API_URL ||
+      process.env.STRAPI_API_URL ||
+      'http://localhost:1337',
+  },
   images: {
-    // Allow images from the configured Strapi instance and optional uploads host
-    remotePatterns: [
-      {
-        protocol: isLocalhost ? 'http' : 'https',
-        hostname,
-        port: isLocalhost ? port : '',
-        pathname: '/uploads/**',
-      },
-      ...(uploadsUrl
-        ? (() => {
-            try {
-              const { hostname: uploadsHostname } = new URL(uploadsUrl);
-              return [
-                {
-                  protocol: 'https',
-                  hostname: uploadsHostname,
-                  pathname: '/uploads/**',
-                },
-              ];
-            } catch {
-              return [];
-            }
-          })()
-        : []),
-    ],
+    // Allow images from the configured Strapi instance and common local patterns
+    remotePatterns,
     deviceSizes: [
       360, 414, 512, 640, 750, 828, 1080, 1200, 1536, 1920, 2048, 3840,
     ],

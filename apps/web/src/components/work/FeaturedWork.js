@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { getStrapiMedia } from '@/lib/strapi'
 import { Container } from '@/components/Container'
 import {
   WebDevelopmentIcon,
@@ -25,6 +26,8 @@ function CategoryIcon({ category, ...props }) {
 function CaseStudy({ caseStudy }) {
   const { attributes } = caseStudy;
   const firstTag = attributes.tags?.data?.[0]?.attributes?.name || 'General';
+  const thumbUrl = getStrapiMedia(attributes.thumbnail)
+  const description = attributes.description || attributes.summary || ''
 
   return (
     <div
@@ -41,21 +44,23 @@ function CaseStudy({ caseStudy }) {
           {attributes.title}
         </h3>
         <p className="mt-3 text-md leading-8 text-slate-700 sm:mt-4 sm:text-base sm:leading-8">
-          {attributes.description}
+          {description}
         </p>
         <Link href={`/work/${attributes.slug}`} className="group mt-14 flex items-center gap-2 text-sm font-medium text-sky-600 duration-200 ease-in-out hover:text-sky-700 sm:mt-16 sm:text-md">
           View Case Study
         </Link>
       </div>
-      <Link href={`/work/${attributes.slug}`} className="group aspect-h-9 aspect-w-16 relative order-1 h-full w-full overflow-hidden rounded-2xl ring-1 ring-slate-100/75 lg:order-2 lg:col-span-6 lg:rounded-l-none lg:rounded-r-none xl:col-span-7 xl:rounded-tl-2xl">
-        <Image
-          src={attributes.thumbnail.data.attributes.url}
-          alt={attributes.title}
-          className="absolute inset-0 object-cover object-top transition duration-300 group-hover:scale-105"
-          fill
-          sizes="(min-width: 1280px) 43rem, (min-width: 1024px) calc(50vw - 3.5rem), (min-width: 640px) 32rem, calc(100vw - 4.5rem)"
-        />
-      </Link>
+      {thumbUrl && (
+        <Link href={`/work/${attributes.slug}`} className="group aspect-h-9 aspect-w-16 relative order-1 h-full w-full overflow-hidden rounded-2xl ring-1 ring-slate-100/75 lg:order-2 lg:col-span-6 lg:rounded-l-none lg:rounded-r-none xl:col-span-7 xl:rounded-tl-2xl">
+          <Image
+            src={thumbUrl}
+            alt={attributes.title}
+            className="absolute inset-0 object-cover object-top transition duration-300 group-hover:scale-105"
+            fill
+            sizes="(min-width: 1280px) 43rem, (min-width: 1024px) calc(50vw - 3.5rem), (min-width: 640px) 32rem, calc(100vw - 4.5rem)"
+          />
+        </Link>
+      )}
     </div>
   )
 }
@@ -64,9 +69,11 @@ export function FeaturedWork({ caseStudies }) {
   if (!caseStudies || caseStudies.length === 0) {
     return null;
   }
-  
   // Filter for valid data before rendering
-  const validCaseStudies = caseStudies.filter(study => study && study.attributes && study.attributes.thumbnail?.data?.attributes?.url);
+  const validCaseStudies = caseStudies.filter(study => {
+    const thumb = getStrapiMedia(study?.attributes?.thumbnail)
+    return Boolean(study && study.attributes && thumb)
+  });
 
   if (validCaseStudies.length === 0) {
     return null;

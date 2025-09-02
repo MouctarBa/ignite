@@ -1,7 +1,11 @@
 import qs from 'qs';
 
+// Use one base URL consistently on server and client to avoid hydration mismatches.
+// Prefer NEXT_PUBLIC_STRAPI_API_URL so Next.js inlines it client-side.
 const STRAPI_API_URL =
-  process.env.STRAPI_API_URL || 'http://localhost:1337';
+  process.env.NEXT_PUBLIC_STRAPI_API_URL ||
+  process.env.STRAPI_API_URL ||
+  'http://localhost:1337';
 const IS_LOCALHOST =
   STRAPI_API_URL.startsWith('http://localhost') ||
   STRAPI_API_URL.startsWith('http://127.0.0.1');
@@ -48,6 +52,10 @@ export async function fetchAPI(path, urlParamsObject = {}, options = {}) {
     response = await fetch(requestUrl, mergedOptions);
   } catch (err) {
     console.error('Failed to fetch from Strapi:', err);
+    if (process.env.NODE_ENV === 'development') {
+      // In dev, fail soft so pages can render with fallbacks
+      return { data: null };
+    }
     throw new Error('Unable to reach Strapi. Please try again later.');
   }
 
@@ -57,7 +65,11 @@ export async function fetchAPI(path, urlParamsObject = {}, options = {}) {
   }
 
   if (!response.ok) {
+    console.error('Strapi request URL:', requestUrl);
     console.error('Error response from Strapi:', await response.text());
+    if (process.env.NODE_ENV === 'development') {
+      return { data: null };
+    }
     throw new Error(
       `An error occurred please try again. Status: ${response.status}`
     );
@@ -68,13 +80,18 @@ export async function fetchAPI(path, urlParamsObject = {}, options = {}) {
 }
 
 export async function getSiteSettings() {
+  // Use broad populate for compatibility across Strapi versions
   const settingsRes = await fetchAPI('/site-setting', {
-    populate: {
-      logo: '*',
-      socialLinks: { populate: '*' },
-    },
+    populate: '*',
   });
   const record = settingsRes.data;
+  const attrs = record?.attributes ?? record;
+  return attrs || {};
+}
+
+export async function getFooterSettings() {
+  const res = await fetchAPI('/footer-setting', { populate: '*' });
+  const record = res?.data;
   const attrs = record?.attributes ?? record;
   return attrs || {};
 }

@@ -1,9 +1,7 @@
 import { Tabs } from '@/components/Tabs'
 import { Container } from '@/components/Container'
-import { Footer } from '@/components/Footer'
 import Link from 'next/link'
 import { getFeaturedTags } from '@/lib/caseStudies'
-import { getGlobal } from '@/lib/strapi'
 
 export const metadata = {
   title: {
@@ -17,7 +15,6 @@ export const metadata = {
 export default async function WorkLayout({ children }) {
   // Await the tags to ensure they are fetched before rendering
   const featuredTags = await getFeaturedTags()
-  const global = await getGlobal()
 
   return (
     <>
@@ -43,7 +40,6 @@ export default async function WorkLayout({ children }) {
           </div>
         </Container>
       </section>
-      <Footer {...(global.footer || {})} />
     </>
   )
 }

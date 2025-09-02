@@ -38,7 +38,8 @@ const sampleCaseStudies = [
 
 export default async function WorkPage() {
   const caseStudiesRes = await fetchAPI('/case-studies', {
-    sort: { date: 'desc' },
+    // Strapi v5 expects sort as a string like 'field:order'
+    sort: 'publishedAt:desc',
     populate: '*', // Populate all fields to be safe
   })
 

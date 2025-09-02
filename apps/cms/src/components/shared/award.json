@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_shared_awards",
+  "info": {
+    "displayName": "award"
+  },
+  "options": {},
+  "attributes": {
+    "logo": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
+    "alt": { "type": "string" },
+    "label": { "type": "string" }
+  },
+  "config": {}
+}
+

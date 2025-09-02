@@ -1,6 +1,6 @@
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
-import { getSiteSettings } from '@/lib/strapi'
+import { getSiteSettings, getFooterSettings } from '@/lib/strapi'
 import clsx from 'clsx'
 import { Inter, Lexend, Gochi_Hand } from 'next/font/google'
 import '@/styles/globals.css'
@@ -31,7 +31,18 @@ export const metadata = {
 }
 
 export default async function RootLayout({ children }) {
-  const siteSettings = await getSiteSettings()
+  let siteSettings = {}
+  let footerSettings = {}
+  try {
+    siteSettings = await getSiteSettings()
+  } catch (e) {
+    console.warn('Site settings unavailable, using defaults:', e?.message || e)
+  }
+  try {
+    footerSettings = await getFooterSettings()
+  } catch (e) {
+    console.warn('Footer settings unavailable, using defaults:', e?.message || e)
+  }
   return (
     <html lang="en">
       <body
@@ -45,7 +56,11 @@ export default async function RootLayout({ children }) {
         <Header siteSettings={siteSettings} />
         {children}
         <Footer
-          socialLinks={siteSettings.socialLinks}
+          newsletter={footerSettings.newsletter}
+          newsletterHeading={footerSettings.newsletterHeading}
+          newsletterSubtext={footerSettings.newsletterSubtext}
+          links={footerSettings.links}
+          socialLinks={footerSettings.socialLinks || siteSettings.socialLinks}
           bookCallUrl={siteSettings.bookCallUrl}
         />
       </body>

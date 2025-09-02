@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { getStrapiMedia } from '@/lib/strapi'
 import { Container } from './Container'
 
 import awwwards from '@/images/logos/awards/awwwards.svg'
@@ -41,18 +42,21 @@ export function Awards({ awards = defaultAwards }) {
               gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
             }}
           >
-            {awards.map((award, index) => (
-              <div
-                key={`award-${index}`}
-                className="flex h-40 w-full shrink-0 items-center justify-center border border-sky-100 sm:h-48 lg:h-52"
-              >
-                <Image
-                  src={award.logo}
-                  alt={award.alt}
-                  className="relative z-10 shrink-0 scale-[.7] sm:scale-75 md:scale-90 lg:scale-75 xl:scale-100"
-                />
-              </div>
-            ))}
+            {awards.map((award, index) => {
+              const logoUrl = getStrapiMedia(award.logo) || award.logo
+              return (
+                <div
+                  key={`award-${index}`}
+                  className="flex h-40 w-full shrink-0 items-center justify-center border border-sky-100 sm:h-48 lg:h-52"
+                >
+                  <Image
+                    src={logoUrl}
+                    alt={award.alt}
+                    className="relative z-10 shrink-0 scale-[.7] sm:scale-75 md:scale-90 lg:scale-75 xl:scale-100"
+                  />
+                </div>
+              )
+            })}
           </div>
           <div className="absolute inset-0 overflow-hidden bg-gradient-radial from-slate-900/25 via-slate-900/95 to-slate-900" />
         </div>

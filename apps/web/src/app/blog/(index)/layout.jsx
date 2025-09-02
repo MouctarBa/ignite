@@ -1,5 +1,4 @@
 import { BlogHero } from '@/components/BlogHero'
-import { Footer } from '@/components/Footer'
 import { Tabs } from '@/components/Tabs'
 import { Container } from '@/components/Container'
 import { Pagination } from '@/components/Pagination'
@@ -37,7 +36,6 @@ export default async function BlogLayout({ children }) {
           <Pagination />
         </Container>
       </section>
-      <Footer />
     </>
   )
 }

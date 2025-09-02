@@ -11,40 +11,76 @@ export const metadata = {
 }
 
 async function getHomepageData() {
-  const homepageRes = await fetchAPI('/homepage', { populate: '*' })
-
-  if (homepageRes?.data) {
-    return homepageRes.data.attributes
+  // Load homepage (non-fatal)
+  let homepageRes = null
+  try {
+    homepageRes = await fetchAPI('/homepage', { populate: '*' })
+  } catch (err) {
+    console.warn('Homepage single type not reachable, falling back:', err)
   }
 
-  // Fallback for older/alternate Strapi setups
-  // - Strapi v4/v5 accept `sort` as a string like 'publishedAt:desc'
-  // - Avoid object sort syntax which can trigger 400s (e.g., `sort[date]`)
+  // Fallback: allow homepage content to come from the Page collection
+  // Create a Page with slug `home` (or `homepage`/`index`) and fill its `hero` component.
+  // We'll map `hero.heading` -> heroText and `hero.image` -> heroMedia for the Hero component.
+  let homepageAttrs = homepageRes?.data?.attributes || null
+  if (!homepageAttrs) {
+    try {
+      const pageRes = await fetchAPI('/pages', {
+        filters: { slug: { $in: ['home', 'homepage', 'index'] } },
+        populate: '*',
+      })
+      const record = pageRes?.data?.[0]
+      const pageAttrs = record?.attributes
+      if (pageAttrs) {
+        homepageAttrs = {
+          heroText: pageAttrs.hero?.heading,
+          heroMedia: pageAttrs.hero?.image,
+          footer: pageAttrs.footer,
+        }
+      }
+    } catch (err) {
+      console.warn('Page collection fallback for homepage failed:', err)
+    }
+  }
+
+  // Always fetch collections so the homepage can render content even if not embedded in single type
   let testimonialsRes = { data: [] }
   let caseStudiesRes = { data: [] }
   let postsRes = { data: [] }
   try {
     ;[testimonialsRes, caseStudiesRes, postsRes] = await Promise.all([
-      fetchAPI('/testimonials', { populate: '*' }),
+      // Optional — only if you later add a testimonial type
+      fetchAPI('/testimonials', { populate: '*' }).catch(() => ({ data: [] })),
       fetchAPI('/case-studies', {
         sort: 'publishedAt:desc',
         pagination: { limit: 4 },
         populate: '*',
-      }),
+      }).catch(() => ({ data: [] })),
       fetchAPI('/posts', {
         sort: 'publishedAt:desc',
         pagination: { limit: 3 },
         populate: '*',
-      }),
+      }).catch(() => ({ data: [] })),
     ])
   } catch (err) {
-    console.warn('Fallback content failed to load:', err)
+    console.warn('Collection content failed to load:', err)
   }
 
+  homepageAttrs = homepageAttrs || {}
+
+  // Prefer explicitly selected featured content when available
+  if (homepageAttrs.featuredCaseStudies?.data?.length) {
+    caseStudiesRes = { data: homepageAttrs.featuredCaseStudies.data }
+  }
+  if (homepageAttrs.featuredPosts?.data?.length) {
+    postsRes = { data: homepageAttrs.featuredPosts.data }
+  }
   return {
+    ...homepageAttrs,
     testimonials: testimonialsRes.data || [],
     caseStudies: caseStudiesRes.data || [],
     posts: postsRes.data || [],
+    experienceVideo: homepageAttrs.experienceVideo,
   }
 }
 
@@ -55,11 +91,13 @@ export default async function HomePage() {
     caseStudies = [],
     posts = [],
     experienceVideo,
+    heroText,
+    heroMedia,
   } = homepage;
 
   return (
     <>
-      <Hero />
+      <Hero heroText={heroText} heroMedia={heroMedia} />
       <Experience video={experienceVideo} />
       <FeaturedWork caseStudies={caseStudies} />
       <Testimonials testimonials={testimonials} />

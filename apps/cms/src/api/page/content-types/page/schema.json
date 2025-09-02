@@ -42,6 +42,46 @@
         }
       }
     },
+    "hero": {
+      "type": "component",
+      "component": "shared.about-hero",
+      "repeatable": false,
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "workExperiences": {
+      "type": "component",
+      "component": "shared.experience",
+      "repeatable": true,
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "awards": {
+      "type": "component",
+      "component": "shared.award",
+      "repeatable": true,
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "pressItems": {
+      "type": "component",
+      "component": "shared.press-item",
+      "repeatable": true,
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "email": {
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "phone": {
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "heading": {
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "subheading": {
+      "type": "text",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
     "seo": {
       "type": "component",
       "pluginOptions": {
@@ -51,7 +91,7 @@
       },
       "component": "shared.seo",
       "repeatable": false,
-      "min": 120
+      "required": false
     }
   }
 }

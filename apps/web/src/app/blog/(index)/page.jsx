@@ -4,7 +4,8 @@ import { fetchAPI } from '@/lib/strapi'
 
 export default async function BlogPage() {
   const postsRes = await fetchAPI('/posts', {
-    sort: { date: 'desc' },
+    // Strapi v5 expects sort as a string like 'field:order'
+    sort: 'publishedAt:desc',
     populate: '*'
   });
 

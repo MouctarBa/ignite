@@ -2,8 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 import { Button } from '@/components/Button'
-import { Footer } from '@/components/Footer'
-import { getGlobal, getPage } from '@/lib/strapi'
+import { getPage } from '@/lib/strapi'
 
 import image from '@/images/quote.jpg'
 
@@ -139,8 +138,12 @@ function Form() {
 }
 
 export default async function ContactPage() {
-  const page = await getPage('contact')
-  const global = await getGlobal()
+  let page = {}
+  try {
+    page = await getPage('contact')
+  } catch (e) {
+    console.warn('Contact page content unavailable:', e?.message || e)
+  }
   const email = page.email || 'Ceo@evergreenschool.com.ng'
   const phone = page.phone || '+(234) 080-6878-2862'
   const heading = page.heading || 'How can I help you? Let\u2019s get in touch'
@@ -279,7 +282,6 @@ export default async function ContactPage() {
           </div>
         </div>
       </section>
-      <Footer {...(global.footer || {})} />
     </>
   )
 }

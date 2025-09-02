@@ -31,6 +31,26 @@
           "localized": true
         }
       }
+    },
+    "experienceVideo": {
+      "type": "media",
+      "allowedTypes": ["videos"],
+      "multiple": false,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "featuredCaseStudies": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::case-study.case-study"
+    },
+    "featuredPosts": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::post.post"
     }
   }
 }

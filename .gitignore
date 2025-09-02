@@ -40,6 +40,8 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+*-dev.out
+*-dev.err
 
 # ------------------------
 # OS / Misc
@@ -47,6 +49,7 @@ lerna-debug.log*
 .DS_Store
 Thumbs.db
 *.pem
+*.exe
 *.zip
 
 # ------------------------
@@ -65,3 +68,4 @@ apps/cms/.env.local
 # ------------------------
 .vercel
 .netlify
+.git-merge-backup/
