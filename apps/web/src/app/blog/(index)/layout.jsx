@@ -3,6 +3,7 @@ import { Tabs } from '@/components/Tabs'
 import { Container } from '@/components/Container'
 import { Pagination } from '@/components/Pagination'
 import { getAllCategories } from '@/lib/articles'
+import { getBlogPage } from '@/lib/strapi'
 
 export const metadata = {
   title: {
@@ -15,10 +16,22 @@ export const metadata = {
 
 export default async function BlogLayout({ children }) {
   const categories = await getAllCategories()
+  let blog = {}
+  try {
+    blog = await getBlogPage()
+  } catch (e) {
+    console.warn('Blog page settings unavailable:', e?.message || e)
+  }
 
   return (
     <>
-      <BlogHero />
+      <BlogHero
+        heading={blog.heading}
+        subtext={blog.subtext}
+        ctaLabel={blog.ctaLabel}
+        ctaHref={blog.ctaHref}
+        background={blog.background}
+      />
       <section
         id="articles"
         className="overflow-hidden bg-white py-16 sm:py-24 lg:py-28"

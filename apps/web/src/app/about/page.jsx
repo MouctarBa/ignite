@@ -2,7 +2,7 @@ import { AboutHero } from '@/components/AboutHero'
 import { WorkExperience } from '@/components/WorkExperience'
 import { Awards } from '@/components/Awards'
 import { Press } from '@/components/Press'
-import { getPage } from '@/lib/strapi'
+import { getAboutPage } from '@/lib/strapi'
 
 export const metadata = {
   title: 'About Doris Chinedu-Okoro',
@@ -13,7 +13,7 @@ export const metadata = {
 export default async function AboutPage() {
   let page = {}
   try {
-    page = await getPage('about')
+    page = await getAboutPage()
   } catch (e) {
     console.warn('About page content unavailable:', e?.message || e)
   }

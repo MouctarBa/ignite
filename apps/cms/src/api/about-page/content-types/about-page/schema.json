@@ -1,0 +1,42 @@
+{
+  "kind": "singleType",
+  "collectionName": "about_pages",
+  "info": {
+    "singularName": "about-page",
+    "pluralName": "about-pages",
+    "displayName": "About Page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": { "localized": true }
+  },
+  "attributes": {
+    "hero": {
+      "type": "component",
+      "component": "shared.about-hero",
+      "repeatable": false,
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "workExperiences": {
+      "type": "component",
+      "component": "shared.experience",
+      "repeatable": true,
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "awards": {
+      "type": "component",
+      "component": "shared.award",
+      "repeatable": true,
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "pressItems": {
+      "type": "component",
+      "component": "shared.press-item",
+      "repeatable": true,
+      "pluginOptions": { "i18n": { "localized": true } }
+    }
+  }
+}
+

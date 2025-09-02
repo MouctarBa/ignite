@@ -113,6 +113,27 @@ export async function getGlobal() {
   return attrs || {};
 }
 
+export async function getAboutPage() {
+  const res = await fetchAPI('/about-page', { populate: '*' });
+  const record = res?.data;
+  const attrs = record?.attributes ?? record;
+  return attrs || {};
+}
+
+export async function getContactPage() {
+  const res = await fetchAPI('/contact-page', { populate: '*' });
+  const record = res?.data;
+  const attrs = record?.attributes ?? record;
+  return attrs || {};
+}
+
+export async function getBlogPage() {
+  const res = await fetchAPI('/blog-page', { populate: '*' });
+  const record = res?.data;
+  const attrs = record?.attributes ?? record;
+  return attrs || {};
+}
+
 // Updated to handle v4 and v5 response shapes
 export async function getPage(slug) {
   const pageRes = await fetchAPI('/pages', {

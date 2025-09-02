@@ -2,9 +2,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 import { Button } from '@/components/Button'
-import { getPage } from '@/lib/strapi'
+import { getContactPage, getStrapiMedia } from '@/lib/strapi'
 
-import image from '@/images/quote.jpg'
+import fallbackImage from '@/images/quote.jpg'
 
 export const metadata = {
   title: 'Contact me',
@@ -140,7 +140,7 @@ function Form() {
 export default async function ContactPage() {
   let page = {}
   try {
-    page = await getPage('contact')
+    page = await getContactPage()
   } catch (e) {
     console.warn('Contact page content unavailable:', e?.message || e)
   }
@@ -148,6 +148,7 @@ export default async function ContactPage() {
   const phone = page.phone || '+(234) 080-6878-2862'
   const heading = page.heading || 'How can I help you? Let\u2019s get in touch'
   const subheading = page.subheading || 'Your next breakthrough starts right here let\u2019s build it together.'
+  const imageUrl = getStrapiMedia(page.heroImage) || fallbackImage
   return (
     <>
       <section className='relative overflow-hidden'>
@@ -163,8 +164,8 @@ export default async function ContactPage() {
 
                 <div className='aspect-h-2 aspect-w-3 mt-12 sm:mt-16'>
                   <Image
-                    src={image}
-                    alt=''
+                    src={imageUrl}
+                    alt='Contact hero image'
                     className='h-full w-full rounded-3xl object-cover xl:left-16'
                     sizes='(min-width: 1280px) 35rem, (min-width: 1024px) calc(50vw - 5rem), (min-width: 768px) 42rem, calc(100vw - 2.5rem)'
                   />
