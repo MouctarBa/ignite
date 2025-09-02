@@ -46,26 +46,11 @@ export interface SharedFooter extends Struct.ComponentSchema {
     displayName: 'footer';
   };
   attributes: {
-    links: Schema.Attribute.Component<'shared.footer-link', true>;
+    links: Schema.Attribute.Component<'shared.link', true>;
     newsletter: Schema.Attribute.Boolean;
     newsletterHeading: Schema.Attribute.String & Schema.Attribute.Required;
     newsletterSubtext: Schema.Attribute.Text & Schema.Attribute.Required;
     socialLinks: Schema.Attribute.Component<'shared.social-link', true>;
-  };
-}
-
-export interface SharedFooterLink extends Struct.ComponentSchema {
-  collectionName: 'components_shared_footer_links';
-  info: {
-    displayName: 'footerLink';
-  };
-  attributes: {
-    href: Schema.Attribute.String & Schema.Attribute.Required;
-    label: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 50;
-      }>;
   };
 }
 
@@ -75,20 +60,13 @@ export interface SharedLink extends Struct.ComponentSchema {
     displayName: 'link';
   };
   attributes: {
+    label: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }>;
+    url: Schema.Attribute.String & Schema.Attribute.Required;
     displayUrl: Schema.Attribute.String;
-    href: Schema.Attribute.String;
-    label: Schema.Attribute.String;
-  };
-}
-
-export interface SharedNavigation extends Struct.ComponentSchema {
-  collectionName: 'components_shared_navigations';
-  info: {
-    displayName: 'navigation';
-  };
-  attributes: {
-    label: Schema.Attribute.String & Schema.Attribute.Required;
-    url: Schema.Attribute.String;
   };
 }
 
@@ -145,9 +123,7 @@ declare module '@strapi/strapi' {
       'shared.award': SharedAward;
       'shared.experience': SharedExperience;
       'shared.footer': SharedFooter;
-      'shared.footer-link': SharedFooterLink;
       'shared.link': SharedLink;
-      'shared.navigation': SharedNavigation;
       'shared.press-item': SharedPressItem;
       'shared.seo': SharedSeo;
       'shared.social-link': SharedSocialLink;

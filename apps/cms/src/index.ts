@@ -131,7 +131,7 @@ export default {
               {
                 title: 'The Teacher\u2019s Teacher on Building Great Schools',
                 category: 'Podcast',
-                link: { href: 'https://example.com/podcast', label: 'Listen to podcast', displayUrl: 'example.com' }
+                link: { url: 'https://example.com/podcast', label: 'Listen to podcast', displayUrl: 'example.com' }
               }
             ],
             publishedAt: new Date(),
