@@ -28,7 +28,7 @@ const links = [
   { label: 'Contact', href: '/contact' },
 ]
 
-export function Header() {
+export function Header({ siteSettings = {} }) {
   const pathname = usePathname()
   const [logoUrl, setLogoUrl] = useState(null)
   const [logoWidth, setLogoWidth] = useState(null)

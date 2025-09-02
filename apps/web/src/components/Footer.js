@@ -20,21 +20,28 @@ const defaultLinks = [
   { label: 'Contact', href: '/contact' },
 ]
 
+const iconMap = {
+  Facebook: FacebookIcon,
+  Instagram: InstagramIcon,
+  LinkedIn: LinkedInIcon,
+  Email: EmailIcon,
+}
+
 const defaultSocialLinks = [
   {
-    label: 'Facebook',
-    icon: FacebookIcon,
-    href: "#"
+    platform: 'Facebook',
+    icon: 'Facebook',
+    url: '#'
   },
   {
-    label: 'Instagram',
-    icon: InstagramIcon,
-    href: '#',
+    platform: 'Instagram',
+    icon: 'Instagram',
+    url: '#',
   },
   {
-    label: 'LinkedIn',
-    icon: LinkedInIcon,
-    href: '#',
+    platform: 'LinkedIn',
+    icon: 'LinkedIn',
+    url: '#',
   },
 ]
 
@@ -54,6 +61,7 @@ export function Footer({
   newsletter = true,
   links = defaultLinks,
   socialLinks = defaultSocialLinks,
+  bookCallUrl = '#',
   newsletterHeading = 'Subscribe to my educator insights',
   newsletterSubtext =
     'Join a community of forward‑thinking school leaders and receive exclusive tips on teacher training, starting and growing schools, and building student‑centred institutions delivered straight to your inbox.',
@@ -112,7 +120,7 @@ export function Footer({
                 Let’s transform education together
               </h3>
               <div className="hidden lg:block">
-                <Button href="#" variant="primary" className="mt-12">
+                <Button href={bookCallUrl} variant="primary" className="mt-12">
                   Book a call
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -135,7 +143,7 @@ export function Footer({
               </p>
 
               <Button
-                href="#"
+                href={bookCallUrl}
                 variant="primary"
                 className="mt-10 lg:hidden"
               >
@@ -154,14 +162,17 @@ export function Footer({
                 </svg>
               </Button>
               <div className="mt-16 grid w-full max-w-sm grid-cols-2 gap-3.5 sm:max-w-none sm:grid-cols-3 lg:mt-8 lg:gap-2.5 xl:gap-3.5">
-                {socialLinks.map((socialLink) => (
-                  <SocialLink
-                    key={`footer-social-link-${socialLink.label}`}
-                    icon={socialLink.icon}
-                    label={socialLink.label}
-                    href={socialLink.href}
-                  />
-                ))}
+                {socialLinks.map((socialLink) => {
+                  const Icon = iconMap[socialLink.icon] || iconMap[socialLink.platform]
+                  return (
+                    <SocialLink
+                      key={`footer-social-link-${socialLink.platform}`}
+                      icon={Icon}
+                      label={socialLink.platform}
+                      href={socialLink.url}
+                    />
+                  )
+                })}
               </div>
             </div>
           </div>

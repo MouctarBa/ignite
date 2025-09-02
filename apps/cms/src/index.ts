@@ -1,4 +1,4 @@
-// import type { Core } from '@strapi/strapi';
+import type { Core } from '@strapi/strapi';
 
 export default {
   /**
@@ -16,5 +16,22 @@ export default {
    * This gives you an opportunity to set up your data model,
    * run jobs, or perform some special logic.
    */
-  bootstrap(/* { strapi }: { strapi: Core.Strapi } */) {},
+  async bootstrap({ strapi }: { strapi: Core.Strapi }) {
+    const roleService = strapi.plugins['users-permissions'].services.role
+    const roles = await roleService.find()
+    const publicRole = roles.find((role: any) => role.type === 'public')
+    if (publicRole) {
+      await roleService.updateRole(publicRole.id, {
+        permissions: {
+          ...publicRole.permissions,
+          'api::homepage.homepage': {
+            find: true,
+          },
+          'api::site-setting.site-setting': {
+            find: true,
+          },
+        },
+      })
+    }
+  },
 };
