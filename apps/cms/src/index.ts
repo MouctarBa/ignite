@@ -17,6 +17,14 @@ export default {
    * run jobs, or perform some special logic.
    */
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
+    const shouldBootstrap =
+      process.env.NODE_ENV !== 'production' ||
+      process.env.ENABLE_DEV_BOOTSTRAP === 'true';
+
+    if (!shouldBootstrap) {
+      return;
+    }
+
     // 1) Loosen public permissions for read-only content in dev
     try {
       const roleService = (strapi as any).plugins['users-permissions'].services.role
