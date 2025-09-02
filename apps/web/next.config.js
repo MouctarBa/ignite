@@ -1,21 +1,8 @@
 /** @type {import('next').NextConfig} */
 
-const strapiUrl =
-  process.env.STRAPI_API_URL ||
-  process.env.NEXT_PUBLIC_STRAPI_API_URL ||
-  'https://localhost:1337';
-
-const { hostname, port, protocol } = new URL(strapiUrl);
+const strapiUrl = process.env.STRAPI_API_URL || 'http://localhost:1337';
+const { hostname, port } = new URL(strapiUrl);
 const isLocalhost = ['localhost', '127.0.0.1'].includes(hostname);
-if (!isLocalhost && protocol !== 'https:') {
-  throw new Error('STRAPI_API_URL must use https');
-}
-
-// Optional separate uploads host, e.g. a CDN
-const uploadsUrl =
-  process.env.STRAPI_UPLOADS_URL ||
-  process.env.NEXT_PUBLIC_STRAPI_UPLOADS_URL ||
-  null;
 
 
 const nextConfig = {
