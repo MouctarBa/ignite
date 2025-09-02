@@ -113,7 +113,7 @@ const defaultItems = [
     title: 'The Teacher\u2019s Teacher on Building Great Schools',
     category: 'Podcast',
     link: {
-      href: 'https://podcasts.example.com/doris-interview',
+      url: 'https://podcasts.example.com/doris-interview',
       label: 'Listen to podcast',
       displayUrl: 'podcasts.example.com',
     },
@@ -135,9 +135,15 @@ export function Press({ items = defaultItems }) {
         <div className="max-w-lg gap-6 mx-auto space-y-6 mt-14 columns-1 sm:mt-16 sm:max-w-2xl sm:columns-2 lg:mx-0 lg:max-w-none lg:columns-3 xl:gap-8 xl:space-y-8">
           {items.map((item, index) => {
             // Compute safe link values.  If item.link is undefined, use fallback values.
-            const href = item.link?.href ?? item.linkHref ?? '#'
+            let href = item.link?.url ?? item.linkUrl ?? '#'
             const label = item.link?.label ?? item.linkLabel ?? ''
             const displayUrl = item.link?.displayUrl ?? item.linkDisplayUrl ?? ''
+            try {
+              const parsed = new URL(href)
+              if (parsed.protocol !== 'https:') href = '#'
+            } catch {
+              href = '#'
+            }
 
             // Determine the icon based on category
             const category = item.category?.toLowerCase() || ''

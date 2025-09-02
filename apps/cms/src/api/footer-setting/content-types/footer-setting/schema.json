@@ -24,7 +24,7 @@
     },
     "links": {
       "type": "component",
-      "component": "shared.footer-link",
+      "component": "shared.link",
       "repeatable": true
     },
     "socialLinks": {

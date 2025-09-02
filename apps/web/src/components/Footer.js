@@ -13,11 +13,11 @@ import {
 } from './SocialIcons'
 
 const defaultLinks = [
-  { label: 'Home', href: '/' },
-  { label: 'About', href: '/about' },
-  // { label: 'Work', href: '/work' },
-  // { label: 'Blog', href: '/blog' },
-  { label: 'Contact', href: '/contact' },
+  { label: 'Home', url: '/' },
+  { label: 'About', url: '/about' },
+  // { label: 'Work', url: '/work' },
+  // { label: 'Blog', url: '/blog' },
+  { label: 'Contact', url: '/contact' },
 ]
 
 const iconMap = {
@@ -179,15 +179,24 @@ export function Footer({
           <hr className="mb-6 mt-12 h-px w-full border-emerald-600/90 sm:mb-10 sm:mt-16" />
           <div className="flex flex-col items-center justify-between md:flex-row">
             <div className="flex items-center gap-6">
-              {links.map((link, index) => (
-                <Link
-                  key={`footer-link-${index}`}
-                  href={link.href}
-                  className="text-base font-medium text-slate-100 duration-200 ease-in-out hover:text-white"
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {links.map((link, index) => {
+                let href = link.url || '#'
+                try {
+                  const parsed = new URL(href)
+                  if (parsed.protocol !== 'https:') href = '#'
+                } catch {
+                  if (!href.startsWith('/')) href = '#'
+                }
+                return (
+                  <Link
+                    key={`footer-link-${index}`}
+                    href={href}
+                    className="text-base font-medium text-slate-100 duration-200 ease-in-out hover:text-white"
+                  >
+                    {link.label}
+                  </Link>
+                )
+              })}
             </div>
             <p className="mt-8 text-base text-slate-300/90 md:mt-0">
               {copyright}
