@@ -27,6 +27,8 @@ const remotePatterns = [
   // Always allow typical local development hosts
   { protocol: 'http', hostname: 'localhost', port: '1337', pathname: '/uploads/**' },
   { protocol: 'http', hostname: '127.0.0.1', port: '1337', pathname: '/uploads/**' },
+  // Sanity CDN images
+  { protocol: 'https', hostname: 'cdn.sanity.io', pathname: '/images/**' },
   // Optional separate uploads host, e.g. a CDN
   ...(uploadsUrl
     ? (() => {
