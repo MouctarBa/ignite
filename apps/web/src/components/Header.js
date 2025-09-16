@@ -37,7 +37,7 @@ export function Header({ siteSettings = {} }) {
   let bookCallUrl = '#'
   try {
     const parsed = new URL(siteSettings.bookCallUrl)
-    if (parsed.protocol === 'https:') {
+    if (['http:', 'https:'].includes(parsed.protocol)) {
       bookCallUrl = parsed.toString()
     }
   } catch {}

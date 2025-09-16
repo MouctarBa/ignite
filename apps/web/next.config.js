@@ -1,15 +1,13 @@
 /** @type {import('next').NextConfig} */
 
+// Default to HTTP for development.
 const strapiUrl =
   process.env.STRAPI_API_URL ||
   process.env.NEXT_PUBLIC_STRAPI_API_URL ||
-  'https://localhost:1337';
+  'http://localhost:1337';
 
 const { hostname, port, protocol } = new URL(strapiUrl);
 const isLocalhost = ['localhost', '127.0.0.1'].includes(hostname);
-if (!isLocalhost && protocol !== 'https:') {
-  throw new Error('STRAPI_API_URL must use https');
-}
 
 // Optional separate uploads host, e.g. a CDN
 const uploadsUrl =
@@ -17,22 +15,18 @@ const uploadsUrl =
   process.env.NEXT_PUBLIC_STRAPI_UPLOADS_URL ||
   null;
 
-
-// Build robust remotePatterns to cover common local setups and env-based hosts
+// Build remotePatterns allowing the actual protocol from STRAPI URL (http or https)
 const remotePatterns = [
   // Env-configured Strapi host
   {
-    protocol: isLocalhost ? 'http' : 'https',
+    protocol: protocol.replace(':', ''),
     hostname,
-    port: isLocalhost ? port : '',
+    port: isLocalhost ? (port || (protocol === 'http:' ? '80' : '443')) : '',
     pathname: '/uploads/**',
   },
   // Always allow typical local development hosts
   { protocol: 'http', hostname: 'localhost', port: '1337', pathname: '/uploads/**' },
   { protocol: 'http', hostname: '127.0.0.1', port: '1337', pathname: '/uploads/**' },
-  // If using the provided HTTPS proxy (tools/dev-https-proxy.js)
-  { protocol: 'https', hostname: 'localhost', port: '1338', pathname: '/uploads/**' },
-  { protocol: 'https', hostname: '127.0.0.1', port: '1338', pathname: '/uploads/**' },
   // Optional separate uploads host, e.g. a CDN
   ...(uploadsUrl
     ? (() => {

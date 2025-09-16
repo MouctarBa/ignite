@@ -48,9 +48,10 @@ async function getHomepageData() {
   let caseStudiesRes = { data: [] }
   let postsRes = { data: [] }
   try {
-    ;[testimonialsRes, caseStudiesRes, postsRes] = await Promise.all([
-      // Optional — only if you later add a testimonial type
-      fetchAPI('/testimonials', { populate: '*' }).catch(() => ({ data: [] })),
+    const ENABLE_TESTIMONIALS =
+      (process.env.NEXT_PUBLIC_ENABLE_TESTIMONIALS || process.env.ENABLE_TESTIMONIALS) === 'true'
+
+    const promises = [
       fetchAPI('/case-studies', {
         sort: 'publishedAt:desc',
         pagination: { limit: 4 },
@@ -61,7 +62,20 @@ async function getHomepageData() {
         pagination: { limit: 3 },
         populate: '*',
       }).catch(() => ({ data: [] })),
-    ])
+    ]
+
+    if (ENABLE_TESTIMONIALS) {
+      promises.unshift(
+        fetchAPI('/testimonials', { populate: '*' }).catch(() => ({ data: [] }))
+      )
+    }
+
+    const results = await Promise.all(promises)
+    if (ENABLE_TESTIMONIALS) {
+      ;[testimonialsRes, caseStudiesRes, postsRes] = results
+    } else {
+      ;[caseStudiesRes, postsRes] = results
+    }
   } catch (err) {
     console.warn('Collection content failed to load:', err)
   }

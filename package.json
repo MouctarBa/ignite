@@ -9,9 +9,6 @@
     "dev:web": "npm run dev --workspace apps/web",
     "dev:cms": "npm run develop --workspace apps/cms",
     "dev": "concurrently -k \"npm:dev:web\" \"npm:dev:cms\"",
-    "dev:proxy": "node tools/dev-https-proxy.js",
-    "dev:web:secure": "node tools/dev-web-with-ca.js",
-    "dev:secure": "concurrently -k \"npm:dev:web:secure\" \"npm:dev:cms\" \"npm:dev:proxy\"",
     "build": "npm run build --workspaces",
     "lint": "npm run lint --workspaces --if-present"
   },

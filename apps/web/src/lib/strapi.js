@@ -2,16 +2,11 @@ import qs from 'qs';
 
 // Use one base URL consistently on server and client to avoid hydration mismatches.
 // Prefer NEXT_PUBLIC_STRAPI_API_URL so Next.js inlines it client-side.
+// During development, allow plain HTTP.
 const STRAPI_API_URL =
   process.env.NEXT_PUBLIC_STRAPI_API_URL ||
   process.env.STRAPI_API_URL ||
   'http://localhost:1337';
-const IS_LOCALHOST =
-  STRAPI_API_URL.startsWith('http://localhost') ||
-  STRAPI_API_URL.startsWith('http://127.0.0.1');
-if (!IS_LOCALHOST && !STRAPI_API_URL.startsWith('https://')) {
-  throw new Error('STRAPI_API_URL must use https');
-}
 const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN;
 const REVALIDATE_INTERVAL = parseInt(
   process.env.REVALIDATE_INTERVAL ?? '60',
@@ -156,12 +151,8 @@ export function getStrapiMedia(media) {
   if (!url) return null
   try {
     const absoluteUrl = new URL(url, STRAPI_API_URL)
-    const isLocalhost = ['localhost', '127.0.0.1'].includes(
-      absoluteUrl.hostname,
-    )
-    if (absoluteUrl.protocol === 'https:' || isLocalhost) {
-      return absoluteUrl.toString()
-    }
+    // In development, allow HTTP or HTTPS and any host.
+    return absoluteUrl.toString()
   } catch {}
   return null
 }

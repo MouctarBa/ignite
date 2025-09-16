@@ -140,7 +140,7 @@ export function Press({ items = defaultItems }) {
             const displayUrl = item.link?.displayUrl ?? item.linkDisplayUrl ?? ''
             try {
               const parsed = new URL(href)
-              if (parsed.protocol !== 'https:') href = '#'
+              if (!['http:', 'https:'].includes(parsed.protocol)) href = '#'
             } catch {
               href = '#'
             }

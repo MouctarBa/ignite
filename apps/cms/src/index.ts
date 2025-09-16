@@ -36,6 +36,11 @@ export default {
             ...publicRole.permissions,
             'api::homepage.homepage': { find: true },
             'api::site-setting.site-setting': { find: true },
+            // Allow read access for common public pages in dev
+            'api::about-page.about-page': { find: true },
+            'api::contact-page.contact-page': { find: true },
+            'api::blog-page.blog-page': { find: true },
+            'api::footer-setting.footer-setting': { find: true },
             'api::page.page': { find: true },
             'api::post.post': { find: true },
             'api::tag.tag': { find: true },
@@ -88,6 +93,36 @@ export default {
               ],
             },
             publishedAt: new Date(),
+          },
+        })
+      } else {
+        const rec = Array.isArray(existingHomepage) ? existingHomepage[0] : existingHomepage
+        if (rec && !rec.publishedAt) {
+          try {
+            await es.update('api::homepage.homepage' as any, rec.id, { data: { publishedAt: new Date() } } as any)
+          } catch {}
+        }
+      }
+
+      // Footer Settings (single type) used by frontend layout
+      const existingFooter = await es.findMany('api::footer-setting.footer-setting')
+      if (!existingFooter || (Array.isArray(existingFooter) && existingFooter.length === 0)) {
+        await es.create('api::footer-setting.footer-setting', {
+          data: {
+            newsletter: true,
+            newsletterHeading: 'Subscribe to my educator insights',
+            newsletterSubtext:
+              'Join a community of forward-thinking school leaders and receive exclusive tips delivered straight to your inbox.',
+            links: [
+              { label: 'Home', url: 'http://localhost:3000/' },
+              { label: 'About', url: 'http://localhost:3000/about' },
+              { label: 'Contact', url: 'http://localhost:3000/contact' },
+            ],
+            socialLinks: [
+              { platform: 'Facebook', url: 'https://facebook.com/yourpage', icon: 'Facebook' },
+              { platform: 'Instagram', url: 'https://instagram.com/yourpage', icon: 'Instagram' },
+              { platform: 'LinkedIn', url: 'https://linkedin.com/in/yourprofile', icon: 'LinkedIn' },
+            ],
           },
         })
       }
@@ -153,6 +188,80 @@ export default {
             publishedAt: new Date(),
           },
         })
+      }
+
+      // Single type - About Page (used by frontend /about)
+      const aboutSingle = await es.findMany('api::about-page.about-page')
+      if (!aboutSingle || (Array.isArray(aboutSingle) && aboutSingle.length === 0)) {
+        await es.create('api::about-page.about-page', {
+          data: {
+            hero: {
+              heading: 'About Me',
+              description1:
+                "Doris Chinedu-Okoro is known as 'The Teacher\u2019s Teacher' for a reason. As the CEO of Evergreen Group of Schools and a sought-after school startup consultant, she has helped countless educators turn their vision into thriving, student-centred institutions. Her mission is to elevate teaching standards and build the next generation of leaders.",
+              description2:
+                "Doris is also the convenor of the South East Educators Conference (SEEC), the first conference of its kind dedicated to professional development for teachers in the region. When she's not mentoring educators, she's writing and speaking about education reform, running the Evergreen Foundation, or participating in executive programmes at Lagos Business School. Join her journey to transform education for all.",
+              name: 'Doris Chinedu-Okoro'
+            },
+            workExperiences: [
+              {
+                name: 'CEO & Founder, Evergreen Group of Schools',
+                dates: '2008 \u2013 Present',
+                description:
+                  'Doris founded Evergreen Group of Schools with the goal of providing high-quality, values-based education in Nigeria. Under her leadership, Evergreen has grown into a multi-campus institution known for its holistic approach to learning.',
+                website: 'https://evergreenschools.com.ng/'
+              },
+              {
+                name: 'School Startup Consultant',
+                dates: '2012 \u2013 Present',
+                description:
+                  'As a consultant, Doris helps entrepreneurs and communities design, launch and manage new schools. Her expertise covers curriculum development, teacher training and sustainable school governance.',
+                website: 'https://evergreenschools.com.ng/consult/'
+              },
+            ],
+            awards: [
+              { alt: 'Investors in People Silver Award (ISLC)', label: 'Investors in People Silver Award (ISLC), 2022' },
+              { alt: 'Lighthouse Christian Chapel Award of Excellence', label: 'Lighthouse Christian Chapel Award of Excellence, 2021' },
+            ],
+            pressItems: [
+              {
+                title: 'The Teacher\u2019s Teacher on Building Great Schools',
+                category: 'Podcast',
+                link: { url: 'https://example.com/podcast', label: 'Listen to podcast', displayUrl: 'example.com' }
+              }
+            ],
+            publishedAt: new Date(),
+          },
+        })
+      } else {
+        const rec = Array.isArray(aboutSingle) ? aboutSingle[0] : aboutSingle
+        if (rec && !rec.publishedAt) {
+          try {
+            await es.update('api::about-page.about-page' as any, rec.id, { data: { publishedAt: new Date() } } as any)
+          } catch {}
+        }
+      }
+
+      // Single type - Contact Page (used by frontend /contact)
+      const contactSingle = await es.findMany('api::contact-page.contact-page')
+      if (!contactSingle || (Array.isArray(contactSingle) && contactSingle.length === 0)) {
+        await es.create('api::contact-page.contact-page', {
+          data: {
+            heading: 'How can I help you? Let\u2019s get in touch',
+            subheading:
+              'Your next breakthrough starts right here \u2014 let\u2019s build it together.',
+            email: 'Ceo@evergreenschool.com.ng',
+            phone: '+(234) 080-6878-2862',
+            publishedAt: new Date(),
+          },
+        })
+      } else {
+        const rec = Array.isArray(contactSingle) ? contactSingle[0] : contactSingle
+        if (rec && !rec.publishedAt) {
+          try {
+            await es.update('api::contact-page.contact-page' as any, rec.id, { data: { publishedAt: new Date() } } as any)
+          } catch {}
+        }
       }
 
       // 3) Seed tags, posts and case studies with media

@@ -183,7 +183,7 @@ export function Footer({
                 let href = link.url || '#'
                 try {
                   const parsed = new URL(href)
-                  if (parsed.protocol !== 'https:') href = '#'
+                  if (!['http:', 'https:'].includes(parsed.protocol)) href = '#'
                 } catch {
                   if (!href.startsWith('/')) href = '#'
                 }

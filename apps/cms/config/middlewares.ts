@@ -5,16 +5,7 @@ export default ({ env }) => {
     'CORS_ORIGIN',
     isProd ? 'https://localhost:3000' : 'http://localhost:3000,https://localhost:3000',
   )
-  // In production, enforce https-only origins. In dev, allow http for localhost.
-  if (isProd) {
-    const allHttps = origin
-      .split(',')
-      .map((o) => o.trim())
-      .every((o) => o.startsWith('https://'))
-    if (!allHttps) {
-      throw new Error('CORS_ORIGIN must use https in production')
-    }
-  }
+  // Allow both HTTP and HTTPS origins; no HTTPS-only enforcement.
   return [
     'strapi::logger',
     'strapi::errors',

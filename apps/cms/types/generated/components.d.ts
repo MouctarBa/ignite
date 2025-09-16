@@ -60,13 +60,13 @@ export interface SharedLink extends Struct.ComponentSchema {
     displayName: 'link';
   };
   attributes: {
+    displayUrl: Schema.Attribute.String;
     label: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 50;
       }>;
     url: Schema.Attribute.String & Schema.Attribute.Required;
-    displayUrl: Schema.Attribute.String;
   };
 }
 
