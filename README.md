@@ -66,6 +66,36 @@ npm run start
 
 Ensure `STRAPI_API_URL` and `STRAPI_API_TOKEN` are configured in your deployment environment for secure content fetching.
 
+## Sanity (Optional)
+
+This branch (`feature/sanity-migration`) adds a Sanity provider alongside Strapi so you can compare both without losing Strapi integration.
+
+Configuration (apps/web):
+
+1) Set these env vars (e.g., in `apps/web/.env.local`):
+
+```
+CMS_PROVIDER=sanity
+NEXT_PUBLIC_SANITY_PROJECT_ID=<your-project-id>
+NEXT_PUBLIC_SANITY_DATASET=production
+# Optional if you need drafts/private data server-side
+SANITY_READ_TOKEN=<read-token>
+# Optional revalidation (seconds)
+REVALIDATE_INTERVAL=60
+```
+
+2) Start the web app as usual:
+
+```
+npm run dev:web
+```
+
+Notes:
+- The web app selects the CMS at runtime via `CMS_PROVIDER` (defaults to `strapi`).
+- Sanity queries use GROQ via `@sanity/client`. Image URLs are built for the Sanity CDN. `next.config.js` allows `cdn.sanity.io/images/**`.
+- The data shape is adapted to match existing Strapi-based components (e.g., posts, case studies) so most pages render without changes. Populate/filters are mapped for common cases (slug lookup, sorting, limits).
+- If a document isn’t found in Sanity, pages fail soft and render fallbacks similar to the Strapi path.
+
 ## File Structure
 
 All of the code for this template is located in the `/src` folder. The folder contains the following:
