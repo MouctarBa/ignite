@@ -10,7 +10,9 @@ export function Experience({
   items = [],
   differentiator,
 }) {
-  const videoUrl = getStrapiMedia(video)
+  const localVideo = '/videos/ignite-doris-chinedu-okoro-UT8GZaaV8fQ-360p.mp4'
+  const localPoster = '/videos/ignite-doris-chinedu-okoro-UT8GZaaV8fQ-poster.jpg'
+  const videoUrl = (typeof video === 'string' ? video : getStrapiMedia(video)) || localVideo
 
   const defaultTitlePrefix = "I'm your"
   const defaultTitleHighlight = 'partner in'
@@ -290,6 +292,7 @@ export function Experience({
                 <video
                   className="object-cover object-center w-full h-full rounded-3xl"
                   src={videoUrl}
+                  poster={localPoster}
                   controls
                   preload="metadata"
                   playsInline

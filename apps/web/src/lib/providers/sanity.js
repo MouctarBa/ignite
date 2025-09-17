@@ -285,8 +285,27 @@ export async function getPage(slug) {
 }
 
 export function getStrapiMedia(media) {
+  // 1) Support Strapi-like shapes
   const url = media?.data?.attributes?.url ?? media?.url
   if (url) return url
+
+  // 2) Support Sanity file assets (e.g., videos)
+  //    Accept shapes like { _type: 'file', asset: { _ref: 'file-<id>-<ext>' } }
+  //    or direct asset refs { _ref: 'file-<id>-<ext>' }
+  const assetRef = media?.asset?._ref || media?._ref || media?._id
+  if (assetRef && typeof assetRef === 'string' && assetRef.startsWith('file-') && projectId && dataset) {
+    // file-<id>-<ext>
+    const parts = assetRef.split('-')
+    if (parts.length >= 3) {
+      const id = parts[1]
+      const ext = parts[2]
+      if (id && ext) {
+        return `https://cdn.sanity.io/files/${projectId}/${dataset}/${id}.${ext}`
+      }
+    }
+  }
+
+  // 3) Fallback to image URL builder for Sanity images
   try {
     return urlForImage(media)
   } catch {
