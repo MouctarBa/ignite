@@ -96,11 +96,20 @@ export function Header({ siteSettings = {} }) {
                 <Link
                   key={`${link.label}-mobile`}
                   href={link.href}
-                  className='block text-base font-semibold text-white duration-200 hover:text-slate-900'
+                  className='block text-base font-semibold text-slate-900 duration-200 hover:text-emerald-700'
                 >
                   {link.label}
                 </Link>
               ))}
+              {/* Mobile CTA */}
+              <Button
+                href={bookCallUrl}
+                variant='primary'
+                className='mt-4 w-full justify-center'
+                aria-label={siteSettings.bookCallLabel || 'Book a call'}
+              >
+                {siteSettings.bookCallLabel || 'Book a call'}
+              </Button>
             </div>
           </div>
         </PopoverPanel>
@@ -153,7 +162,8 @@ export function Header({ siteSettings = {} }) {
             ))}
           </div>
           <div className='flex items-center'>
-            <Button variant='primary' href={bookCallUrl}>
+            {/* Hide desktop CTA on small screens; shown inside hamburger */}
+            <Button variant='primary' href={bookCallUrl} className='hidden md:inline-flex'>
               {siteSettings.bookCallLabel || 'Book a call'}
             </Button>
             <div className='ml-4 md:hidden'>
