@@ -5,7 +5,7 @@ import { CaseStudyTestimonial } from '@/components/work/CaseStudyTestimonial'
 import { CaseStudyNavigation } from '@/components/work/CaseStudyNavigation'
 import { Footer } from '@/components/Footer'
 import ReactMarkdown from 'react-markdown'
-import { fetchAPI, getGlobal } from '@/lib/strapi'
+import { fetchAPI, getGlobal, getWorkPage } from '@/lib/strapi'
 
 export async function generateStaticParams() {
   const caseStudies = await fetchAPI('/case-studies');
@@ -21,6 +21,17 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function CaseStudyPage({ params }) {
+  try {
+    const work = await getWorkPage()
+    if (work.enabled === false) {
+      return (
+        <main className="p-6">
+          <h1 className="text-2xl font-semibold">Case studies coming soon</h1>
+          <p className="mt-2 text-slate-600">This case study is not available right now.</p>
+        </main>
+      )
+    }
+  } catch {}
   const caseStudiesRes = await fetchAPI('/case-studies', {
     filters: { slug: { $eq: params.slug } },
     populate: {

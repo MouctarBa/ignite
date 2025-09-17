@@ -65,7 +65,7 @@ function CaseStudy({ caseStudy }) {
   )
 }
 
-export function FeaturedWork({ caseStudies }) {
+export function FeaturedWork({ caseStudies, heading, subtext }) {
   if (!caseStudies || caseStudies.length === 0) {
     return null;
   }
@@ -84,11 +84,10 @@ export function FeaturedWork({ caseStudies }) {
       <Container>
         <div className="text-center">
           <h2 className="font-display text-4xl font-semibold text-slate-900 sm:text-5xl">
-            Explore my recent education projects
+            {heading || 'Explore my recent education projects'}
           </h2>
           <p className="mx-auto mt-4 max-w-md text-lg leading-8 text-slate-700 sm:mt-5">
-            These case studies highlight how I support schools and teachers to
-            achieve excellence.
+            {subtext || 'These case studies highlight how I support schools and teachers to achieve excellence.'}
           </p>
         </div>
         <div className="relative mx-auto mt-16 max-w-xl space-y-16 lg:mx-0 lg:max-w-none">

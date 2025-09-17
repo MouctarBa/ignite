@@ -38,14 +38,14 @@ const defaultCompanies = [
   },
 ];
 
-export function WorkExperience({ experiences = defaultCompanies }) {
+export function WorkExperience({ experiences = defaultCompanies, headingPrefix = 'My journey in', headingHighlight = 'education', headingSuffix = 'leadership', intro = 'From launching my first Evergreen campus to convening SEEC, each step has been driven by my passion for teacher excellence and student-centred learning.', journeyNote = 'I am currently here in my journey' }) {
   return (
     <section className="relative overflow-x-clip bg-white py-16 sm:py-24 lg:py-32">
       <Container className="relative">
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
           <div>
             <h2 className="font-display text-4xl font-semibold text-slate-900 sm:text-5xl">
-              My journey in{" "}
+              {headingPrefix}{" "}
               <span className="relative whitespace-nowrap">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -65,14 +65,12 @@ export function WorkExperience({ experiences = defaultCompanies }) {
                   </defs>
                 </svg>
 
-                <span className="relative text-sky-700">education</span>
+                <span className="relative text-sky-700">{headingHighlight}</span>
               </span>{" "}
-              leadership
+              {headingSuffix}
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-slate-700">
-              From launching my first Evergreen campus to convening SEEC, each
-              step has been driven by my passion for teacher excellence and
-              student‑centred learning.
+              {intro}
             </p>
           </div>
           <ol className="col-span-2 grid grid-cols-1 gap-x-8 gap-y-10 text-base leading-7 text-gray-600 sm:grid-cols-2 lg:gap-y-16">
@@ -104,7 +102,7 @@ export function WorkExperience({ experiences = defaultCompanies }) {
             ))}
             <li className="relative mt-3 flex h-fit items-center font-writing text-2xl tracking-wide text-slate-600 sm:left-14 sm:top-6 sm:mt-0 sm:block sm:text-[27px] md:left-20">
               <span className="inline-block w-52 max-w-[240px] transform sm:w-auto sm:-rotate-12">
-                I am currently here in my journey
+                {journeyNote}
               </span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"

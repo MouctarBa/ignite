@@ -22,6 +22,16 @@ export default async function BlogLayout({ children }) {
   } catch (e) {
     console.warn('Blog page settings unavailable:', e?.message || e)
   }
+  if (blog.enabled === false) {
+    return (
+      <section className="py-24">
+        <Container>
+          <h1 className="text-center font-display text-4xl font-semibold text-slate-900 sm:text-5xl">Blog coming soon</h1>
+          <p className="mx-auto mt-4 max-w-2xl text-center text-lg text-slate-700">This section is temporarily unavailable.</p>
+        </Container>
+      </section>
+    )
+  }
 
   return (
     <>
@@ -38,7 +48,7 @@ export default async function BlogLayout({ children }) {
       >
         <Container>
           <h2 className="text-center font-display text-4xl font-semibold text-slate-900 sm:text-5xl">
-            Latest Articles
+            {blog.latestArticlesHeading || 'Latest Articles'}
           </h2>
           <Tabs
             tabs={categories}

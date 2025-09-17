@@ -1,4 +1,4 @@
-import { fetchAPI } from '@/lib/strapi'
+import { fetchAPI, getWorkPage } from '@/lib/strapi'
 import { CaseStudies } from '@/components/work/CaseStudies'
 
 const sampleCaseStudies = [
@@ -37,8 +37,19 @@ const sampleCaseStudies = [
 ]
 
 export default async function WorkPage() {
+  try {
+    const work = await getWorkPage()
+    if (work.enabled === false) {
+      return (
+        <div className='py-16 text-center'>
+          <h2 className='text-2xl font-semibold'>Case studies coming soon</h2>
+          <p className='mt-2 text-slate-600'>This section is temporarily unavailable.</p>
+        </div>
+      )
+    }
+  } catch {}
   const caseStudiesRes = await fetchAPI('/case-studies', {
-    // Strapi v5 expects sort as a string like 'field:order'
+    // Sorting is a string like 'field:order'
     sort: 'publishedAt:desc',
     populate: '*', // Populate all fields to be safe
   })

@@ -5,6 +5,8 @@ import clsx from 'clsx'
 import { Inter, Lexend, Gochi_Hand } from 'next/font/google'
 import '@/styles/globals.css'
 
+export const revalidate = parseInt(process.env.REVALIDATE_INTERVAL ?? '60', 10)
+
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
@@ -59,9 +61,14 @@ export default async function RootLayout({ children }) {
           newsletter={footerSettings.newsletter}
           newsletterHeading={footerSettings.newsletterHeading}
           newsletterSubtext={footerSettings.newsletterSubtext}
+          newsletterButtonLabel={footerSettings.newsletterButtonLabel}
+          newsletterEmailPlaceholder={footerSettings.newsletterEmailPlaceholder}
           links={footerSettings.links}
           socialLinks={footerSettings.socialLinks || siteSettings.socialLinks}
           bookCallUrl={siteSettings.bookCallUrl}
+          bookCallLabel={siteSettings.bookCallLabel}
+          ctaHeading={footerSettings.ctaHeading}
+          ctaText={footerSettings.ctaText}
         />
       </body>
     </html>

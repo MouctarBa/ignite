@@ -1,5 +1,5 @@
 import { CaseStudies } from '@/components/work/CaseStudies'
-import { fetchAPI } from '@/lib/strapi'
+import { fetchAPI, getWorkPage } from '@/lib/strapi'
 
 const parseTag = (tagSlug) => {
   const tag = tagSlug
@@ -26,6 +26,17 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function WorkCategoryPage({ params }) {
+  try {
+    const work = await getWorkPage()
+    if (work.enabled === false) {
+      return (
+        <div className='py-16 text-center'>
+          <h2 className='text-2xl font-semibold'>Case studies coming soon</h2>
+          <p className='mt-2 text-slate-600'>This section is temporarily unavailable.</p>
+        </div>
+      )
+    }
+  } catch {}
   const tagName = parseTag(params.tagSlug)
 
   const caseStudiesRes = await fetchAPI('/case-studies', {

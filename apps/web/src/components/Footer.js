@@ -62,9 +62,14 @@ export function Footer({
   links = defaultLinks,
   socialLinks = defaultSocialLinks,
   bookCallUrl = '#',
+  bookCallLabel = 'Book a call',
   newsletterHeading = 'Subscribe to my educator insights',
   newsletterSubtext =
-    'Join a community of forward‑thinking school leaders and receive exclusive tips on teacher training, starting and growing schools, and building student‑centred institutions delivered straight to your inbox.',
+    'Join a community of forward-thinking school leaders and receive exclusive tips on teacher training, starting and growing schools, and building student-centred institutions delivered straight to your inbox.',
+  newsletterButtonLabel = 'Subscribe',
+  newsletterEmailPlaceholder = 'Enter your email',
+  ctaHeading = "Let's transform education together",
+  ctaText = "I'm currently partnering with educators, entrepreneurs and NGOs across Africa to build exemplary schools and empower teachers. Let's connect and discuss how I can support your vision.",
   copyright = `© ${new Date().getFullYear()} Bah Digital Designs. All rights reserved.`,
 }) {
   return (
@@ -97,14 +102,14 @@ export function Footer({
                     type="email"
                     className="h-14 w-full rounded-full border-0 bg-white/10 py-3.5 pl-5 pr-32 text-sm leading-5 text-emeral-50 placeholder-emerald-100/90 outline-none ring-1 ring-white/25 backdrop-blur  duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-white/30 sm:pl-6"
                     required
-                    placeholder="Enter your email"
+                    placeholder={typeof newsletterEmailPlaceholder !== 'undefined' ? newsletterEmailPlaceholder : 'Enter your email'}
                     autoComplete="email"
                   />
                   <button
                     type="submit"
                     className="absolute right-1.5 top-1.5 inline-flex h-11 items-center rounded-full bg-emerald-900 px-5 py-3 text-sm font-semibold text-emerald-50 outline-none transition duration-200 ease-in-out hover:bg-emerald-800 focus:outline-none sm:px-7 sm:text-md"
                   >
-                    Subscribe
+                    {typeof newsletterButtonLabel !== 'undefined' ? newsletterButtonLabel : 'Subscribe'}
                   </button>
                 </form>
               </div>
@@ -117,11 +122,11 @@ export function Footer({
           <div className="mx-auto grid max-w-xl items-center gap-5 lg:mx-0 lg:max-w-none lg:grid-cols-12 lg:gap-12 xl:gap-20">
             <div className="lg:col-span-7">
               <h3 className="text-center font-display text-4xl font-semibold text-white sm:text-5xl lg:max-w-xl lg:text-left">
-                Let’s transform education together
+                {ctaHeading}
               </h3>
               <div className="hidden lg:block">
                 <Button href={bookCallUrl} variant="primary" className="mt-12">
-                  Book a call
+                  {bookCallLabel}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
@@ -139,7 +144,7 @@ export function Footer({
             </div>
             <div className="flex flex-col items-center lg:col-span-5 lg:items-start">
               <p className="text-center text-lg text-slate-50 lg:max-w-sm lg:text-left">
-                I’m currently partnering with educators, entrepreneurs and NGOs across Africa to build exemplary schools and empower teachers. Let’s connect and discuss how I can support your vision.
+                {ctaText}
               </p>
 
               <Button
@@ -147,7 +152,7 @@ export function Footer({
                 variant="primary"
                 className="mt-10 lg:hidden"
               >
-                Book a call
+                {bookCallLabel}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
@@ -162,14 +167,22 @@ export function Footer({
                 </svg>
               </Button>
               <div className="mt-16 grid w-full max-w-sm grid-cols-2 gap-3.5 sm:max-w-none sm:grid-cols-3 lg:mt-8 lg:gap-2.5 xl:gap-3.5">
-                {socialLinks.map((socialLink) => {
-                  const Icon = iconMap[socialLink.icon] || iconMap[socialLink.platform]
+                {(Array.isArray(socialLinks) ? socialLinks : []).map((socialLink, idx) => {
+                  const Icon = iconMap[socialLink?.icon] || iconMap[socialLink?.platform]
+                  let href = socialLink?.url || socialLink?.href || '#'
+                  try {
+                    const parsed = new URL(href)
+                    if (!['http:', 'https:'].includes(parsed.protocol)) href = '#'
+                  } catch {
+                    if (!href.startsWith('/')) href = '#'
+                  }
+                  const label = socialLink?.platform || socialLink?.label || 'Social'
                   return (
                     <SocialLink
-                      key={`footer-social-link-${socialLink.platform}`}
+                      key={`footer-social-link-${idx}`}
                       icon={Icon}
-                      label={socialLink.platform}
-                      href={socialLink.url}
+                      label={label}
+                      href={href}
                     />
                   )
                 })}
@@ -180,7 +193,7 @@ export function Footer({
           <div className="flex flex-col items-center justify-between md:flex-row">
             <div className="flex items-center gap-6">
               {links.map((link, index) => {
-                let href = link.url || '#'
+                let href = link.url || link.href || '#'
                 try {
                   const parsed = new URL(href)
                   if (!['http:', 'https:'].includes(parsed.protocol)) href = '#'
@@ -207,3 +220,6 @@ export function Footer({
     </section>
   )
 }
+
+
+

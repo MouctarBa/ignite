@@ -31,7 +31,7 @@ const companies = [
     { name: 'Instagram', logo: instagram },
 ];
 
-export function Testimonials({ testimonials }) {
+export function Testimonials({ testimonials, heading, companiesHeading, partnerLogos }) {
   const [swiperIndex, setSwiperIndex] = useState(0);
   const [carouselProgress, setCarouselProgress] = useState(0);
 
@@ -52,7 +52,7 @@ export function Testimonials({ testimonials }) {
         <div className="grid max-w-xl gap-6 mx-auto lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:gap-16">
           <div>
             <h2 className="text-4xl font-semibold font-display text-slate-900 sm:text-5xl">
-              Here’s what past clients are saying about me
+              {heading || "Here's what past clients are saying about me"}
             </h2>
             <div className="mt-10 hidden h-[7px] w-full rounded-full bg-slate-200 lg:mt-16 lg:block">
               <div
@@ -142,12 +142,16 @@ export function Testimonials({ testimonials }) {
       <Container className="mt-16 sm:mt-20">
         <div className="max-w-xl mx-auto lg:mx-0 lg:max-w-none">
           <h3 className="relative max-w-xs font-writing text-[27px] tracking-wide text-slate-600">
-            These are some <span className="text-sky-700">companies</span> I have worked with
+            {companiesHeading || (
+              <>
+                These are some <span className="text-sky-700">companies</span> I have worked with
+              </>
+            )}
           </h3>
           <div className="grid grid-cols-2 gap-2.5 mt-12 sm:mt-14 lg:mt-20 lg:grid-cols-5">
-            {companies.map((company) => (
-              <div key={company.name} className="flex items-center justify-center py-7 border rounded-xl shadow-sm border-slate-200/90 shadow-sky-100/50">
-                <Image src={company.logo} alt={company.name} unoptimized className="w-32 h-auto sm:w-36" />
+            {(partnerLogos && partnerLogos.length ? partnerLogos : companies).map((logo, idx) => (
+              <div key={`company-${idx}`} className="flex items-center justify-center py-7 border rounded-xl shadow-sm border-slate-200/90 shadow-sky-100/50">
+                <Image src={logo} alt="Company logo" unoptimized className="w-32 h-auto sm:w-36" />
               </div>
             ))}
           </div>

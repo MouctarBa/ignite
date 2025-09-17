@@ -2,13 +2,15 @@
   "name": "ignite",
   "private": true,
   "workspaces": [
-    "apps/*",
+    "apps/web",
+    "apps/studio",
     "packages/*"
   ],
   "scripts": {
     "dev:web": "npm run dev --workspace apps/web",
-    "dev:cms": "npm run develop --workspace apps/cms",
-    "dev": "concurrently -k \"npm:dev:web\" \"npm:dev:cms\"",
+    "dev:studio": "npm run dev --workspace apps/studio",
+    "dev": "concurrently -k \"npm:dev:web\" \"npm:dev:studio\"",
+    "seed:sanity": "node apps/studio/scripts/seed.js",
     "build": "npm run build --workspaces",
     "lint": "npm run lint --workspaces --if-present"
   },
