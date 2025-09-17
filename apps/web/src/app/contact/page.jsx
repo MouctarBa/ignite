@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { Button } from '@/components/Button'
 import { getContactPage, getStrapiMedia } from '@/lib/strapi'
 
-import fallbackImage from '@/images/quote.jpg'
+import fallbackImage from '@/images/contact.jpg'
 
 export const metadata = {
   title: 'Contact me',
