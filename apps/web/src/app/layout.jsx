@@ -4,6 +4,7 @@ import { getSiteSettings, getFooterSettings } from '@/lib/strapi'
 import clsx from 'clsx'
 import { Inter, Lexend, Gochi_Hand } from 'next/font/google'
 import '@/styles/globals.css'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 export const revalidate = parseInt(process.env.REVALIDATE_INTERVAL ?? '60', 10)
 
@@ -70,6 +71,7 @@ export default async function RootLayout({ children }) {
           ctaHeading={footerSettings.ctaHeading}
           ctaText={footerSettings.ctaText}
         />
+        <SpeedInsights />
       </body>
     </html>
   )
