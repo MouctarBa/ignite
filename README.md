@@ -26,29 +26,21 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to view the website.
 
-## Strapi Configuration
+## Sanity Configuration
 
-Create an `.env.local` file in the project root with the following variables:
+This branch uses Sanity as the only CMS.
 
-```bash
-STRAPI_API_URL=https://localhost:1337
-STRAPI_API_TOKEN=<your-private-token>
-REVALIDATE_INTERVAL=60 # revalidate Strapi fetches every 60 seconds
+Create an `.env.local` in `apps/web` with:
+
 ```
-
-Plain HTTP (`http://`) should be used only for legacy or strictly local development scenarios.
-
-The token should be kept server-side for security. Avoid using the
-`NEXT_PUBLIC_` prefix so it is not exposed to the browser.
-If `STRAPI_API_TOKEN` is omitted, the site will attempt public requests only and
-log a warning, but private content will not load.
-
-Make sure your Strapi instance is running and reachable at the
-`STRAPI_API_URL`. If the API is unavailable or the token is invalid the site
-will fail to fetch content and you may see `500` errors in development.
-
-`REVALIDATE_INTERVAL` controls how often Next.js will revalidate data
-fetched from Strapi. The default is `60` seconds.
+NEXT_PUBLIC_CMS_PROVIDER=sanity
+NEXT_PUBLIC_SANITY_PROJECT_ID=<your-project-id>
+NEXT_PUBLIC_SANITY_DATASET=production
+# Optional if you need drafts/private data server-side
+SANITY_READ_TOKEN=<read-token>
+# Optional revalidation (seconds)
+REVALIDATE_INTERVAL=60
+```
 
 ## Production Build
 
@@ -66,35 +58,15 @@ npm run start
 
 Ensure `STRAPI_API_URL` and `STRAPI_API_TOKEN` are configured in your deployment environment for secure content fetching.
 
-## Sanity (Optional)
+## Sanity Studio
 
-This branch (`feature/sanity-migration`) adds a Sanity provider alongside Strapi so you can compare both without losing Strapi integration.
-
-Configuration (apps/web):
-
-1) Set these env vars (e.g., in `apps/web/.env.local`):
+Run the Studio to manage content:
 
 ```
-CMS_PROVIDER=sanity
-NEXT_PUBLIC_SANITY_PROJECT_ID=<your-project-id>
-NEXT_PUBLIC_SANITY_DATASET=production
-# Optional if you need drafts/private data server-side
-SANITY_READ_TOKEN=<read-token>
-# Optional revalidation (seconds)
-REVALIDATE_INTERVAL=60
+npm run dev:studio
 ```
 
-2) Start the web app as usual:
-
-```
-npm run dev:web
-```
-
-Notes:
-- The web app selects the CMS at runtime via `CMS_PROVIDER` (defaults to `strapi`).
-- Sanity queries use GROQ via `@sanity/client`. Image URLs are built for the Sanity CDN. `next.config.js` allows `cdn.sanity.io/images/**`.
-- The data shape is adapted to match existing Strapi-based components (e.g., posts, case studies) so most pages render without changes. Populate/filters are mapped for common cases (slug lookup, sorting, limits).
-- If a document isn’t found in Sanity, pages fail soft and render fallbacks similar to the Strapi path.
+See `apps/studio/README.md` for details and seeding instructions.
 
 ## File Structure
 

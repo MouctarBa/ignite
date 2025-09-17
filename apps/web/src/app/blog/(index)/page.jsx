@@ -1,20 +1,23 @@
 import { BlogGrid } from '@/components/blog/BlogGrid'
 import { samplePosts } from '@/components/blog/FeaturedPosts'
-import { fetchAPI } from '@/lib/strapi'
+import { fetchAPI, getBlogPage } from '@/lib/strapi'
 
 export default async function BlogPage() {
-  const postsRes = await fetchAPI('/posts', {
-    // Strapi v5 expects sort as a string like 'field:order'
+  const [blog, postsRes] = await Promise.all([
+    getBlogPage().catch(() => ({})),
+    fetchAPI('/posts', {
+    // Sorting is a string like 'field:order'
     sort: 'publishedAt:desc',
     populate: '*'
-  });
+  })
+  ]);
 
   // Safety check to ensure data was fetched correctly
   if (!postsRes || !postsRes.data) {
     return (
       <div className="text-center py-10">
         <h2 className="text-xl font-semibold">Could not load posts.</h2>
-        <p className="mt-2">Please ensure you have published posts in Strapi and that API permissions are correct.</p>
+        <p className="mt-2">Please ensure you have published posts in Sanity and that API permissions/token are correct.</p>
       </div>
     );
   }
@@ -46,8 +49,11 @@ export default async function BlogPage() {
     <section className="py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <h1 className="text-center font-display text-4xl font-semibold text-slate-900 sm:text-5xl">
-          Educational Insights
+          {blog?.title || 'Educational Insights'}
         </h1>
+        {blog?.description && (
+          <p className="mx-auto mt-5 max-w-3xl text-center text-lg text-slate-600">{blog.description}</p>
+        )}
         <BlogGrid posts={finalPosts} />
       </div>
     </section>

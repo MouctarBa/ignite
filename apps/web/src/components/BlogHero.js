@@ -27,11 +27,20 @@ export function BlogHero({ heading, subtext, ctaLabel, ctaHref, background }) {
   )
   const text = subtext || 'Scroll down and subscribe in the footer to get exclusive insights on school leadership, teacher training, and community impact.'
   const label = ctaLabel || 'Go to Subscribe'
-  const href = ctaHref || '#newsletter'
+  let href = ctaHref || '#newsletter'
+  try {
+    const parsed = new URL(href)
+    if (!['http:', 'https:'].includes(parsed.protocol)) {
+      // allow relative anchors/paths
+      if (!(typeof href === 'string' && (href.startsWith('/') || href.startsWith('#')))) href = '#'
+    }
+  } catch {
+    if (!(typeof href === 'string' && (href.startsWith('/') || href.startsWith('#')))) href = '#'
+  }
   return (
     <section className="relative overflow-hidden bg-white lg:px-8">
       <Container className="relative bg-slate-50 py-16 sm:py-24 lg:rounded-b-3xl lg:py-32">
-        <Image src={bg} alt="" className="absolute inset-0 h-full w-full opacity-75" />
+        <Image src={bg} alt="" className="absolute inset-0 opacity-75 object-cover" fill sizes="100vw" />
         <div className="relative flex flex-col items-center justify-center">
           <h1 className="text-center font-display text-5xl font-semibold text-slate-900 sm:text-6xl">{title}</h1>
           <p className="mx-auto mt-10 max-w-xl text-center text-lg leading-8 text-slate-700">{text}</p>

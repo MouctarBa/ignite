@@ -19,13 +19,14 @@ import logo from '@/images/logo-image.png'
 import logoIcon from '@/images/logo-icon.png'
 import { getStrapiMedia } from '@/lib/strapi'
 
-const links = [
-  { label: 'Home', href: '/' },
-  { label: 'About', href: '/about' },
-  // { label: 'Work', href: '/work' },
-  // { label: 'Blog', href: '/blog' },
-  { label: 'Contact', href: '/contact' },
-]
+const DEFAULT_ORDER = ['home', 'about', 'work', 'blog', 'contact']
+const PAGE_META = {
+  home: { label: 'Home', href: '/' },
+  about: { label: 'About', href: '/about' },
+  work: { label: 'Work', href: '/work' },
+  blog: { label: 'Blog', href: '/blog' },
+  contact: { label: 'Contact', href: '/contact' },
+}
 
 export function Header({ siteSettings = {} }) {
   const pathname = usePathname()
@@ -34,6 +35,25 @@ export function Header({ siteSettings = {} }) {
   const logoUrl = media
   const logoWidth = mediaAttrs.width
   const logoHeight = mediaAttrs.height
+  // Build nav from fixed pages and visibility toggles
+  function buildNav(site) {
+    const pages = DEFAULT_ORDER
+    const links = []
+    for (const key of pages) {
+      // Respect page visibility toggles
+      if (key === 'home' && site?.showHome === false) continue
+      if (key === 'about' && site?.showAbout === false) continue
+      if (key === 'work' && (site?.showWork === false || site?.enableWork === false)) continue
+      if (key === 'blog' && (site?.showBlog === false || site?.enableBlog === false)) continue
+      if (key === 'contact' && site?.showContact === false) continue
+      const meta = PAGE_META[key]
+      if (!meta) continue
+      links.push({ label: meta.label, href: meta.href })
+    }
+    return links
+  }
+  const navLinks = buildNav(siteSettings)
+
   let bookCallUrl = '#'
   try {
     const parsed = new URL(siteSettings.bookCallUrl)
@@ -72,7 +92,7 @@ export function Header({ siteSettings = {} }) {
         >
           <div>
             <div className='flex flex-col space-y-4'>
-              {links.map((link) => (
+              {navLinks.map((link) => (
                 <Link
                   key={`${link.label}-mobile`}
                   href={link.href}
@@ -117,7 +137,7 @@ export function Header({ siteSettings = {} }) {
             </Link>
           </div>
           <div className='hidden items-center md:flex md:space-x-6 lg:space-x-8'>
-            {links.map((link) => (
+            {navLinks.map((link) => (
               <Link
                 key={`${link.label}-desktop`}
                 href={link.href}
@@ -134,7 +154,7 @@ export function Header({ siteSettings = {} }) {
           </div>
           <div className='flex items-center'>
             <Button variant='primary' href={bookCallUrl}>
-              Book a call
+              {siteSettings.bookCallLabel || 'Book a call'}
             </Button>
             <div className='ml-4 md:hidden'>
               <MobileNav />

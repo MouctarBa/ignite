@@ -6,7 +6,9 @@ const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || process.env.SANIT
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || process.env.SANITY_DATASET || 'production'
 const apiVersion = process.env.SANITY_API_VERSION || '2025-01-01'
 const token = process.env.SANITY_READ_TOKEN || undefined
-const useCdn = !token && process.env.NODE_ENV === 'production'
+const useCdn = (process.env.SANITY_USE_CDN ?? (
+  !token && process.env.NODE_ENV === 'production' ? 'true' : 'false'
+)) === 'true'
 
 export const sanityClient = projectId
   ? createClient({ projectId, dataset, apiVersion, useCdn, token })
@@ -66,8 +68,24 @@ export async function fetchAPI(path, params = {}, _options = {}) {
         const doc = await sanityClient.fetch(groq`*[_type == "contactPage"][0]`)
         return { data: doc ? wrapRecord(doc) : null }
       }
+      case '/work-experience': {
+        const doc = await sanityClient.fetch(groq`*[_type == "workExperience"][0]`)
+        return { data: doc ? wrapRecord(doc) : null }
+      }
+      case '/awards': {
+        const doc = await sanityClient.fetch(groq`*[_type == "awardsSection"][0]`)
+        return { data: doc ? wrapRecord(doc) : null }
+      }
+      case '/press': {
+        const doc = await sanityClient.fetch(groq`*[_type == "pressSection"][0]`)
+        return { data: doc ? wrapRecord(doc) : null }
+      }
       case '/blog-page': {
         const doc = await sanityClient.fetch(groq`*[_type == "blogPage"][0]`)
+        return { data: doc ? wrapRecord(doc) : null }
+      }
+      case '/work-page': {
+        const doc = await sanityClient.fetch(groq`*[_type == "workPage"][0]`)
         return { data: doc ? wrapRecord(doc) : null }
       }
       case '/pages': {
@@ -106,7 +124,7 @@ export async function fetchAPI(path, params = {}, _options = {}) {
             groq`*[_type == "caseStudy" && slug.current == $slug][0]{
               _id, title, description, slug, publishedAt,
               tags[]->{name},
-              "image": coverImage
+              "thumbnail": coverImage
             }`,
             { slug: slugEq }
           )
@@ -116,15 +134,24 @@ export async function fetchAPI(path, params = {}, _options = {}) {
           groq`*[_type == "caseStudy"] | order(publishedAt ${order})[0...$limit]{
             _id, title, description, slug, publishedAt,
             tags[]->{name},
-            "image": coverImage
+            "thumbnail": coverImage
           }`,
           { limit: limit ?? 100 }
         )
         return wrapList(list.map(mapCaseStudy))
       }
       case '/testimonials': {
-        const list = await sanityClient.fetch(groq`*[_type == "testimonial"][0...$limit]`, { limit: limit ?? 50 })
-        return wrapList(list)
+        const list = await sanityClient.fetch(
+          groq`*[_type == "testimonial"][0...$limit]{
+            _id,
+            author,
+            role,
+            quote,
+            avatar
+          }`,
+          { limit: limit ?? 50 }
+        )
+        return wrapList(list.map(mapTestimonial))
       }
       default:
         console.warn('Sanity provider: unhandled path', path)
@@ -154,8 +181,21 @@ function mapCaseStudy(cs) {
     tags: {
       data: (cs?.tags || []).map((t, idx) => ({ id: t?._id || idx, attributes: { name: t?.name } })),
     },
-    image: cs?.image
-      ? { data: { attributes: { url: urlForImage(cs.image) } } }
+    // The site expects Strapi-like 'thumbnail' shape for case studies
+    thumbnail: cs?.thumbnail
+      ? { data: { attributes: { url: urlForImage(cs.thumbnail) } } }
+      : null,
+  }
+}
+
+function mapTestimonial(t) {
+  return {
+    headline: t?.headline || undefined,
+    content: t?.content || t?.quote || undefined,
+    author_name: t?.author || undefined,
+    author_role: t?.role || undefined,
+    author_image: t?.avatar
+      ? { data: { attributes: { url: urlForImage(t.avatar) } } }
       : null,
   }
 }
@@ -188,6 +228,34 @@ export async function getAboutPage() {
   return attrs || {}
 }
 
+export async function getWorkExperience() {
+  const res = await fetchAPI('/work-experience')
+  const record = res?.data
+  const attrs = record?.attributes ?? record
+  return attrs || {}
+}
+
+export async function getAwardsSection() {
+  const res = await fetchAPI('/awards')
+  const record = res?.data
+  const attrs = record?.attributes ?? record
+  // Map awards logos to URL
+  if (attrs?.awards?.length) {
+    attrs.awards = attrs.awards.map((a) => ({
+      ...a,
+      logo: urlForImage(a.logo) || a.logo,
+    }))
+  }
+  return attrs || {}
+}
+
+export async function getPressSection() {
+  const res = await fetchAPI('/press')
+  const record = res?.data
+  const attrs = record?.attributes ?? record
+  return attrs || {}
+}
+
 export async function getContactPage() {
   const res = await fetchAPI('/contact-page')
   const record = res?.data
@@ -202,6 +270,13 @@ export async function getBlogPage() {
   return attrs || {}
 }
 
+export async function getWorkPage() {
+  const res = await fetchAPI('/work-page')
+  const record = res?.data
+  const attrs = record?.attributes ?? record
+  return attrs || {}
+}
+
 export async function getPage(slug) {
   const res = await fetchAPI('/pages', { filters: { slug: { $eq: slug } } })
   const rec = res?.data?.[0]
@@ -211,6 +286,10 @@ export async function getPage(slug) {
 
 export function getStrapiMedia(media) {
   const url = media?.data?.attributes?.url ?? media?.url
-  return url || null
+  if (url) return url
+  try {
+    return urlForImage(media)
+  } catch {
+    return null
+  }
 }
-

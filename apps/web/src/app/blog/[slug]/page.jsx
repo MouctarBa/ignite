@@ -6,7 +6,7 @@ import remarkGfm from 'remark-gfm'
 import rehypeSanitize from 'rehype-sanitize'
 import { notFound } from 'next/navigation'
 
-import { fetchAPI, getGlobal } from '@/lib/strapi'
+import { fetchAPI, getGlobal, getBlogPage } from '@/lib/strapi'
 import { PostFooter } from './PostFooter'
 import { Footer } from '@/components/Footer'
 import {
@@ -42,6 +42,17 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function BlogPost({ params }) {
+  try {
+    const blog = await getBlogPage()
+    if (blog.enabled === false) {
+      return (
+        <main className="p-6">
+          <h1 className="text-2xl font-semibold">Blog coming soon</h1>
+          <p className="mt-2 text-slate-600">This post is not available right now.</p>
+        </main>
+      )
+    }
+  } catch {}
   const postsRes = await fetchAPI('/posts', {
     filters: { slug: { $eq: params.slug } },
     populate: { image: { fields: ['url', 'alternativeText'] } }

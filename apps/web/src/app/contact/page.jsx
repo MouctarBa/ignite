@@ -12,7 +12,15 @@ export const metadata = {
     "Whether you're looking to kickstart a new web project or simply want to say hi, feel free to get in touch.",
 }
 
-function Form() {
+function Form({
+  namePlaceholder,
+  emailPlaceholder,
+  phonePlaceholder,
+  messagePlaceholder,
+  servicesHeading,
+  servicesOptions,
+  submitLabel,
+}) {
   const inputClasses =
     'block w-full px-4 py-4 leading-4 transition-colors duration-200 ease-in-out border-0 shadow-sm rounded-xl bg-slate-50 text-md text-slate-900 shadow-sky-100/50 ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 hover:bg-white focus:border-0 focus:bg-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-sky-600/60'
 
@@ -88,49 +96,22 @@ function Form() {
   return (
     <form action='#' method='POST' className='mt-10'>
       <div className='space-y-7'>
-        <TextField
-          label='Name'
-          name='name'
-          autoComplete='name'
-          placeholder='Adebayo Adedji'
-        />
-        <TextField
-          label='Email'
-          name='email'
-          type='email'
-          autoComplete='email'
-          placeholder='adebayo@email.com'
-        />
-        <TextField
-          label='Phone'
-          name='phone'
-          type='tel'
-          autoComplete='tel'
-          aria-describedby='phone-description'
-          placeholder='+1 (800) 123-4567'
-        />
-        <TextField
-          label='Message'
-          name='message'
-          type='textarea'
-          aria-describedby='message-description'
-          placeholder='Tell me a little bit about your request...'
-        />
+        <TextField label='Name' name='name' autoComplete='name' placeholder={namePlaceholder} />
+        <TextField label='Email' name='email' type='email' autoComplete='email' placeholder={emailPlaceholder} />
+        <TextField label='Phone' name='phone' type='tel' autoComplete='tel' aria-describedby='phone-description' placeholder={phonePlaceholder} />
+        <TextField label='Message' name='message' type='textarea' aria-describedby='message-description' placeholder={messagePlaceholder} />
         <fieldset>
-          <legend className='block text-md font-medium leading-6 text-slate-900'>
-            Expected services
-          </legend>
+          <legend className='block text-md font-medium leading-6 text-slate-900'>{servicesHeading}</legend>
           <div className='mt-4 space-y-3'>
-            <CheckboxField label='Coaching' name='coaching' />
-            <CheckboxField label='Mentorship' name='mentorship' />
-            <CheckboxField label='Speaking' name='speacking' />
-            <CheckboxField label='Other' name='other' />
+            {(servicesOptions || ['Coaching', 'Mentorship', 'Speaking', 'Other']).map((label, idx) => (
+              <CheckboxField key={`service-${idx}`} label={label} name={`service-${idx}`} />
+            ))}
           </div>
         </fieldset>
       </div>
       <div className='mt-10 border-t border-slate-200 pt-8'>
         <Button type='submit' variant="secondary" className='w-full text-base sm:text-lg'>
-          Get started
+          {submitLabel || 'Get started'}
         </Button>
       </div>
     </form>
@@ -148,6 +129,19 @@ export default async function ContactPage() {
   const phone = page.phone || '+(234) 080-6878-2862'
   const heading = page.heading || 'How can I help you? Let\u2019s get in touch'
   const subheading = page.subheading || 'Your next breakthrough starts right here let\u2019s build it together.'
+  const reachMeHeading = page.reachMeHeading || 'You can reach me at the following'
+  const emailTitle = page.emailTitle || 'Email me'
+  const emailSubtitle = page.emailSubtitle || 'I will usually email you back within an hour'
+  const callTitle = page.callTitle || 'Call me'
+  const callSubtitle = page.callSubtitle || "I'm available weekdays from 9AM to 5PM"
+  const formHeading = page.formHeading || 'Fill out the form below to get started'
+  const submitLabel = page.submitLabel || 'Get started'
+  const namePlaceholder = page.namePlaceholder || 'Adebayo Adedji'
+  const emailPlaceholder = page.emailPlaceholder || 'adebayo@email.com'
+  const phonePlaceholder = page.phonePlaceholder || '+1 (800) 123-4567'
+  const messagePlaceholder = page.messagePlaceholder || 'Tell me a little bit about your request...'
+  const servicesHeading = page.servicesHeading || 'Expected services'
+  const servicesOptions = Array.isArray(page.servicesOptions) && page.servicesOptions.length ? page.servicesOptions : ['Coaching', 'Mentorship', 'Speaking', 'Other']
   const imageUrl = getStrapiMedia(page.heroImage) || fallbackImage
   return (
     <>
@@ -162,18 +156,18 @@ export default async function ContactPage() {
                   <span className='ml-4 sm:ml-6'>👋</span>
                 </h2>
 
-                <div className='aspect-h-2 aspect-w-3 mt-12 sm:mt-16'>
+                <div className='relative aspect-h-2 aspect-w-3 mt-12 sm:mt-16'>
                   <Image
                     src={imageUrl}
                     alt='Contact hero image'
-                    className='h-full w-full rounded-3xl object-cover xl:left-16'
+                    className='rounded-3xl object-cover xl:left-16'
+                    fill
                     sizes='(min-width: 1280px) 35rem, (min-width: 1024px) calc(50vw - 5rem), (min-width: 768px) 42rem, calc(100vw - 2.5rem)'
                   />
                 </div>
                 <div className='relative mt-14 h-fit w-fit font-writing text-2xl tracking-wide text-slate-600 sm:mt-20 sm:text-[27px]'>
                   <span className='inline-block w-52 max-w-[220px] transform sm:w-auto sm:-rotate-6'>
-                    You can <span className='text-sky-700'>reach me</span> at
-                    the following
+                    {reachMeHeading}
                   </span>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -221,10 +215,10 @@ export default async function ContactPage() {
                     </svg>
                     <div className='sm:pt-0.5'>
                       <p className='font-display text-lg text-slate-900'>
-                        Email me
+                        {emailTitle}
                       </p>
                       <p className='mt-1.5 text-base text-slate-600 sm:mt-2'>
-                        I will usually email you back within an hour
+                        {emailSubtitle}
                       </p>
                       <Link
                         href={`mailto:${email}`}
@@ -252,10 +246,10 @@ export default async function ContactPage() {
 
                     <div className='sm:pt-0.5'>
                       <p className='font-display text-lg text-slate-900'>
-                        Call me
+                        {callTitle}
                       </p>
                       <p className='mt-2 text-base text-slate-600'>
-                        I’m available weekdays from 9AM to 5PM
+                        {callSubtitle}
                       </p>
                       <Link
                         href={`tel:${phone}`}
@@ -272,12 +266,20 @@ export default async function ContactPage() {
             <div className='px-5 py-16 sm:px-6 sm:py-24 lg:col-span-6 lg:pl-0 lg:pr-8 lg:pt-32 xl:col-span-5 xl:col-start-8 2xl:pr-0'>
               <div className='mx-auto max-w-lg lg:mr-0'>
                 <h3 className='font-display text-3xl font-semibold text-slate-900'>
-                  Fill out the form below to get started
+                  {formHeading}
                 </h3>
                 <p className='mt-4 text-lg text-slate-600'>
                   {subheading}
                 </p>
-                <Form />
+                <Form
+                  namePlaceholder={namePlaceholder}
+                  emailPlaceholder={emailPlaceholder}
+                  phonePlaceholder={phonePlaceholder}
+                  messagePlaceholder={messagePlaceholder}
+                  servicesHeading={servicesHeading}
+                  servicesOptions={servicesOptions}
+                  submitLabel={submitLabel}
+                />
               </div>
             </div>
           </div>

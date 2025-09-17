@@ -1,17 +1,16 @@
-// Proxy to selected CMS provider. Default is Strapi; set CMS_PROVIDER=sanity to switch.
-import * as strapi from './providers/strapi'
+// CMS provider: Sanity only (Strapi removed on this branch)
 import * as sanity from './providers/sanity'
 
-const providerName = (process.env.NEXT_PUBLIC_CMS_PROVIDER || process.env.CMS_PROVIDER || 'strapi').toLowerCase()
-const provider = providerName === 'sanity' ? sanity : strapi
-
-export const fetchAPI = provider.fetchAPI
-export const getSiteSettings = provider.getSiteSettings
-export const getFooterSettings = provider.getFooterSettings
-export const getGlobal = provider.getGlobal
-export const getAboutPage = provider.getAboutPage
-export const getContactPage = provider.getContactPage
-export const getBlogPage = provider.getBlogPage
-export const getPage = provider.getPage
-export const getStrapiMedia = provider.getStrapiMedia
-
+export const fetchAPI = sanity.fetchAPI
+export const getSiteSettings = sanity.getSiteSettings
+export const getFooterSettings = sanity.getFooterSettings
+export const getGlobal = sanity.getGlobal
+export const getAboutPage = sanity.getAboutPage
+export const getContactPage = sanity.getContactPage
+export const getBlogPage = sanity.getBlogPage
+export const getWorkPage = sanity.getWorkPage
+export const getPage = sanity.getPage
+export const getStrapiMedia = sanity.getStrapiMedia
+export const getWorkExperience = sanity.getWorkExperience
+export const getAwardsSection = sanity.getAwardsSection
+export const getPressSection = sanity.getPressSection

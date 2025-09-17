@@ -1,5 +1,5 @@
 import { BlogGrid } from '@/components/blog/BlogGrid'
-import { fetchAPI } from '@/lib/strapi'
+import { fetchAPI, getBlogPage } from '@/lib/strapi'
 
 const parseCategory = (categorySlug) => {
   const category = categorySlug
@@ -24,6 +24,17 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function BlogCategoryPage({ params }) {
+  try {
+    const blog = await getBlogPage()
+    if (blog.enabled === false) {
+      return (
+        <div className='py-16 text-center'>
+          <h2 className='text-2xl font-semibold'>Blog coming soon</h2>
+          <p className='mt-2 text-slate-600'>This section is temporarily unavailable.</p>
+        </div>
+      )
+    }
+  } catch {}
   const categoryName = parseCategory(params.categorySlug)
 
   const postsRes = await fetchAPI('/posts', {

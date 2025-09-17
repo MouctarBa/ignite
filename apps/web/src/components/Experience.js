@@ -1,8 +1,43 @@
 import { Container } from './Container'
 import { getStrapiMedia } from '@/lib/strapi'
 
-export function Experience({ video }) {
+export function Experience({
+  video,
+  titlePrefix,
+  titleHighlight,
+  titleSuffix,
+  introText,
+  items = [],
+  differentiator,
+}) {
   const videoUrl = getStrapiMedia(video)
+
+  const defaultTitlePrefix = "I'm your"
+  const defaultTitleHighlight = 'partner in'
+  const defaultTitleSuffix = 'transformational education'
+  const defaultIntroText =
+    'Experience the advantage of an all-inclusive educational consulting solution, where excellence, efficiency and responsiveness converge to build thriving schools and empower teachers.'
+  const defaultItems = [
+    {
+      icon: 'Excellence',
+      title: 'Excellence',
+      description:
+        'I take pride in doing things well. From curriculum design to teacher training, every project is delivered with the highest standards.',
+    },
+    {
+      icon: 'Efficiency',
+      title: 'Efficiency',
+      description:
+        'I bring structured processes and practical frameworks that save time and create measurable results in schools and classrooms.',
+    },
+    {
+      icon: 'Responsiveness',
+      title: 'Responsiveness',
+      description:
+        'I work closely with teams, adapt quickly, and respond to emerging needs to keep your goals on track.',
+    },
+  ]
+  const defaultDifferentiator = 'What differentiates me from others'
 
   return (
     <section className="relative pt-20 pb-40 overflow-hidden bg-gradient-to-b from-slate-50 via-slate-50 to-white sm:pt-24 lg:pb-64 lg:pt-32">
@@ -10,34 +45,25 @@ export function Experience({ video }) {
         <div className="grid items-center max-w-xl gap-6 mx-auto lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:gap-16">
           <div>
             <h2 className="text-4xl font-semibold font-display text-slate-900 sm:text-5xl">
-              I&apos;m your{' '}
+              {titlePrefix || defaultTitlePrefix}{' '}
               <span className="relative whitespace-nowrap">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="249"
-                  height="22"
-                  viewBox="0 0 249 22"
-                  fill="currentColor"
-                  className="absolute left-0 top-2/3 h-[0.6em] w-full fill-sky-200/75"
-                >
+                <svg xmlns="http://www.w3.org/2000/svg" width="249" height="22" viewBox="0 0 249 22" fill="currentColor" className="absolute left-0 top-2/3 h-[0.6em] w-full fill-sky-200/75">
                   <path d="M247.564 18.5808C241.772 13.3568 232.473 12.7526 225.225 11.4427C217.124 9.97398 208.996 8.57034 200.846 7.46096C186.542 5.51305 172.169 4.08857 157.79 3.01565C126.033 0.645858 94.0929 0.0338786 62.3387 2.36982C42.1785 3.85419 22.008 5.90888 2.32917 10.8464C-0.0155171 11.4349 0.207047 14.6719 2.6889 14.7084C22.0261 14.9896 41.3866 12.6406 60.7109 11.8568C79.9471 11.0808 99.2274 10.6719 118.484 10.9558C142.604 11.3125 166.719 12.8334 190.722 15.5156C199.956 16.5469 209.195 17.6016 218.411 18.8255C227.864 20.0808 237.259 22 246.767 20.7422C247.709 20.6198 248.426 19.3568 247.564 18.5808Z" />
                 </svg>
-
-                <span className="relative text-sky-700">partner in</span>
+                <span className="relative text-sky-700">{titleHighlight || defaultTitleHighlight}</span>
               </span>{' '}
-              transformational education
+              {titleSuffix || defaultTitleSuffix}
             </h2>
           </div>
           <div>
-            <p className="text-lg leading-8 text-slate-700">
-Experience the advantage of an all‑inclusive educational consulting solution, where excellence, efficiency and responsiveness converge to build thriving schools and empower teachers.
-            </p>
+            <p className="text-lg leading-8 text-slate-700">{introText || defaultIntroText}</p>
           </div>
         </div>
         <div className="grid max-w-xl mx-auto mt-16 gap-14 lg:mx-0 lg:mt-24 lg:max-w-none lg:grid-cols-12 lg:gap-7">
           <div className="max-w-lg lg:col-span-4">
             <ul className="relative">
-              <li>
+              {(items && items.length ? items : defaultItems).map((it, idx) => (
+              <li key={`exp-item-${idx}`}>
                 <div className="relative pb-24 lg:pb-20">
                   <span
                     className="absolute -ml-px border border-dashed bottom-4 left-10 top-24 border-slate-300"
@@ -79,16 +105,14 @@ Experience the advantage of an all‑inclusive educational consulting solution, 
                       </span>
                     </div>
                     <div>
-                      <h3 className="text-xl font-medium font-display text-slate-900 ">
-                        Excellence
-                      </h3>
-                      <p className="mt-2.5 text-base text-slate-700">
-                        I take pride in doing things well. From curriculum design to teacher training, every project is delivered with the highest standards.
-                      </p>
+                      <h3 className="text-xl font-medium font-display text-slate-900 ">{it.title}</h3>
+                      <p className="mt-2.5 text-base text-slate-700">{it.description}</p>
                     </div>
                   </div>
                 </div>
               </li>
+              ))}
+              {/* Keep the bottom graphic/handwritten note */}
               <li>
                 <div className="relative pb-24 lg:pb-20">
                   <span
@@ -256,9 +280,7 @@ Experience the advantage of an all‑inclusive educational consulting solution, 
                     </clipPath>
                   </defs>
                 </svg>
-                <span className="inline-block max-w-[220px] -rotate-12 transform font-writing text-2xl tracking-wide text-slate-600">
-                  What differentiates me from others
-                </span>
+                <span className="inline-block max-w-[220px] -rotate-12 transform font-writing text-2xl tracking-wide text-slate-600">{differentiator || defaultDifferentiator}</span>
               </div>
             </ul>
           </div>

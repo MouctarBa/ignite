@@ -30,7 +30,9 @@ export function AboutHero({ data = {} }) {
       <Image
         src={bgUrl}
         alt='Classroom background'
-        className='absolute inset-0 h-full w-full object-cover object-left lg:w-2/3'
+        className='absolute inset-0 object-cover object-left lg:w-2/3'
+        fill
+        sizes='100vw'
       />
       <Container className='relative py-16 sm:py-24 lg:py-32'>
         <div className='mx-auto max-w-3xl px-4 sm:px-6 lg:mx-0 lg:w-2/3 lg:max-w-none lg:px-8 lg:pr-16'>
@@ -67,7 +69,8 @@ export function AboutHero({ data = {} }) {
         <Image
           src={imgUrl}
           alt='Doris Chinedu-Okoro, founder of Evergreen Group of Schools'
-          className='absolute inset-0 h-full w-full object-cover object-top'
+          className='absolute inset-0 object-cover object-top'
+          fill
           sizes='(min-width: 1024px) 33vw, 100vw'
           priority
         />

@@ -3,7 +3,7 @@ import { Experience } from '@/components/Experience'
 import { FeaturedWork } from '@/components/work/FeaturedWork'
 import { Testimonials } from '@/components/Testimonials'
 import { FeaturedPosts } from '@/components/blog/FeaturedPosts'
-import { fetchAPI } from '@/lib/strapi'
+import { fetchAPI, getSiteSettings, getStrapiMedia } from '@/lib/strapi'
 
 export const metadata = {
   description:
@@ -43,15 +43,18 @@ async function getHomepageData() {
     }
   }
 
+  // Ensure hero media compatibility
+  if (homepageAttrs && !homepageAttrs.heroMedia && homepageAttrs.heroImage) {
+    homepageAttrs.heroMedia = homepageAttrs.heroImage
+  }
+
   // Always fetch collections so the homepage can render content even if not embedded in single type
   let testimonialsRes = { data: [] }
   let caseStudiesRes = { data: [] }
   let postsRes = { data: [] }
   try {
-    const ENABLE_TESTIMONIALS =
-      (process.env.NEXT_PUBLIC_ENABLE_TESTIMONIALS || process.env.ENABLE_TESTIMONIALS) === 'true'
-
-    const promises = [
+    const [testimonials, caseStudies, posts] = await Promise.all([
+      fetchAPI('/testimonials', { populate: '*' }).catch(() => ({ data: [] })),
       fetchAPI('/case-studies', {
         sort: 'publishedAt:desc',
         pagination: { limit: 4 },
@@ -62,20 +65,10 @@ async function getHomepageData() {
         pagination: { limit: 3 },
         populate: '*',
       }).catch(() => ({ data: [] })),
-    ]
-
-    if (ENABLE_TESTIMONIALS) {
-      promises.unshift(
-        fetchAPI('/testimonials', { populate: '*' }).catch(() => ({ data: [] }))
-      )
-    }
-
-    const results = await Promise.all(promises)
-    if (ENABLE_TESTIMONIALS) {
-      ;[testimonialsRes, caseStudiesRes, postsRes] = results
-    } else {
-      ;[caseStudiesRes, postsRes] = results
-    }
+    ])
+    testimonialsRes = testimonials
+    caseStudiesRes = caseStudies
+    postsRes = posts
   } catch (err) {
     console.warn('Collection content failed to load:', err)
   }
@@ -99,7 +92,11 @@ async function getHomepageData() {
 }
 
 export default async function HomePage() {
-  const homepage = (await getHomepageData()) || {};
+  const [homepage, siteSettings] = await Promise.all([
+    getHomepageData(),
+    getSiteSettings().catch(() => ({})),
+  ])
+  const homepageData = homepage || {}
   const {
     testimonials = [],
     caseStudies = [],
@@ -107,15 +104,48 @@ export default async function HomePage() {
     experienceVideo,
     heroText,
     heroMedia,
-  } = homepage;
+    heroTitle,
+    heroSubtitle,
+  } = homepageData;
 
   return (
     <>
-      <Hero heroText={heroText} heroMedia={heroMedia} />
-      <Experience video={experienceVideo} />
-      <FeaturedWork caseStudies={caseStudies} />
-      <Testimonials testimonials={testimonials} />
-      <FeaturedPosts posts={posts} />
+      <Hero
+        heroTitle={heroTitle}
+        heroSubtitle={heroSubtitle}
+        heroText={heroText}
+        heroMedia={heroMedia}
+        socialLinks={siteSettings?.socialLinks}
+        bookCallUrl={siteSettings?.bookCallUrl}
+        bookCallLabel={siteSettings?.bookCallLabel}
+      />
+      <Experience
+        video={homepage.experienceVideo}
+        titlePrefix={homepage.experience?.titlePrefix}
+        titleHighlight={homepage.experience?.titleHighlight}
+        titleSuffix={homepage.experience?.titleSuffix}
+        introText={homepage.experience?.introText}
+        items={homepage.experience?.items}
+        differentiator={homepage.experience?.differentiator}
+      />
+      {homepage.showFeaturedWork !== false && (
+        <FeaturedWork
+          caseStudies={caseStudies}
+          heading={homepage.featuredWork?.heading}
+          subtext={homepage.featuredWork?.subtext}
+        />
+      )}
+      {homepage.showTestimonials !== false && (
+        <Testimonials
+          testimonials={testimonials}
+          heading={homepage.testimonialsHeading}
+          companiesHeading={homepage.companiesHeading}
+          partnerLogos={(homepage.partnerLogos || []).map((img) => getStrapiMedia(img)).filter(Boolean)}
+        />
+      )}
+      {homepage.showFeaturedPosts !== false && (
+        <FeaturedPosts posts={posts} heading={homepage.featuredPostsHeading} />
+      )}
     </>
   )
 }
