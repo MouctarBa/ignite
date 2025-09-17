@@ -1,5 +1,6 @@
 import { CaseStudies } from '@/components/work/CaseStudies'
 import { fetchAPI, getWorkPage } from '@/lib/strapi'
+import { getAllTags } from '@/lib/caseStudies'
 
 const parseTag = (tagSlug) => {
   const tag = tagSlug
@@ -11,11 +12,9 @@ const parseTag = (tagSlug) => {
 }
 
 export async function generateStaticParams() {
-  const caseStudies = await fetchAPI('/case-studies')
-  const tags = new Set(
-    caseStudies.data.flatMap((study) => study.attributes.tags)
-  )
-  return Array.from(tags).map((tag) => ({
+  // Use helper that understands the Sanity-mapped tag shape
+  const tags = await getAllTags()
+  return tags.map((tag) => ({
     tagSlug: tag.replace(/ /g, '-').toLowerCase(),
   }))
 }
@@ -39,24 +38,22 @@ export default async function WorkCategoryPage({ params }) {
   } catch {}
   const tagName = parseTag(params.tagSlug)
 
-  const caseStudiesRes = await fetchAPI('/case-studies', {
-    filters: { tags: { $containsi: tagName } },
-    populate: '*',
+  // Fetch all and filter locally by tag, since the Sanity provider
+  // does not implement Strapi-style tag filtering.
+  const caseStudiesRes = await fetchAPI('/case-studies', { populate: '*' })
+  const all = Array.isArray(caseStudiesRes?.data) ? caseStudiesRes.data : []
+
+  const filtered = all.filter((study) => {
+    const tags = study?.attributes?.tags?.data || []
+    return tags.some(
+      (t) => (t?.attributes?.name || '').toLowerCase() === tagName.toLowerCase()
+    )
   })
 
-  const caseStudies = caseStudiesRes.data.map((study) => ({
-    ...study.attributes,
-    id: study.id,
-    url: `/work/${study.attributes.slug}`,
-    thumbnail: study.attributes.thumbnail.data.attributes.url,
-  }))
+  const pagination = caseStudiesRes?.meta?.pagination || { page: 1, pageCount: 1 }
 
-  const pagination = caseStudiesRes.meta?.pagination || {
-    page: 1,
-    pageCount: 1,
-  }
-
-  return <CaseStudies caseStudies={caseStudies} pagination={pagination} />
+  // Pass through the original Strapi-like shape (with attributes) expected by UI
+  return <CaseStudies caseStudies={filtered} pagination={pagination} />
 }
 
 export const dynamicParams = true
