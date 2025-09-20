@@ -153,7 +153,7 @@ export default async function ContactPage() {
               <div className='relative mx-auto max-w-2xl lg:mx-0 lg:max-w-none'>
                 <h2 className='font-display text-4xl font-semibold leading-tight text-slate-900 sm:text-5xl sm:leading-tight lg:text-[40px] lg:leading-tight xl:text-5xl xl:leading-tight'>
                   {heading}
-                  <span className='ml-4 sm:ml-6'>👋</span>
+                  
                 </h2>
 
                 <div className='relative aspect-h-2 aspect-w-3 mt-12 sm:mt-16'>
