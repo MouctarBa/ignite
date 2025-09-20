@@ -1,12 +1,12 @@
 # Sanity Studio (apps/studio)
 
-This is a minimal Sanity Studio configured to match the content types used by the web app.
+This is the Sanity Studio for the Ignite product. It manages content types and editorial workflows used by the web application. This repository is a licensed product and is not a public template; usage requires prior permission from the owner.
 
 ## Setup
 
-1) Create a project on sanity.io (or use an existing project)
-2) Add environment variables (see `.env.example`)
-3) Install deps and run the studio
+1) Create or use an existing project at sanity.io
+2) Configure environment variables (see `.env.example`)
+3) Install dependencies and run the Studio
 
 ```
 npm install
@@ -28,4 +28,8 @@ Optionally add `SANITY_STUDIO_READ_TOKEN` if you need token-based reads in custo
 npm run build --workspace apps/studio
 npm run deploy --workspace apps/studio
 ```
+
+## License and Usage
+
+This software is proprietary and licensed. All rights reserved. Any use, reproduction, distribution, or modification requires prior written permission from the owner. Unauthorized use is strictly prohibited.
 

@@ -1,0 +1,10 @@
+Ignite Proprietary License
+
+All rights reserved. This software and associated assets are the confidential and proprietary information of the owner ("Owner").
+
+You may not use, copy, modify, merge, publish, distribute, sublicense, or sell copies of this software, in whole or in part, without the prior written permission of the Owner. Any unauthorized use is strictly prohibited.
+
+Third‑party assets included in this repository (for example: fonts, icons, images, and videos) are subject to their respective licenses and are not granted for reuse beyond this product without obtaining appropriate rights from the respective licensors.
+
+For licensing inquiries or permission requests, contact the project maintainers.
+
