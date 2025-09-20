@@ -59,9 +59,19 @@ export async function POST(request) {
       touched.add('/contact')
       break
     case 'blogPage':
+      // Blog page settings affect header/nav visibility; refresh common shells
+      touched.add('/')
+      touched.add('/about')
+      touched.add('/contact')
       touched.add('/blog')
+      touched.add('/work')
       break
     case 'workPage':
+      // Work page settings affect header/nav visibility; refresh common shells
+      touched.add('/')
+      touched.add('/about')
+      touched.add('/contact')
+      touched.add('/blog')
       touched.add('/work')
       break
     case 'post':
