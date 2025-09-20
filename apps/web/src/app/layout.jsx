@@ -5,6 +5,7 @@ import clsx from 'clsx'
 import { Inter, Lexend, Gochi_Hand } from 'next/font/google'
 import '@/styles/globals.css'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { Analytics } from '@vercel/analytics/next'
 
 export const revalidate = parseInt(process.env.REVALIDATE_INTERVAL ?? '60', 10)
 
@@ -72,6 +73,7 @@ export default async function RootLayout({ children }) {
           ctaText={footerSettings.ctaText}
         />
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   )
