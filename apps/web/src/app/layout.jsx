@@ -1,6 +1,6 @@
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
-import { getSiteSettings, getFooterSettings } from '@/lib/strapi'
+import { getSiteSettings, getFooterSettings, getBlogPage, getWorkPage } from '@/lib/strapi'
 import clsx from 'clsx'
 import { Inter, Lexend, Gochi_Hand } from 'next/font/google'
 import '@/styles/globals.css'
@@ -37,6 +37,8 @@ export const metadata = {
 export default async function RootLayout({ children }) {
   let siteSettings = {}
   let footerSettings = {}
+  let blogPage = {}
+  let workPage = {}
   try {
     siteSettings = await getSiteSettings()
   } catch (e) {
@@ -46,6 +48,23 @@ export default async function RootLayout({ children }) {
     footerSettings = await getFooterSettings()
   } catch (e) {
     console.warn('Footer settings unavailable, using defaults:', e?.message || e)
+  }
+  try {
+    blogPage = await getBlogPage()
+  } catch (e) {
+    console.warn('Blog page settings unavailable:', e?.message || e)
+  }
+  try {
+    workPage = await getWorkPage()
+  } catch (e) {
+    console.warn('Work page settings unavailable:', e?.message || e)
+  }
+
+  const headerSettings = {
+    ...siteSettings,
+    // Treat undefined as enabled (true); explicitly false disables
+    enableBlog: blogPage?.enabled !== false,
+    enableWork: workPage?.enabled !== false,
   }
   return (
     <html lang="en">
@@ -57,7 +76,7 @@ export default async function RootLayout({ children }) {
           gochiHand.variable
         )}
       >
-        <Header siteSettings={siteSettings} />
+        <Header siteSettings={headerSettings} />
         {children}
         <Footer
           newsletter={footerSettings.newsletter}
