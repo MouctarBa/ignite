@@ -43,8 +43,8 @@ export function Header({ siteSettings = {} }) {
       // Respect page visibility toggles
       if (key === 'home' && site?.showHome === false) continue
       if (key === 'about' && site?.showAbout === false) continue
-      if (key === 'work' && (site?.showWork === false || site?.enableWork === false)) continue
-      if (key === 'blog' && (site?.showBlog === false || site?.enableBlog === false)) continue
+      if (key === 'work' && (site?.enableWork === false)) continue
+      if (key === 'blog' && (site?.enableBlog === false)) continue
       if (key === 'contact' && site?.showContact === false) continue
       const meta = PAGE_META[key]
       if (!meta) continue
