@@ -100,7 +100,7 @@ export function Footer({
                 >
                   <input
                     type="email"
-                    className="h-14 w-full rounded-full border-0 bg-white/10 py-3.5 pl-5 pr-32 text-sm leading-5 text-emeral-50 placeholder-emerald-100/90 outline-none ring-1 ring-white/25 backdrop-blur  duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-white/30 sm:pl-6"
+                    className="h-14 w-full rounded-full border-0 bg-white/10 py-3.5 pl-5 pr-32 text-sm leading-5 text-emerald-50 placeholder-emerald-100/90 outline-none ring-1 ring-white/25 backdrop-blur  duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-white/30 sm:pl-6"
                     required
                     placeholder={typeof newsletterEmailPlaceholder !== 'undefined' ? newsletterEmailPlaceholder : 'Enter your email'}
                     autoComplete="email"
@@ -193,12 +193,23 @@ export function Footer({
           <div className="flex flex-col items-center justify-between md:flex-row">
             <div className="flex items-center gap-6">
               {links.map((link, index) => {
-                let href = link.url || link.href || '#'
+                let href = link?.url || link?.href || '#'
+                if (typeof href === 'string') {
+                  href = href.trim()
+                }
                 try {
                   const parsed = new URL(href)
                   if (!['http:', 'https:'].includes(parsed.protocol)) href = '#'
                 } catch {
-                  if (!href.startsWith('/')) href = '#'
+                  // Support internal routes without a leading slash, e.g., 'about' -> '/about'
+                  if (typeof href === 'string' && href && !href.startsWith('/')) {
+                    // Allow anchor-only and protocol links to fall back to '#'
+                    if (href.startsWith('#') || href.includes(':')) {
+                      href = '#'
+                    } else {
+                      href = `/${href.replace(/^\/+/, '')}`
+                    }
+                  }
                 }
                 return (
                   <Link
